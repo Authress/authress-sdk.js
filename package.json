@@ -1,0 +1,52 @@
+{
+  "name": "authress-sdk",
+  "version": "0.0.0",
+  "description": "Client SDK for Authress (https://authress.com)",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "lib"
+  ],
+  "scripts": {
+    "lint": "eslint --ext .js tests lib index.js",
+    "test": "mocha tests/**/*.js -R spec"
+  },
+  "dependencies": {},
+  "peerDependencies": {
+    "aws-sdk": "*"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "commander": "^2.5.0",
+    "eslint-config-cimpress-atsquad": "^1.0.67",
+    "fs-extra": "^6.0.1",
+    "glob": "^5.0.15",
+    "mocha": "^7.1.2",
+    "sinon": "^1.17.3",
+    "travis-build-tools": "~1.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Authress/authress-sdk.js"
+  },
+  "keywords": [
+    "authorization",
+    "authorization as a service",
+    "authentication",
+    "Authress",
+    "Authress client",
+    "access management",
+    "access management as a service",
+    "user security"
+  ],
+  "author": "Authress Developers <developers@authress.com> (https://authress.com)",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/Authress/authress-sdk.js/issues"
+  },
+  "homepage": "https://authress.com",
+  "engines": {
+    "node": ">=8.9.4"
+  }
+}
