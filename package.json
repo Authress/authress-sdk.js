@@ -1,7 +1,7 @@
 {
   "name": "authress-sdk",
   "version": "0.0.0",
-  "description": "Client SDK for Authress (https://authress.com)",
+  "description": "Client SDK for Authress authorization as a service. Provides managed authorization api to secure service resources including user data.",
   "main": "index.js",
   "files": [
     "index.js",
@@ -34,18 +34,19 @@
     "authorization",
     "authorization as a service",
     "authentication",
+    "user authentication",
     "Authress",
     "Authress client",
     "access management",
     "access management as a service",
     "user security"
   ],
-  "author": "Authress Developers <developers@authress.com> (https://authress.com)",
-  "license": "BSD-3-Clause",
+  "author": "Authress Developers <developers@authress.io> (https://authress.io)",
+  "license": "Apache License 2.0",
   "bugs": {
     "url": "https://github.com/Authress/authress-sdk.js/issues"
   },
-  "homepage": "https://authress.com",
+  "homepage": "https://authress.io",
   "engines": {
     "node": ">=8.9.4"
   }
