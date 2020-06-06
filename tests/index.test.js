@@ -8,8 +8,9 @@ describe('index.js', () => {
 
     // it('new authressSDK()', () => {
     //   const AuthressClient = require('../index');
-    //   const client = new AuthressClient();
-    //   client.userPermissions.authorizeUser();
+    //   // const client = new AuthressClient();
+    //   // client.userPermissions.authorizeUser();
+    //   console.log(AuthressClient.serviceClientTokenProvider('aeoaoe')());
     // });
   });
 });

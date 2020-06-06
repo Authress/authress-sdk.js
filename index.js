@@ -25,4 +25,6 @@ class AuthressClient {
   }
 }
 
+AuthressClient.serviceClientTokenProvider = require('./src/serviceClientTokenProvider');
 module.exports = AuthressClient;
+

@@ -1623,7 +1623,8 @@ declare class AuthressClient {
   accounts: AccountsApiResourcesApi;
   roles: RolesApiResourcesApi;
 
-  setToken(accessKey: string): void;
+  setToken(jwtToken: string): void;
+  static serviceClientTokenProvider(accessKey): Function<string>;
 }
 
 export = AuthressClient;

@@ -65,7 +65,7 @@ const AuthressClient = require('authress-sdk');
 // Create a service client in the Authress management portal and past the access token here
 // This will generate a token automatically instead of passing the user token to the api
 const accessToken = 'eyJrZXlJ....';
-const authressClient = new AuthressClient({ baseUrl: 'https://DOMAIN.api-REGION.authress.io' }, new ServiceClientTokenProvider(accessToken));
+const authressClient = new AuthressClient({ baseUrl: 'https://DOMAIN.api-REGION.authress.io' }, AuthressClient.serviceClientTokenProvider(accessToken));
 
 // on api route
 [route('/resources/<resourceId>')]
