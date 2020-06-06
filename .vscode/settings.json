@@ -1,5 +1,2 @@
 {
-  "files.exclude": {
-    "**/bin/": false,
-  }
 }

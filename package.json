@@ -2,28 +2,33 @@
   "name": "authress-sdk",
   "version": "0.0.0",
   "description": "Client SDK for Authress authorization as a service. Provides managed authorization api to secure service resources including user data.",
-  "main": "index.js",
+  "main": "./index.js",
+  "types": "./index.d.ts",
   "files": [
     "index.js",
     "index.d.ts",
-    "lib"
+    "src"
   ],
   "scripts": {
-    "lint": "eslint --ext .js tests lib index.js",
-    "test": "mocha tests/**/*.js -R spec"
+    "lint": "eslint --ext .js tests src make.js",
+    "test": "mocha tests/**/*.test.js -R spec"
   },
-  "dependencies": {},
-  "peerDependencies": {
-    "aws-sdk": "*"
+  "dependencies": {
+    "axios": "^0.19.0"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
-    "commander": "^2.5.0",
+    "chai": "^4.2.0",
+    "commander": "^4.0.1",
+    "eslint": "^7.2.0",
     "eslint-config-cimpress-atsquad": "^1.0.67",
-    "fs-extra": "^6.0.1",
-    "glob": "^5.0.15",
-    "mocha": "^7.1.2",
-    "sinon": "^1.17.3",
+    "eslint-plugin-mocha": "^7.0.1",
+    "eslint-plugin-node": "^11.1.0",
+    "fs-extra": "^8.1.0",
+    "glob": "^7.1.6",
+    "mocha": "^7.2.0",
+    "nodemon": "^1.19.4",
+    "sinon": "^7.5.0",
+    "sinon-chai": "^3.3.0",
     "travis-build-tools": "~1.2"
   },
   "repository": {
@@ -42,7 +47,7 @@
     "user security"
   ],
   "author": "Authress Developers <developers@authress.io> (https://authress.io)",
-  "license": "Apache License 2.0",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/Authress/authress-sdk.js/issues"
   },
