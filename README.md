@@ -25,7 +25,8 @@ const { AuthressClient } = require('authress-sdk');
 
 ## Getting Started
 
-### Authorize using a user token
+### Authorization
+#### Authorize using a user token
 ```js
 const { AuthressClient } = require('authress-sdk');
 
@@ -55,7 +56,7 @@ function getResource(resourceId) {
   return { resource: {}, statusCode: 200 };
 ```
 
-### Authorize with a service client
+#### Authorize with a service client
 ```js
 const { AuthressClient, ServiceClientTokenProvider } = require('authress-sdk');
 
@@ -83,4 +84,23 @@ function getResource(resourceId) {
 
   // On success, continue with the route code to load resource and return it
   return { resource: {}, statusCode: 200 };
+```
+
+### Creating resources
+When a user creates a resource in your application, we want to ensure that they get access own that resource.
+
+You may receive **User does not have sufficient access to grant permissions to resources** as an error along with the status code **403**. This means that the service client or user jwt does not have access to create the access record. If using a service client, go to the Authress portal and create a one time record which grants the service client `Authress:Owner` to `Resources/` so that it can manage access records for these types of resources.
+
+```js
+await authressClient.accessRecords.createRecord({
+  name: `Access To New Resource ${NewResourceId}`,
+  // Optional admin if they should be allowed to edit this record
+  // admin: [{ userId: requestUserId }],
+  users: [{ userId: requestUserId }],
+  statements: [{
+    resources: [{ resourceUri: `Resources/${NewResourceId}` }],
+    // Owner by default gives full control over this new resource, including the ability to grant others access as well.
+    roles: ['Authress:Owner']
+  }]
+});
 ```

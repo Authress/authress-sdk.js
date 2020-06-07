@@ -1339,7 +1339,8 @@ declare class AuthressClient {
   roles: RolesApiResourcesApi;
 
   setToken(jwtToken: string): void;
-  static serviceClientTokenProvider(accessKey: string): () => string;
 }
 
-export = AuthressClient;
+declare class ServiceClientTokenProvider {}
+
+export = { AuthressClient, ServiceClientTokenProvider };
