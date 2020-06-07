@@ -20,14 +20,14 @@ npm install authress-sdk
 
 Then required the package:
 ```js
-const AuthressClient = require('authress-sdk');
+const { AuthressClient } = require('authress-sdk');
 ```
 
 ## Getting Started
 
 ### Authorize using a user token
 ```js
-const AuthressClient = require('authress-sdk');
+const { AuthressClient } = require('authress-sdk');
 
 // create an instance of the API class during service initialization
 // Replace DOMAIN with the Authress domain for your account
@@ -45,8 +45,8 @@ function getResource(resourceId) {
     client.userPermissions.authorizeUser(userId, `resources/${resourceId}`, 'READ');
   } catch (error) {
     // Will throw except if the user is not authorized to read the resource
-    if (error.status === 403) {
-      return 403;
+    if (error.status === 404) {
+      return 404;
     }
     throw error;
   }
@@ -57,7 +57,7 @@ function getResource(resourceId) {
 
 ### Authorize with a service client
 ```js
-const AuthressClient = require('authress-sdk');
+const { AuthressClient, ServiceClientTokenProvider } = require('authress-sdk');
 
 // create an instance of the API class during service initialization
 // Replace DOMAIN with the Authress domain for your account
@@ -65,7 +65,7 @@ const AuthressClient = require('authress-sdk');
 // Create a service client in the Authress management portal and past the access token here
 // This will generate a token automatically instead of passing the user token to the api
 const accessToken = 'eyJrZXlJ....';
-const authressClient = new AuthressClient({ baseUrl: 'https://DOMAIN.api-REGION.authress.io' }, AuthressClient.serviceClientTokenProvider(accessToken));
+const authressClient = new AuthressClient({ baseUrl: 'https://DOMAIN.api-REGION.authress.io' }, new ServiceClientTokenProvider(accessToken));
 
 // on api route
 [route('/resources/<resourceId>')]
@@ -75,8 +75,8 @@ function getResource(resourceId) {
     client.userPermissions.authorizeUser(userId, `resources/${resourceId}`, 'READ');
   } catch (error) {
     // Will throw except if the user is not authorized to read the resource
-    if (error.status === 403) {
-      return 403;
+    if (error.status === 404) {
+      return 404;
     }
     throw error;
   }

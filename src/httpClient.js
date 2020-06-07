@@ -25,7 +25,7 @@ class HttpClient {
 
         if (error.response) {
           newError = {
-            data: error.response.data,
+            data: error.response.data || {},
             status: error.response.status,
             headers: error.response.headers
           };
@@ -46,7 +46,7 @@ class HttpClient {
     }, error => {
       const newError = error && error.response && {
         url: error.config && error.config.url,
-        data: error.response.data,
+        data: error.response.data || {},
         status: error.response.status,
         headers: error.response.headers
       } || error.message && { message: error.message, code: error.code, stack: error.stack } || error;

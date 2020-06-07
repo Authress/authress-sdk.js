@@ -1,11 +1,11 @@
 const jwtManager = require('jsonwebtoken');
 
-let cachedKeyData = {};
 module.exports = function(accessKey) {
   return async () => {
-    if (cachedKeyData && cachedKeyData.token && cachedKeyData.expires < new Date(Date.now() + 3600000)) {
-      return cachedKeyData.token;
+    if (this.cachedKeyData && this.cachedKeyData.token && this.cachedKeyData.expires > Date.now() + 3600000) {
+      return this.cachedKeyData.token;
     }
+
     const decodedAccessKey = JSON.parse(Buffer.from(accessKey, 'base64').toString('utf8').trim());
     const now = Math.round(Date.now() / 1000);
     const jwt = {

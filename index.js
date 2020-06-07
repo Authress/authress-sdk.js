@@ -25,6 +25,6 @@ class AuthressClient {
   }
 }
 
-AuthressClient.serviceClientTokenProvider = require('./src/serviceClientTokenProvider');
-module.exports = AuthressClient;
+const ServiceClientTokenProvider = require('./src/serviceClientTokenProvider');
+module.exports = { AuthressClient, ServiceClientTokenProvider };
 
