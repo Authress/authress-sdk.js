@@ -2,9 +2,9 @@ const httpClient = require('./src/httpClient');
 const AccessRecordsApi = require('./src/accessRecordsApi');
 const UserPermissionsApi = require('./src/userPermissionsApi');
 const ServiceClientsApi = require('./src/serviceClientsApi');
-// const ResourcesApi = require('./resourcesApi');
-// const AccountsApi = require('./accountsApi');
-// const RolesApi = require('./rolesApi');
+const ResourcesApi = require('./src/resourcesApi');
+const AccountsApi = require('./src/accountsApi');
+const RolesApi = require('./src/rolesApi');
 
 class AuthressClient {
   constructor(settings, tokenProvider) {
@@ -15,9 +15,9 @@ class AuthressClient {
     this.accessRecords = new AccessRecordsApi(this.httpClient);
     this.serviceClients = new ServiceClientsApi(this.httpClient);
     this.userPermissions = new UserPermissionsApi(this.httpClient);
-    // this.resources = new ResourcesApi(this.httpClient);
-    // this.accounts = new AccountsApi(this.httpClient);
-    // this.roles = new RolesApi(this.httpClient);
+    this.resources = new ResourcesApi(this.httpClient);
+    this.accounts = new AccountsApi(this.httpClient);
+    this.roles = new RolesApi(this.httpClient);
   }
 
   setToken(token) {

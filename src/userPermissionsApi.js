@@ -34,7 +34,8 @@ class UserPermissionsApi {
       throw new ArgumentRequiredError('tokenId', 'Required parameter tokenId was null or undefined when calling disableUserToken.');
     }
     const url = `/v1/users/${encodeURIComponent(String(userId))}/tokens/${encodeURIComponent(String(tokenId))}`;
-    await this.client.delete(url);
+    const response = await this.client.delete(url);
+    return response;
   }
 
   async getUserPermissionsForResource(userId, resourceUri) {
@@ -65,7 +66,7 @@ class UserPermissionsApi {
     return response;
   }
 
-  async requestUserToken(body, userId) {
+  async requestUserToken(userId, body) {
     // verify required parameter 'body' is not null or undefined
     if (body === null || body === undefined) {
       throw new ArgumentRequiredError('body', 'Required parameter body was null or undefined when calling requestUserToken.');

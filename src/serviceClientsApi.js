@@ -25,7 +25,8 @@ class ServiceClientsApi {
     }
 
     const url = `/v1/clients/${encodeURIComponent(String(clientId))}/access-keys/${encodeURIComponent(String(keyId))}`;
-    await this.client.delete(url);
+    const response = await this.client.delete(url);
+    return response;
   }
 
   async deleteClient(clientId) {
@@ -35,7 +36,8 @@ class ServiceClientsApi {
     }
 
     const url = `/v1/clients/${encodeURIComponent(String(clientId))}`;
-    await this.client.delete(url);
+    const response = await this.client.delete(url);
+    return response;
   }
 
   async getClient(clientId) {
@@ -64,7 +66,7 @@ class ServiceClientsApi {
     return response;
   }
 
-  async updateClient(body, clientId) {
+  async updateClient(clientId, body) {
     // verify required parameter 'body' is not null or undefined
     if (body === null || body === undefined) {
       throw new ArgumentRequiredError('body', 'Required parameter body was null or undefined when calling updateClient.');
