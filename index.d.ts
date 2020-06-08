@@ -427,10 +427,10 @@ export interface UserPermissions {
     userId: string;
     /**
      * A list of the permissions
-     * @type {Array<V1rolesroleIdPermissions>}
+     * @type {Array<PermissionObject>}
      * @memberof UserPermissions
      */
-    permissions: Array<V1rolesroleIdPermissions>;
+    permissions: Array<PermissionObject>;
 }
 /**
  * A JWT token with represents the user.
@@ -478,10 +478,10 @@ export interface UserToken {
 export interface ResourcePermissions {
     /**
      *
-     * @type {Array<V1resourcesresourceUriPermissions>}
+     * @type {Array<ResourcePermissionsObject>}
      * @memberof ResourcePermissions
      */
-    permissions: Array<V1resourcesresourceUriPermissions>;
+    permissions: Array<ResourcePermissionsObject>;
 }
 
 /**
@@ -510,10 +510,10 @@ export interface Role {
     description?: string;
     /**
      * A list of the permissions
-     * @type {Array<V1rolesroleIdPermissions>}
+     * @type {Array<PermissionObject>}
      * @memberof Role
      */
-    permissions: Array<V1rolesroleIdPermissions>;
+    permissions: Array<PermissionObject>;
 }
 
 /**
@@ -611,10 +611,10 @@ export interface PermissionResponse {
     userId: string;
     /**
      * A list of the permissions
-     * @type {Array<V1rolesroleIdPermissions>}
+     * @type {Array<PermissionObject>}
      * @memberof PermissionResponse
      */
-    permissions: Array<V1rolesroleIdPermissions>;
+    permissions: Array<PermissionObject>;
 }
 /**
  *
@@ -624,10 +624,10 @@ export interface PermissionResponse {
 export interface ResourcePermission {
     /**
      *
-     * @type {Array<V1resourcesresourceUriPermissions>}
+     * @type {Array<ResourcePermissionsObject>}
      * @memberof ResourcePermission
      */
-    permissions: Array<V1resourcesresourceUriPermissions>;
+    permissions: Array<ResourcePermissionsObject>;
 }
 /**
  * A collection of resource permissions that have been defined.
@@ -637,10 +637,10 @@ export interface ResourcePermission {
 export interface ResourcePermissionCollection {
     /**
      *
-     * @type {ResourcePermissionCollectionResources}
+     * @type {Array<ResourcePermission>}
      * @memberof ResourcePermissionCollection
      */
-    resources: ResourcePermissionCollectionResources;
+    resources: Array<ResourcePermission>;
     /**
      *
      * @type {ResourcePermissionCollectionLinks}
@@ -685,19 +685,6 @@ export interface ResourcePermissionCollectionLinksNext {
      * @memberof ResourcePermissionCollectionLinksNext
      */
     rel?: string;
-}
-/**
- *
- * @export
- * @interface ResourcePermissionCollectionResources
- */
-export interface ResourcePermissionCollectionResources {
-    /**
-     *
-     * @type {Array<V1resourcesresourceUriPermissions>}
-     * @memberof ResourcePermissionCollectionResources
-     */
-    permissions: Array<V1resourcesresourceUriPermissions>;
 }
 
 /**
@@ -935,28 +922,28 @@ export interface V1recordsUsers {
 /**
  *
  * @export
- * @interface V1resourcesresourceUriPermissions
+ * @interface ResourcePermissionsObject
  */
-export interface V1resourcesresourceUriPermissions {
+export interface ResourcePermissionsObject {
   /**
    *
    * @type {string}
-   * @memberof V1resourcesresourceUriPermissions
+   * @memberof ResourcePermissionsObject
    */
-  action: V1resourcesresourceUriPermissions.ActionEnum;
+  action: ResourcePermissionsObject.ActionEnum;
   /**
    *
    * @type {boolean}
-   * @memberof V1resourcesresourceUriPermissions
+   * @memberof ResourcePermissionsObject
    */
   allow: boolean;
 }
 
 /**
  * @export
- * @namespace V1resourcesresourceUriPermissions
+ * @namespace ResourcePermissionsObject
  */
-export namespace V1resourcesresourceUriPermissions {
+export namespace ResourcePermissionsObject {
   /**
    * @export
    * @enum {string}
@@ -965,38 +952,6 @@ export namespace V1resourcesresourceUriPermissions {
       CLAIM = 'CLAIM',
       PUBLIC = 'PUBLIC'
   }
-}
-
-/**
- * The collective action and associate grants on a permission
- * @export
- * @interface V1rolesroleIdPermissions
- */
-export interface V1rolesroleIdPermissions {
-  /**
-   * The action the permission grants, can be scoped using `:` and parent actions imply child permissions, action:* or action implies action:sub-action. This property is case-insensitive, it will always be cast to lowercase before comparing actions to user permissions.
-   * @type {string}
-   * @memberof V1rolesroleIdPermissions
-   */
-  action: string;
-  /**
-   * Does this permission grant the user the ability to execute the action?
-   * @type {boolean}
-   * @memberof V1rolesroleIdPermissions
-   */
-  allow: boolean;
-  /**
-   * Allows the user to give the permission to others without being able to execute the action.
-   * @type {boolean}
-   * @memberof V1rolesroleIdPermissions
-   */
-  grant: boolean;
-  /**
-   * Allows delegating or granting the permission to others without being able to execute tha action.
-   * @type {boolean}
-   * @memberof V1rolesroleIdPermissions
-   */
-  delegate: boolean;
 }
 
 /**
