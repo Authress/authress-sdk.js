@@ -120,7 +120,7 @@ api.use((error, req, res, next) => {
 /********************************************************************************************* */
 /********************************************************************************************* */
 
-/** Here and blow continues the boiler plat which is mostly unnecessary. It is added to make it easier to debug issues with the example. */
+/** Here and below continues the boiler plat which is mostly unnecessary. It is added to make it easier to debug issues with the example. */
 // Default fall back handling
 api.options(/.*/, (req, res) => {
   res.status(200).json({});
