@@ -3,8 +3,6 @@ export interface AuthressSettings {
   baseUrl: string;
 }
 
-export type ArgumentRequiredError = Error
-
 export interface Response<ResponseType> {
   /** Response data object on successful request */
   data: ResponseType;
@@ -1297,5 +1295,11 @@ declare class AuthressClient {
 }
 
 declare class ServiceClientTokenProvider {}
+declare class ArgumentRequiredError implements Error {}
+declare class UnauthorizedError implements Error {
+  userId: string;
+  resourceUri: string;
+  permission: string;
+}
 
-export = { AuthressClient, ServiceClientTokenProvider };
+export = { AuthressClient, ServiceClientTokenProvider, UnauthorizedError };

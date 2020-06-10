@@ -1,6 +1,7 @@
 const { URL, URLSearchParams } = require('url');
 
 const ArgumentRequiredError = require('./argumentRequiredError');
+const UnauthorizedError = require('./unauthorizedError');
 class UserPermissionsApi {
   constructor(client) {
     this.client = client;
@@ -20,8 +21,15 @@ class UserPermissionsApi {
       throw new ArgumentRequiredError('permission', 'Required parameter permission was null or undefined when calling authorizeUser.');
     }
     const url = `/v1/users/${encodeURIComponent(String(userId))}/resources/${encodeURIComponent(String(resourceUri))}/permissions/${encodeURIComponent(String(permission))}`;
-    const response = await this.client.get(url);
-    return response;
+    try {
+      const response = await this.client.get(url);
+      return response;
+    } catch (error) {
+      if (error.status === 404) {
+        throw UnauthorizedError(userId, resourceUri, permission);
+      }
+      throw error;
+    }
   }
 
   async disableUserToken(userId, tokenId) {
