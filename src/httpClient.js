@@ -1,5 +1,7 @@
 const axios = require('axios');
 
+const package = require('../package.json');
+
 const defaultHeaders = {
   'Content-Type': 'application/json'
 };
@@ -15,7 +17,8 @@ class HttpClient {
       const token = await this.tokenProvider();
       config.headers = {
         ...config.headers,
-        Authorization: `Bearer ${token}`
+        'Authorization': `Bearer ${token}`,
+        'User-Agent': `C# AuthressSDK version: ${package.version}`
       };
       return config;
     }, error => {
