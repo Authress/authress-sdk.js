@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const package = require('../package.json');
+const packageInfo = require('../package.json');
 
 const defaultHeaders = {
   'Content-Type': 'application/json'
@@ -18,7 +18,7 @@ class HttpClient {
       config.headers = {
         ...config.headers,
         'Authorization': `Bearer ${token}`,
-        'User-Agent': `C# AuthressSDK version: ${package.version}`
+        'User-Agent': `C# AuthressSDK version: ${packageInfo.version}`
       };
       return config;
     }, error => {
