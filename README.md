@@ -1,16 +1,9 @@
 # authress-sdk.js
-The Authress SDK in javascript
+This is the Authress SDK used to integrate with the authorization as a service provider Authress at https://authress.io.
 
 [![npm version](https://badge.fury.io/js/authress-sdk.svg)](https://badge.fury.io/js/authress-sdk)
 [![Build Status](https://travis-ci.com/authress/authress-sdk.js.svg?branch=master)](https://travis-ci.com/authress/authress-sdk.js)
 
-
-# authress-sdk
-Authress SDK for Python.
-
-[![NuGet version](https://badge.fury.io/py/authress-sdk.svg)](https://badge.fury.io/py/authress-sdk) [![Build Status](https://travis-ci.com/authress/authress-sdk.py.svg?branch=master)](https://travis-ci.com/authress/authress-sdk.py)
-
-This is the Authress SDK used to integrate with the authorization as a service provider Authress at https://authress.io.
 
 ## Usage
 
