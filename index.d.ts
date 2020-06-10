@@ -1243,6 +1243,7 @@ export interface UserPermissionsApi {
    * @param {string} resourceUri The uri path of a resource to validate, must be URL encoded, uri segments are allowed, the resource must be a full path, and permissions are not inherited by sub resources.
    * @param {string} permission Permission to check, &#x27;*&#x27; and scoped permissions can also be checked here.
    * @throws {ArgumentRequiredError}
+   * @throws {UnauthorizedError}
    */
   authorizeUser(userId: string, resourceUri: string, permission: string): Promise<Response<void>>;
   /**

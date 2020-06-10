@@ -25,7 +25,10 @@ const { AuthressClient } = require('authress-sdk');
 
 ## Getting Started
 
-### Authorization
+### Framework Examples
+* [Express](./examples/expressMicroservice)
+
+### Generic Javacript Example
 #### Authorize using a user token
 ```js
 const { AuthressClient } = require('authress-sdk');
@@ -86,7 +89,7 @@ function getResource(resourceId) {
   return { resource: {}, statusCode: 200 };
 ```
 
-### Creating resources
+#### Creating resources
 When a user creates a resource in your application, we want to ensure that they get access own that resource.
 
 You may receive **User does not have sufficient access to grant permissions to resources** as an error along with the status code **403**. This means that the service client or user jwt does not have access to create the access record. If using a service client, go to the Authress portal and create a one time record which grants the service client `Authress:Owner` to `Resources/` so that it can manage access records for these types of resources.
