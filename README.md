@@ -43,7 +43,7 @@ function getResource(resourceId) {
 
   // Check Authress to authorize the user
   try {
-    client.userPermissions.authorizeUser(userId, `resources/${resourceId}`, 'READ');
+    authressClient.userPermissions.authorizeUser(userId, `resources/${resourceId}`, 'READ');
   } catch (error) {
     // Will throw except if the user is not authorized to read the resource
     if (error.status === 404) {
@@ -73,7 +73,7 @@ const authressClient = new AuthressClient({ baseUrl: 'https://DOMAIN.api-REGION.
 function getResource(resourceId) {
   // Check Authress to authorize the user
   try {
-    client.userPermissions.authorizeUser(userId, `resources/${resourceId}`, 'READ');
+    authressClient.userPermissions.authorizeUser(userId, `resources/${resourceId}`, 'READ');
   } catch (error) {
     // Will throw except if the user is not authorized to read the resource
     if (error.status === 404) {
