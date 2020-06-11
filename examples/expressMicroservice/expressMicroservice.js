@@ -90,6 +90,8 @@ api.post('/v1/resources/:id/sub-resource', async (request, response, next) => {
 
     // Save the user's access to the new resource in Authress, NOTE: this uses the authressServiceClient instead of the user's specific authress client
     await authressServiceClient.createRecord({
+      // Leave blank for Authress to generate one on the fly, or specify a value if the app intends to update and make modifications at a later point.
+      recordId: 'RecordId',
       name: `Access To New Resource ${newSubResourceId}`,
       // Optional admin if they should be allowed to edit this record
       // admin: [{ userId: requestUserId }],
