@@ -471,13 +471,13 @@ export interface UserToken {
 /**
  *
  * @export
- * @interface ResourcePermissions
+ * @interface ResourcePermissionsCollection
  */
-export interface ResourcePermissions {
+export interface ResourcePermissionsCollection {
   /**
    *
    * @type {Array<ResourcePermissionsObject>}
-   * @memberof ResourcePermissions
+   * @memberof ResourcePermissionsCollection
    */
   permissions: Array<ResourcePermissionsObject>;
 }
@@ -1146,17 +1146,17 @@ export interface AccountsApi {
 // };
 
 /**
- * ResourcePermissionsApi
+ * ResourcesApi
  * @export
  */
-export interface ResourcePermissionsApi {
+export interface ResourcesApi {
   /**
    * Permissions can be set globally at a resource level. This will apply to all users in an account.
    * @summary Get a resource permissions object.
    * @param {string} resourceUri The uri path of a resource to validate, must be URL encoded, uri segments are allowed.
    * @throws {ArgumentRequiredError}
    */
-  getResourcePermissions(resourceUri: string): Promise<Response<ResourcePermissions>>;
+  getResourcePermissions(resourceUri: string): Promise<Response<ResourcePermissionsCollection>>;
   /**
    * <i class=\"far fa-money-bill-alt text-primary\"></i> <span class=\"text-primary\">Billable</span> Get the resource users. This result is a list of users that have some permission to the resource. Users with access to higher level resources nor users with access only to a child resource, will not be returned in this result. In the case that the resource has multiple users, the list will be paginated.
    * @summary List resource users
