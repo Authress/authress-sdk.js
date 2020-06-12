@@ -474,12 +474,47 @@ export interface UserToken {
  * @interface ResourcePermissions
  */
 export interface ResourcePermissions {
-    /**
-     *
-     * @type {Array<ResourcePermissionsObject>}
-     * @memberof ResourcePermissions
-     */
-    permissions: Array<ResourcePermissionsObject>;
+  /**
+   *
+   * @type {Array<ResourcePermissionsObject>}
+   * @memberof ResourcePermissions
+   */
+  permissions: Array<ResourcePermissionsObject>;
+}
+
+/**
+ *
+ * @export
+ * @interface ResourceUsersCollection
+ */
+export interface ResourceUsersCollection {
+  /**
+   *
+   * @type {Array<User>}
+   * @memberof ResourceUsersCollection
+   */
+  users: Array<User>;
+
+  /**
+   *
+   * @type {ResourcePermissionCollectionLinks}
+   * @memberof ResourceUsersCollection
+   */
+  links: ResourcePermissionCollectionLinks;
+}
+
+/**
+ *
+ * @export
+ * @interface User
+ */
+export interface User {
+  /**
+   *
+   * @type {string}
+   * @memberof User
+   */
+  usrId: string;
 }
 
 /**
@@ -1122,6 +1157,14 @@ export interface ResourcePermissionsApi {
    * @throws {ArgumentRequiredError}
    */
   getResourcePermissions(resourceUri: string): Promise<Response<ResourcePermissions>>;
+  /**
+   * <i class=\"far fa-money-bill-alt text-primary\"></i> <span class=\"text-primary\">Billable</span> Get the resource users. This result is a list of users that have some permission to the resource. Users with access to higher level resources nor users with access only to a child resource, will not be returned in this result. In the case that the resource has multiple users, the list will be paginated.
+   * @summary List resource users
+   * @param {string} resourceUri The uri path of a resource to validate, must be URL encoded, uri segments are allowed.
+   * @throws {ArgumentRequiredError}
+   */
+  getResourceUsers(resourceUri: string): Promise<Response<ResourceUsersCollection>>;
+
   /**
    * Permissions can be set globally at a resource level. Lists any resources with a globally set resource policy
    * @summary List resource configurations
