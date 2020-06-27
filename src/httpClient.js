@@ -18,7 +18,8 @@ class HttpClient {
       config.headers = {
         ...config.headers,
         'Authorization': `Bearer ${token}`,
-        'User-Agent': `C# AuthressSDK version: ${packageInfo.version}`
+        // 'X-Powered-By': `Javascript AuthressSDK version: ${packageInfo.version}`,
+        'User-Agent': `Javascript AuthressSDK version: ${packageInfo.version}`
       };
       return config;
     }, error => {
