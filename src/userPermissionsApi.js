@@ -80,7 +80,10 @@ class UserPermissionsApi {
     }
 
     const url = new URL(`${this.client.baseUrl}/v1/users/${encodeURIComponent(String(tokenUserId))}/resources`);
-    url.search = new URLSearchParams({ resourceUri, limit, cursor }).toString();
+    const qs = { resourceUri };
+    if (limit) { qs.limit = limit; }
+    if (cursor) { qs.cursor = cursor; }
+    url.search = new URLSearchParams(qs).toString();
 
     const response = await this.client.get(url);
     return response;

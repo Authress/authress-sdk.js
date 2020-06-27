@@ -45,7 +45,12 @@ class AccessRecordsApi {
 
   async getRecords(limit, cursor, filter, status) {
     const url = new URL(`${this.client.baseUrl}/v1/records`);
-    url.search = new URLSearchParams({ limit, cursor, filter, status }).toString();
+    const qs = {};
+    if (limit) { qs.limit = limit; }
+    if (cursor) { qs.cursor = cursor; }
+    if (filter) { qs.filter = filter; }
+    if (status) { qs.status = status; }
+    url.search = new URLSearchParams(qs).toString();
     const response = await this.client.get(url);
     return response;
   }
