@@ -10,7 +10,7 @@ module.exports = function(accessKey) {
     const now = Math.round(Date.now() / 1000);
     const jwt = {
       aud: decodedAccessKey.audience,
-      iss: `https://api.authress.io/v1/clients/${decodedAccessKey.clientId}`,
+      iss: `https://api.authress.io/v1/clients/${encodeURIComponent(decodedAccessKey.clientId)}`,
       sub: decodedAccessKey.clientId,
       iat: now,
       // valid for 24 hours
