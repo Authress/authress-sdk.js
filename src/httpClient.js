@@ -17,10 +17,13 @@ class HttpClient {
       const token = await this.tokenProvider();
       config.headers = {
         ...config.headers,
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`
         // 'X-Powered-By': `Javascript AuthressSDK version: ${packageInfo.version}`,
-        'User-Agent': `Javascript AuthressSDK version: ${packageInfo.version}`
       };
+
+      if (typeof window === 'undefined' || typeof process !== 'undefined') {
+        config.headers['User-Agent'] = `Javascript AuthressSDK version: ${packageInfo.version}`;
+      }
       return config;
     }, error => {
       let newError = error;
