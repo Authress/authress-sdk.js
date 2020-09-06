@@ -90,8 +90,6 @@ You may receive **User does not have sufficient access to grant permissions to r
 ```js
 await authressClient.accessRecords.createRecord({
   name: `Access To New Resource ${NewResourceId}`,
-  // Optional admin if they should be allowed to edit this record
-  // admin: [{ userId: requestUserId }],
   users: [{ userId: requestUserId }],
   statements: [{
     resources: [{ resourceUri: `Resources/${NewResourceId}` }],

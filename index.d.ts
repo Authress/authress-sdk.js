@@ -57,7 +57,7 @@ export interface AccessRecord {
    */
   users: Array<V1recordsUsers>;
   /**
-   * The list of admin that can edit this record even if they do not have global record edit permissions.
+   * The list of admin that can edit this record even if they do not have global record edit permissions. By default the creator of the record has admin access unless explicitly this property is set.
    * @type {Array<V1recordsUsers>}
    * @memberof AccessRecord
    */
