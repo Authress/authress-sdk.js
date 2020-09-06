@@ -30,7 +30,6 @@
     "fs-extra": "^8.1.0",
     "glob": "^7.1.6",
     "mocha": "^7.2.0",
-    "nodemon": "^1.19.4",
     "sinon": "^7.5.0",
     "sinon-chai": "^3.3.0",
     "travis-build-tools": "~1.2",
