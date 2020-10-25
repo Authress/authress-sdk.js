@@ -35,7 +35,7 @@ class UserPermissionsApi {
       return response;
     } catch (error) {
       if (error.status === 404) {
-        throw new UnauthorizedError(userId, resourceUri, permission);
+        throw new UnauthorizedError(tokenUserId, resourceUri, permission);
       }
       throw error;
     }
