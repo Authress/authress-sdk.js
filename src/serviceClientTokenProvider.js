@@ -7,7 +7,7 @@ module.exports = function(accessKey) {
     }
 
     const accessKeyBuffer = Buffer.from(accessKey, 'base64');
-    const accessKeyString = accessKeyBuffer.toString('base64') === accessKey ? accessKeyBuffer.toString('utf8') : accessKey
+    const accessKeyString = accessKeyBuffer.toString('base64') === accessKey ? accessKeyBuffer.toString('utf8') : accessKey;
     const decodedAccessKey = JSON.parse(accessKeyString.trim());
     const now = Math.round(Date.now() / 1000);
     const jwt = {
