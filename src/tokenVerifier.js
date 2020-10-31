@@ -3,17 +3,34 @@ const axios = require('axios');
 const { URL } = require('url');
 const jwkConverter = require('jwk-to-pem');
 
+const keyMap = {};
 const client = axios.create();
+
 async function getPublicKey(jwkKeyListUrl, kid) {
-  const result = await client.get(jwkKeyListUrl);
-  const jwk = result.data.keys.find(key => key.kid === kid);
-  if (jwk) {
-    return jwkConverter(jwk);
+  const hashKey = JSON.stringify({ jwkKeyListUrl, kid });
+
+  const getKeyUnCached = async () => {
+    const result = await client.get(jwkKeyListUrl);
+    const jwk = result.data.keys.find(key => key.kid === kid);
+    if (jwk) {
+      return jwkConverter(jwk);
+    }
+
+    const error = new Error('No matching public key found for token');
+    error.code = 'Unauthorized';
+    throw error;
+  };
+
+  if (!keyMap[hashKey]) {
+    keyMap[hashKey] = getKeyUnCached();
   }
 
-  const error = new Error('No matching public key found for token');
-  error.code = 'Unauthorized';
-  throw error;
+  try {
+    const key = await keyMap[hashKey];
+    return key;
+  } catch (error) {
+    return keyMap[hashKey] = getKeyUnCached();
+  }
 }
 
 module.exports = async function(authressCustomDomain, authenticationToken) {
@@ -23,7 +40,6 @@ module.exports = async function(authressCustomDomain, authenticationToken) {
     throw error;
   }
 
-  // Verify the issuer
   const unverifiedToken = jwtManager.decode(authenticationToken, { complete: true });
   const kid = unverifiedToken && unverifiedToken.header && unverifiedToken.header.kid;
   if (!kid) {
@@ -45,8 +61,9 @@ module.exports = async function(authressCustomDomain, authenticationToken) {
     throw error;
   }
 
+  const key = await getPublicKey(`${issuer}/.well-known/openid-configuration/jwks`, kid);
+
   try {
-    const key = await getPublicKey(`${issuer}/.well-known/openid-configuration/jwks`, kid);
     const identity = jwtManager.verify(authenticationToken, key, { algorithms: ['RS256', 'RS384', 'RS512'], issuer });
     return identity;
   } catch (verifierError) {
