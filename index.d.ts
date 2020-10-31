@@ -1339,6 +1339,7 @@ declare class AuthressClient {
 }
 
 declare class ServiceClientTokenProvider {}
+declare function TokenVerifier(authenticationServiceUrl: string, authenticationToken: string);
 declare class ArgumentRequiredError implements Error {}
 declare class UnauthorizedError implements Error {
   userId: string;
@@ -1346,4 +1347,4 @@ declare class UnauthorizedError implements Error {
   permission: string;
 }
 
-export = { AuthressClient, ServiceClientTokenProvider, UnauthorizedError };
+export = { AuthressClient, ServiceClientTokenProvider, UnauthorizedError, TokenVerifier };
