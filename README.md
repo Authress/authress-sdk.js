@@ -21,7 +21,7 @@ const { AuthressClient } = require('authress-sdk');
 ### Framework Examples
 * [Express](./examples/expressMicroservice)
 
-### Generic Javacript Example
+### Generic Javascript Example
 #### Authorize using a user token
 ```js
 const { AuthressClient } = require('authress-sdk');
@@ -97,4 +97,21 @@ await authressClient.accessRecords.createRecord({
     roles: ['Authress:Owner']
   }]
 });
+```
+
+#### Verifying a token using the token verifier
+```js
+const { TokenVerifier } = require('authress-sdk');
+const cookieManager = require('cookie');
+
+try {
+  // Grab authorization cookie from the request, the best way to do this will be framework specific.
+  const cookies = cookieManager.parse(request.headers.cookie || '');
+  const userToken = cookies.authorization;
+  // Specify your custom domain for tokens. Configurable at https://authress.io/app/#/manage?focus=applications
+  const userIdentity = await TokenVerifier('https://login.application.com', cookies.authorization);
+} catch (error) {
+  console.log('User is unauthorized', error);
+  return { statusCode: 401 };
+}
 ```

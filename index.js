@@ -26,6 +26,7 @@ class AuthressClient {
 }
 
 const ServiceClientTokenProvider = require('./src/serviceClientTokenProvider');
+const TokenVerifier = require('./src/tokenVerifier');
 const UnauthorizedError = require('./src/unauthorizedError');
-module.exports = { AuthressClient, ServiceClientTokenProvider, UnauthorizedError };
+module.exports = { AuthressClient, ServiceClientTokenProvider, UnauthorizedError, TokenVerifier };
 
