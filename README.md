@@ -107,9 +107,10 @@ const cookieManager = require('cookie');
 try {
   // Grab authorization cookie from the request, the best way to do this will be framework specific.
   const cookies = cookieManager.parse(request.headers.cookie || '');
-  const userToken = cookies.authorization;
+  const userToken = cookies.authorization || request.headers.Authorization.split(' ')[1];
   // Specify your custom domain for tokens. Configurable at https://authress.io/app/#/manage?focus=applications
-  const userIdentity = await TokenVerifier('https://login.application.com', cookies.authorization);
+  // Replacing the domain with your login url
+  const userIdentity = await TokenVerifier('https://login.application.com', userToken);
 } catch (error) {
   console.log('User is unauthorized', error);
   return { statusCode: 401 };
