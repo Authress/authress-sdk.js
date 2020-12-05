@@ -82,9 +82,13 @@ class UserPermissionsApi {
     try {
       await this.authorizeUser(userId, resourceUri, permission);
       return {
-        userId,
-        accessToAllSubResources: true,
-        resources: null
+        status: 200,
+        headers: {},
+        data: {
+          userId: tokenUserId,
+          accessToAllSubResources: true,
+          resources: null
+        }
       };
     } catch (error) {
       const url = new URL(`${this.client.baseUrl}/v1/users/${encodeURIComponent(String(tokenUserId))}/resources`);
