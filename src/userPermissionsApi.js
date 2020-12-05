@@ -72,21 +72,31 @@ class UserPermissionsApi {
     return response;
   }
 
-  async getUserResources(userId, resourceUri, limit, cursor) {
+  async getUserResources(userId, resourceUri, limit, cursor, permission) {
     // verify required parameter 'userId' is not null or undefined
     let tokenUserId = userId;
     if (userId === null || userId === undefined) {
       tokenUserId = await getFallbackUser(this.client);
     }
 
-    const url = new URL(`${this.client.baseUrl}/v1/users/${encodeURIComponent(String(tokenUserId))}/resources`);
-    const qs = { resourceUri };
-    if (limit) { qs.limit = limit; }
-    if (cursor) { qs.cursor = cursor; }
-    url.search = new URLSearchParams(qs).toString();
+    try {
+      await this.authorizeUser(userId, resourceUri, permission);
+      return {
+        userId,
+        accessToAllSubResources: true,
+        resources: null
+      };
+    } catch (error) {
+      const url = new URL(`${this.client.baseUrl}/v1/users/${encodeURIComponent(String(tokenUserId))}/resources`);
+      const qs = { resourceUri };
+      if (limit) { qs.limit = limit; }
+      if (cursor) { qs.cursor = cursor; }
+      if (permission) { qs.permissions = permission; }
+      url.search = new URLSearchParams(qs).toString();
 
-    const response = await this.client.get(url);
-    return response;
+      const response = await this.client.get(url);
+      return response;
+    }
   }
 
   async requestUserToken(userId, body) {
