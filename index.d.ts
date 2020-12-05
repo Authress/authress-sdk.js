@@ -168,13 +168,13 @@ export interface AccountCollection {
  */
 export interface ClaimRequest {
     /**
-     * The parent resource to add a child resource to. The resource must have a resource configuration that add the permission CLAIM for this to work.
+     * The parent resource to add a sub-resource to. The resource must have a resource configuration that add the permission CLAIM for this to work.
      * @type {string}
      * @memberof ClaimRequest
      */
     collectionResource: string;
     /**
-     * The child resource the user is requesting Admin ownership over.
+     * The sub-resource the user is requesting Admin ownership over.
      * @type {string}
      * @memberof ClaimRequest
      */
@@ -188,13 +188,13 @@ export interface ClaimRequest {
  */
 export interface ClaimRequest {
     /**
-     * The parent resource to add a child resource to. The resource must have a resource configuration that add the permission CLAIM for this to work.
+     * The parent resource to add a sub-resource to. The resource must have a resource configuration that add the permission CLAIM for this to work.
      * @type {string}
      * @memberof ClaimRequest
      */
     collectionResource: string;
     /**
-     * The child resource the user is requesting Admin ownership over.
+     * The sub-resource the user is requesting Admin ownership over.
      * @type {string}
      * @memberof ClaimRequest
      */
@@ -316,6 +316,12 @@ export interface UserResources {
      * @memberof UserResources
      */
     resources?: Array<UserResourcesResources>;
+    /**
+     * If the user has access to all sub-resources, then instead of resources being a list, this property will be populated `true`.
+     * @type {Array<UserResourcesResources>}
+     * @memberof UserResources
+     */
+    accessToAllSubResources?: boolean;
     /**
      *
      * @type {ResourcePermissionCollectionLinks}
@@ -600,7 +606,7 @@ export interface MetadataObject {
  */
 export interface PermissionObject {
     /**
-     * The action the permission grants, can be scoped using `:` and parent actions imply child permissions, action:* or action implies action:sub-action. This property is case-insensitive, it will always be cast to lowercase before comparing actions to user permissions.
+     * The action the permission grants, can be scoped using `:` and parent actions imply sub-action permissions, action:* or action implies action:sub-action. This property is case-insensitive, it will always be cast to lowercase before comparing actions to user permissions.
      * @type {string}
      * @memberof PermissionObject
      */
@@ -757,37 +763,6 @@ export interface TokenRequest {
      * @memberof TokenRequest
      */
     expires: Date;
-}
-/**
- * A collect of permissions that the user has to a resource.
- * @export
- * @interface UserResources
- */
-export interface UserResources {
-    /**
-     *
-     * @type {V1usersuserIdresourcesresourceUrimetadataAccount}
-     * @memberof UserResources
-     */
-    account?: V1usersuserIdresourcesresourceUrimetadataAccount;
-    /**
-     *
-     * @type {string}
-     * @memberof UserResources
-     */
-    userId: string;
-    /**
-     * A list of the resources the user has some permission to.
-     * @type {Array<UserResourcesResources>}
-     * @memberof UserResources
-     */
-    resources?: Array<UserResourcesResources>;
-    /**
-     *
-     * @type {ResourcePermissionCollectionLinks}
-     * @memberof UserResources
-     */
-    links: ResourcePermissionCollectionLinks;
 }
 /**
  *
@@ -1008,7 +983,7 @@ export interface V1usersuserIdresourcesresourceUrimetadataAccount {
  */
 export interface V1usersuserIdtokensResources {
   /**
-   * A resource path which can be top level, fully qualified, or end with a *. Parent resources imply permissions to sub resources.
+   * A resource path which can be top level, fully qualified, or end with a *. Parent resources imply permissions to sub-resources.
    * @type {string}
    * @memberof V1usersuserIdtokensResources
    */
@@ -1158,7 +1133,7 @@ export interface ResourcesApi {
    */
   getResourcePermissions(resourceUri: string): Promise<Response<ResourcePermissionsCollection>>;
   /**
-   * <i class=\"far fa-money-bill-alt text-primary\"></i> <span class=\"text-primary\">Billable</span> Get the resource users. This result is a list of users that have some permission to the resource. Users with access to higher level resources nor users with access only to a child resource, will not be returned in this result. In the case that the resource has multiple users, the list will be paginated.
+   * <i class=\"far fa-money-bill-alt text-primary\"></i> <span class=\"text-primary\">Billable</span> Get the resource users. This result is a list of users that have some permission to the resource. Users with access to higher level resources nor users with access only to a sub-resource, will not be returned in this result. In the case that the resource has multiple users, the list will be paginated.
    * @summary List resource users
    * @param {string} resourceUri The uri path of a resource to validate, must be URL encoded, uri segments are allowed.
    * @throws {ArgumentRequiredError}
@@ -1283,7 +1258,7 @@ export interface UserPermissionsApi {
    * <i class=\"far fa-money-bill-alt text-primary\"></i> <span class=\"text-primary\">Billable</span> Does the user have the specified permissions to the resource?
    * @summary Check to see if a user has permissions to a resource.
    * @param {string} userId The user to check permissions on
-   * @param {string} resourceUri The uri path of a resource to validate, must be URL encoded, uri segments are allowed, the resource must be a full path, and permissions are not inherited by sub resources.
+   * @param {string} resourceUri The uri path of a resource to validate, must be URL encoded, uri segments are allowed, the resource must be a full path, and permissions are not inherited by sub-resources.
    * @param {string} permission Permission to check, &#x27;*&#x27; and scoped permissions can also be checked here.
    * @throws {ArgumentRequiredError}
    * @throws {UnauthorizedError}
@@ -1309,12 +1284,13 @@ export interface UserPermissionsApi {
    * <i class=\"far fa-money-bill-alt text-primary\"></i> <span class=\"text-primary\">Billable</span> Get the users resources. This result is a list of resource uris that are either--A single element which matches the resource query uri or a list of direct collection resource uris. Since resource uris are cascading, a user with * access will always return a list with a single result. In the case that the user only has access to a subset of resources in a collection, the list will be paginated.
    * @summary Get the resources a user has to permission to.
    * @param {string} userId The user to check permissions on
-   * @param {string} [resourceUri] The top level uri path of a resource to query for. Will only match explicit or collection resource children. Will not partial match resource names.
+   * @param {string} [resourceUri] The top level uri path of a resource to query for. Will only match explicit or collection resource sub-resourceren. Will not partial match resource names.
    * @param {number} [limit] Max number of results to return
    * @param {string} [cursor] Continuation cursor for paging (will automatically be set)
+   * @param {string} [permission] Allow action permission that the user must have to the resource
    * @throws {ArgumentRequiredError}
    */
-  getUserResources(userId: string, resourceUri?: string, limit?: number, cursor?: string): Promise<Response<UserResources>>;
+  getUserResources(userId: string, resourceUri?: string, limit?: number, cursor?: string, permission?: string): Promise<Response<UserResources>>;
   /**
    * <i class=\"far fa-money-bill-alt text-primary\"></i> <span class=\"text-primary\">Billable</span> Get an Authress signed JWT access token using with userId as the sub. Additionally, can be configured to limit the permissions for this particular token and the length of time the token is valid. Token validation is real-time, so deleted tokens are restricted from being used as soon as they are deleted. This gives full control to the user and client creating the token. Client must have access to impersonating the user in order to generate tokens on their behalf.
    * @summary Request a user token with additional configuration
