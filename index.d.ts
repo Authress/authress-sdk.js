@@ -1287,7 +1287,7 @@ export interface UserPermissionsApi {
    * @param {string} [resourceUri] The top level uri path of a resource to query for. Will only match explicit or collection resource sub-resourceren. Will not partial match resource names.
    * @param {number} [limit] Max number of results to return
    * @param {string} [cursor] Continuation cursor for paging (will automatically be set)
-   * @param {string} [permission] Allow action permission that the user must have to the resource
+   * @param {string} [permission] A required ALLOW action to check for. Resources a user does not have this permission will not be returned.
    * @throws {ArgumentRequiredError}
    */
   getUserResources(userId: string, resourceUri?: string, limit?: number, cursor?: string, permission?: string): Promise<Response<UserResources>>;
@@ -1308,7 +1308,7 @@ declare class AuthressClient {
   serviceClients: ServiceClientsApi;
   userPermissions: UserPermissionsApi;
   resources: ResourcesApi;
-  accounts: AccountsApiResourcesApi;
+  accounts: AccountsApi;
   roles: RolesApiResourcesApi;
 
   setToken(jwtToken: string): void;
