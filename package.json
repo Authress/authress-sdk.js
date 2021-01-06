@@ -14,7 +14,7 @@
     "test": "mocha tests/**/*.test.js -R spec"
   },
   "dependencies": {
-    "axios": "^0.19",
+    "axios": "^0.21",
     "jsonwebtoken": "^8.5",
     "jwk-to-pem": "^2.0.4"
   },
