@@ -1,4 +1,6 @@
 const jwtManager = require('jsonwebtoken');
+const { default: JwtSigner } = require('jose/dist/node/cjs/jwt/sign');
+const { createPrivateKey } = require('crypto');
 
 module.exports = function(accessKey) {
   return async () => {
@@ -8,7 +10,18 @@ module.exports = function(accessKey) {
 
     const accessKeyBuffer = Buffer.from(accessKey, 'base64');
     const accessKeyString = accessKeyBuffer.toString('base64') === accessKey ? accessKeyBuffer.toString('utf8') : accessKey;
-    const decodedAccessKey = JSON.parse(accessKeyString.trim());
+    let decodedAccessKey;
+    let alg = 'RS256';
+    try {
+      decodedAccessKey = JSON.parse(accessKeyString.trim());
+    } catch (error) {
+      alg = 'EdDSA';
+      decodedAccessKey = {
+        clientId: accessKey.split('.')[0], keyId: accessKey.split('.')[1],
+        audience: `${accessKey.split('.')[2]}.accounts.authress.io`, privateKey: accessKey.split('.')[3]
+      };
+    }
+
     const now = Math.round(Date.now() / 1000);
     const jwt = {
       aud: decodedAccessKey.audience,
@@ -19,9 +32,16 @@ module.exports = function(accessKey) {
       exp: now + 60 * 60 * 24,
       scope: 'openid'
     };
-    const options = { algorithm: 'RS256', keyid: decodedAccessKey.keyId };
-    const token = await jwtManager.sign(jwt, decodedAccessKey.privateKey, options);
-    this.cachedKeyData = { token, expires: jwt.exp * 1000 };
+
+    if (alg === 'RS256') {
+      const options = { algorithm: 'RS256', keyid: decodedAccessKey.keyId };
+      const token = await jwtManager.sign(jwt, decodedAccessKey.privateKey, options);
+      this.cachedKeyData = { token, expires: jwt.exp * 1000 };
+      return token;
+    }
+
+    const importedKey = createPrivateKey({ key: Buffer.from(decodedAccessKey.privateKey, 'base64'), format: 'der', type: 'pkcs8' });
+    const token = await new JwtSigner(jwt).setProtectedHeader({ alg: 'EdDSA', kid: decodedAccessKey.keyId }).sign(importedKey);
     return token;
   };
 };

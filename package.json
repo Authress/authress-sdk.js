@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "axios": "^0.21",
+    "jose": "^3.6.2",
     "jsonwebtoken": "^8.5",
     "jwk-to-pem": "^2.0.4"
   },
@@ -58,6 +59,6 @@
   },
   "homepage": "https://authress.io",
   "engines": {
-    "node": ">=10.12"
+    "node": ">=11.6"
   }
 }
