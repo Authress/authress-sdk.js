@@ -1,5 +1,5 @@
 const jwtManager = require('jsonwebtoken');
-const { default: JwtSigner } = require('jose/dist/node/cjs/jwt/sign');
+const { default: JwtSigner } = require('jose/jwt/sign');
 const { createPrivateKey } = require('crypto');
 
 module.exports = function(accessKey) {
