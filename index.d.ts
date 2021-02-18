@@ -1281,7 +1281,7 @@ export interface UserPermissionsApi {
    */
   getUserPermissionsForResource(userId: string, resourceUri: string): Promise<Response<UserPermissions>>;
   /**
-   * <i class=\"far fa-money-bill-alt text-primary\"></i> <span class=\"text-primary\">Billable</span> Get the users resources. Get the users resources. This result is a list of resource uris that a user has an explicit permission to, a user with * access to all sub resources will return an empty list and {accessToAllSubResources} will be populated. The list will be paginated.
+   * <i class=\"far fa-money-bill-alt text-primary\"></i> <span class=\"text-primary\">Billable</span> Get the users resources. Get the users resources. This result is a list of resource uris that a user has an explicit permission to, a user with * access to all sub resources will return an empty list and {accessToAllSubResources} will be populated. To get a user's list of resources in these cases, it is recommended to also check explicit access to the collection resource, using the authorizeUser endpoint. In the case that the user only has access to a subset of resources in a collection, the list will be paginated.
    * @summary Get the resources a user has to permission to.
    * @param {string} userId The user to check permissions on
    * @param {string} [resourceUri] The top level uri path of a resource to query for. Will only match explicit or collection resource sub-resources. Will not partial match resource names.
