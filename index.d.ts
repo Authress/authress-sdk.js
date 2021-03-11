@@ -46,34 +46,34 @@ export interface AccessRecord {
   status?: AccessRecord.StatusEnum;
   /**
    *
-   * @type {V1recordsAccount}
+   * @type {AccountLink}
    * @memberof AccessRecord
    */
-  account: V1recordsAccount;
+  account?: AccountLink;
   /**
    * The list of users this record applies to
-   * @type {Array<V1recordsUsers>}
+   * @type {Array<User>}
    * @memberof AccessRecord
    */
-  users: Array<V1recordsUsers>;
+  users: Array<User>;
   /**
    * The list of admin that can edit this record even if they do not have global record edit permissions. By default the creator of the record has admin access unless explicitly this property is set.
-   * @type {Array<V1recordsUsers>}
+   * @type {Array<User>}
    * @memberof AccessRecord
    */
-  admins?: Array<V1recordsUsers>;
+  admins?: Array<User>;
   /**
    * A list of statements which match roles to resources. Users in this record have all statements apply to them
-   * @type {Array<V1usersuserIdtokensStatements>}
+   * @type {Array<Statement>}
    * @memberof AccessRecord
    */
-  statements: Array<V1usersuserIdtokensStatements>;
+  statements: Array<Statement>;
   /**
    *
-   * @type {V1recordsLinks}
+   * @type {Links}
    * @memberof AccessRecord
    */
-  links: V1recordsLinks;
+  links?: Links;
 }
 
 /**
@@ -104,10 +104,10 @@ export interface AccessRecordCollection {
     records: Array<AccessRecord>;
     /**
      *
-     * @type {ResourcePermissionCollectionLinks}
+     * @type {CollectionLinks}
      * @memberof AccessRecordCollection
      */
-    links: ResourcePermissionCollectionLinks;
+    links: CollectionLinks;
 }
 
 /**
@@ -127,7 +127,7 @@ export interface Account {
      * @type {Date}
      * @memberof Account
      */
-    createdTime: Date;
+    createdTime?: Date;
     /**
      * The top authress sub domain specific for this account to be used with this API.
      * @type {string}
@@ -142,10 +142,10 @@ export interface Account {
     company: Record<string, unknown>;
     /**
      *
-     * @type {V1recordsLinks}
+     * @type {Links}
      * @memberof Account
      */
-    links: V1recordsLinks;
+    links?: Links;
 }
 /**
  *
@@ -300,10 +300,10 @@ export interface IdentityRequest {
 export interface UserResources {
     /**
      *
-     * @type {V1usersuserIdresourcesresourceUrimetadataAccount}
+     * @type {AccountLink}
      * @memberof UserResources
      */
-    account?: V1usersuserIdresourcesresourceUrimetadataAccount;
+    account?: AccountLink;
     /**
      *
      * @type {string}
@@ -324,10 +324,10 @@ export interface UserResources {
     accessToAllSubResources?: boolean;
     /**
      *
-     * @type {ResourcePermissionCollectionLinks}
+     * @type {CollectionLinks}
      * @memberof UserResources
      */
-    links: ResourcePermissionCollectionLinks;
+    links?: CollectionLinks;
 }
 
 /**
@@ -344,10 +344,10 @@ export interface ServiceClientCollection {
     clients: Array<ServiceClient>;
     /**
      *
-     * @type {ResourcePermissionCollectionLinks}
+     * @type {CollectionLinks}
      * @memberof ServiceClientCollection
      */
-    links: ResourcePermissionCollectionLinks;
+    links: CollectionLinks;
 }
 /**
  * A client configuration.
@@ -366,7 +366,7 @@ export interface ServiceClient {
      * @type {Date}
      * @memberof ServiceClient
      */
-    createdTime: Date;
+    createdTime?: Date;
     /**
      * The name of the client
      * @type {string}
@@ -375,10 +375,10 @@ export interface ServiceClient {
     name?: string;
     /**
      *
-     * @type {V1clientsOptions}
+     * @type {ServiceClientOptions}
      * @memberof ServiceClient
      */
-    options?: V1clientsOptions;
+    options?: ServiceClientOptions;
 }
 /**
  * A client configuration.
@@ -419,10 +419,10 @@ export interface AccessKeyResponse {
 export interface UserPermissions {
     /**
      *
-     * @type {V1usersuserIdresourcesresourceUrimetadataAccount}
+     * @type {AccountLink}
      * @memberof UserPermissions
      */
-    account?: V1usersuserIdresourcesresourceUrimetadataAccount;
+    account?: AccountLink;
     /**
      *
      * @type {string}
@@ -444,10 +444,10 @@ export interface UserPermissions {
 export interface UserToken {
     /**
      *
-     * @type {V1usersuserIdresourcesresourceUrimetadataAccount}
+     * @type {AccountLink}
      * @memberof UserToken
      */
-    account?: V1usersuserIdresourcesresourceUrimetadataAccount;
+    account?: AccountLink;
     /**
      *
      * @type {string}
@@ -468,10 +468,10 @@ export interface UserToken {
     token: string;
     /**
      *
-     * @type {UserTokenLinks}
+     * @type {Links}
      * @memberof UserToken
      */
-    links?: UserTokenLinks;
+    links?: Links;
 }
 
 /**
@@ -503,10 +503,10 @@ export interface ResourceUsersCollection {
 
   /**
    *
-   * @type {ResourcePermissionCollectionLinks}
+   * @type {CollectionLinks}
    * @memberof ResourceUsersCollection
    */
-  links: ResourcePermissionCollectionLinks;
+  links: CollectionLinks;
 }
 
 /**
@@ -582,10 +582,10 @@ export interface Link {
 export interface MetadataObject {
     /**
      *
-     * @type {V1usersuserIdresourcesresourceUrimetadataAccount}
+     * @type {AccountLink}
      * @memberof MetadataObject
      */
-    account?: V1usersuserIdresourcesresourceUrimetadataAccount;
+    account?: AccountLink;
     /**
      *
      * @type {string}
@@ -638,10 +638,10 @@ export interface PermissionObject {
 export interface PermissionResponse {
     /**
      *
-     * @type {V1usersuserIdresourcesresourceUrimetadataAccount}
+     * @type {AccountLink}
      * @memberof PermissionResponse
      */
-    account?: V1usersuserIdresourcesresourceUrimetadataAccount;
+    account?: AccountLink;
     /**
      *
      * @type {string}
@@ -682,69 +682,31 @@ export interface ResourcePermissionCollection {
     resources: Array<ResourcePermission>;
     /**
      *
-     * @type {ResourcePermissionCollectionLinks}
+     * @type {CollectionLinks}
      * @memberof ResourcePermissionCollection
      */
-    links: ResourcePermissionCollectionLinks;
+    links: CollectionLinks;
 }
 /**
  *
  * @export
- * @interface ResourcePermissionCollectionLinks
+ * @interface CollectionLinks
  */
-export interface ResourcePermissionCollectionLinks {
+export interface CollectionLinks {
     /**
      *
-     * @type {V1recordsLinksSelf}
-     * @memberof ResourcePermissionCollectionLinks
+     * @type {Link}
+     * @memberof CollectionLinks
      */
-    self: V1recordsLinksSelf;
+    self: Link;
     /**
      *
-     * @type {ResourcePermissionCollectionLinksNext}
-     * @memberof ResourcePermissionCollectionLinks
+     * @type {Link}
+     * @memberof CollectionLinks
      */
-    next?: ResourcePermissionCollectionLinksNext;
-}
-/**
- * A link pointing to the next page in the collection if it exists. If there is no next page this property will not exist.
- * @export
- * @interface ResourcePermissionCollectionLinksNext
- */
-export interface ResourcePermissionCollectionLinksNext {
-    /**
-     * The absolute url pointing to the reference resource.
-     * @type {string}
-     * @memberof ResourcePermissionCollectionLinksNext
-     */
-    href: string;
-    /**
-     * Optional property indicating the type of link if it is not a default IANA approved global link relation.
-     * @type {string}
-     * @memberof ResourcePermissionCollectionLinksNext
-     */
-    rel?: string;
+    next?: Link;
 }
 
-/**
- *
- * @export
- * @interface Statement
- */
-export interface Statement {
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof Statement
-     */
-    roles: Array<string>;
-    /**
-     *
-     * @type {Array<V1usersuserIdtokensResources>}
-     * @memberof Statement
-     */
-    resources: Array<V1usersuserIdtokensResources>;
-}
 /**
  *
  * @export
@@ -753,10 +715,10 @@ export interface Statement {
 export interface TokenRequest {
     /**
      * A list of statements which match roles to resources. The token will have all statements apply to it.
-     * @type {Array<V1usersuserIdtokensStatements>}
+     * @type {Array<Statement>}
      * @memberof TokenRequest
      */
-    statements: Array<V1usersuserIdtokensStatements>;
+    statements: Array<Statement>;
     /**
      * The ISO8601 datetime when the token will expire. Default is 24 hours from now.
      * @type {Date}
@@ -785,10 +747,10 @@ export interface UserResourcesResources {
 export interface UserToken {
   /**
    *
-   * @type {V1usersuserIdresourcesresourceUrimetadataAccount}
+   * @type {AccountLink}
    * @memberof UserToken
    */
-  account?: V1usersuserIdresourcesresourceUrimetadataAccount;
+  account?: AccountLink;
   /**
    *
    * @type {string}
@@ -809,120 +771,56 @@ export interface UserToken {
   token: string;
   /**
    *
-   * @type {UserTokenLinks}
+   * @type {Links}
    * @memberof UserToken
    */
-  links?: UserTokenLinks;
+  links?: Links;
 }
-/**
- *
- * @export
- * @interface UserTokenLinks
- */
-export interface UserTokenLinks {
-    /**
-     *
-     * @type {UserTokenLinksSelf}
-     * @memberof UserTokenLinks
-     */
-    self: UserTokenLinksSelf;
-}
-/**
- * A self link pointing to this token to be able to disable it or get its current configuration.
- * @export
- * @interface UserTokenLinksSelf
- */
-export interface UserTokenLinksSelf {
-    /**
-     * The absolute url pointing to the reference resource.
-     * @type {string}
-     * @memberof UserTokenLinksSelf
-     */
-    href: string;
-    /**
-     * Optional property indicating the type of link if it is not a default IANA approved global link relation.
-     * @type {string}
-     * @memberof UserTokenLinksSelf
-     */
-    rel?: string;
-}
+
 /**
  * A map of client specific options
  * @export
- * @interface V1clientsOptions
+ * @interface ServiceClientOptions
  */
-export interface V1clientsOptions {
+export interface ServiceClientOptions {
     /**
      * Grant the client access to verify authorization on behalf of any user.
      * @type {boolean}
-     * @memberof V1clientsOptions
+     * @memberof ServiceClientOptions
      */
     grantUserPermissionsAccess?: boolean;
     /**
      * Grant the client access to read and write user data on behalf of any user
      * @type {boolean}
-     * @memberof V1clientsOptions
+     * @memberof ServiceClientOptions
      */
     grantMetadataAccess?: boolean;
 }
-/**
- *
- * @export
- * @interface V1recordsAccount
- */
-export interface V1recordsAccount {
-    /**
-     *
-     * @type {string}
-     * @memberof V1recordsAccount
-     */
-    accountId: string;
-}
 
 /**
  *
  * @export
- * @interface V1recordsLinks
+ * @interface Links
  */
-export interface V1recordsLinks {
+export interface Links {
   /**
    *
-   * @type {V1recordsLinksSelf}
-   * @memberof V1recordsLinks
+   * @type {Link}
+   * @memberof Links
    */
-  self: V1recordsLinksSelf;
-}
-
-/**
- * A self link pointing to this request url
- * @export
- * @interface V1recordsLinksSelf
- */
-export interface V1recordsLinksSelf {
-  /**
-   * The absolute url pointing to the reference resource.
-   * @type {string}
-   * @memberof V1recordsLinksSelf
-   */
-  href: string;
-  /**
-   * Optional property indicating the type of link if it is not a default IANA approved global link relation.
-   * @type {string}
-   * @memberof V1recordsLinksSelf
-   */
-  rel?: string;
+  self: Link;
 }
 
 /**
  *
  * @export
- * @interface V1recordsUsers
+ * @interface User
  */
-export interface V1recordsUsers {
+export interface User {
   /**
    *
    * @type {string}
-   * @memberof V1recordsUsers
+   * @memberof User
    */
   userId: string;
 }
@@ -965,13 +863,13 @@ export namespace ResourcePermissionsObject {
 /**
  *
  * @export
- * @interface V1usersuserIdresourcesresourceUrimetadataAccount
+ * @interface AccountLink
  */
-export interface V1usersuserIdresourcesresourceUrimetadataAccount {
+export interface AccountLink {
   /**
    *
    * @type {string}
-   * @memberof V1usersuserIdresourcesresourceUrimetadataAccount
+   * @memberof AccountLink
    */
   accountId?: string;
 }
@@ -979,13 +877,13 @@ export interface V1usersuserIdresourcesresourceUrimetadataAccount {
 /**
  *
  * @export
- * @interface V1usersuserIdtokensResources
+ * @interface Resource
  */
-export interface V1usersuserIdtokensResources {
+export interface Resource {
   /**
    * A resource path which can be top level, fully qualified, or end with a *. Parent resources imply permissions to sub-resources.
    * @type {string}
-   * @memberof V1usersuserIdtokensResources
+   * @memberof Resource
    */
   resourceUri: string;
 }
@@ -993,21 +891,21 @@ export interface V1usersuserIdtokensResources {
 /**
  *
  * @export
- * @interface V1usersuserIdtokensStatements
+ * @interface Statement
  */
-export interface V1usersuserIdtokensStatements {
+export interface Statement {
   /**
    *
    * @type {Array<string>}
-   * @memberof V1usersuserIdtokensStatements
+   * @memberof Statement
    */
   roles: Array<string>;
   /**
    *
-   * @type {Array<V1usersuserIdtokensResources>}
-   * @memberof V1usersuserIdtokensStatements
+   * @type {Array<Resource>}
+   * @memberof Statement
    */
-  resources: Array<V1usersuserIdtokensResources>;
+  resources: Array<Resource>;
 }
 
 /**
