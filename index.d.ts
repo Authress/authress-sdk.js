@@ -520,7 +520,7 @@ export interface User {
    * @type {string}
    * @memberof User
    */
-  usrId: string;
+  userId: string;
 }
 
 /**
