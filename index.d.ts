@@ -909,6 +909,39 @@ export interface Statement {
 }
 
 /**
+ *
+ * @export
+ * @interface UserRoleCollection
+ */
+export interface UserRoleCollection {
+  /**
+   * @type {string}
+   * @memberof UserRoleCollection
+   */
+  userId: string;
+  /**
+   * A list of the attached user roles
+   * @type {Array<UserRole>}
+   * @memberof UserRoleCollection
+   */
+  roles: Array<UserRole>;
+}
+
+/**
+ *
+ * @export
+ * @interface UserRole
+ */
+export interface UserRole {
+  /**
+   * The identifier of the role.
+   * @type {string}
+   * @memberof UserRole
+   */
+  roleId: string;
+}
+
+/**
  * AccessRecordsApi
  * @export
  */
@@ -1179,6 +1212,14 @@ export interface UserPermissionsApi {
    */
   getUserPermissionsForResource(userId: string, resourceUri: string): Promise<Response<UserPermissions>>;
   /**
+   * <i class="far fa-money-bill-alt text-primary"></i> <span class="text-primary">Billable</span> Get a summary of the roles a user has to a particular resource. Users can be assigned roles from multiple access records, this may cause the same role to appear in the list more than once.<br><span class="badge badge-outline-secondary">READ: Authress:UserPermissions/{userId}</span>
+   * @summary Get the roles a user has to a resource.
+   * @param {string} userId The user to get roles for.
+   * @param {string} resourceUri The uri path of a resource to get roles for, must be URL encoded. Checks for explicit resource roles, roles attached to parent resources are not returned.
+   * @throws {ArgumentRequiredError}
+   */
+   getUserRolesForResource(userId: string, resourceUri: string): Promise<Response<UserRoleCollection>>;
+  /**
    * <i class=\"far fa-money-bill-alt text-primary\"></i> <span class=\"text-primary\">Billable</span> Get the users resources. Get the users resources. This result is a list of resource uris that a user has an explicit permission to, a user with * access to all sub resources will return an empty list and {accessToAllSubResources} will be populated. To get a user's list of resources in these cases, it is recommended to also check explicit access to the collection resource, using the authorizeUser endpoint. In the case that the user only has access to a subset of resources in a collection, the list will be paginated.
    * @summary Get the resources a user has to permission to.
    * @param {string} userId The user to check permissions on
@@ -1206,9 +1247,10 @@ export interface UserPermissionsApi {
  */
 export class AuthressClient {
   /**
+   * @constructor
    * @summary Creates an instance of the Authress client.
    * @param {AuthressSettings} settings The authress settings
-   * @param {Function<string>?} tokenProvider An optional {ServiceClientTokenProvider} which is used to generate an Authress client with the service clients permissions.
+   * @param {Function<string>} [tokenProvider] An optional {@link ServiceClientTokenProvider} which is used to generate an Authress client with the service clients permissions.
    */
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   constructor(settings: AuthressSettings, tokenProvider: () => string);
@@ -1264,6 +1306,7 @@ export class AuthressClient {
 */
 export class ServiceClientTokenProvider {
   /**
+   * @constructor
    * @summary Create an instance of the service client token provider. Used to call the Authress API, when the user's token does not contain the necessary permissions.
    * @param {string} accessKey The service client access key, can be generated from https://authress.io/app/#/manage?focus=clients
    */
