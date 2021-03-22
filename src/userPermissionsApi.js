@@ -72,6 +72,21 @@ class UserPermissionsApi {
     return response;
   }
 
+  async getUserRolesForResource(userId, resourceUri) {
+    let tokenUserId = userId;
+    if (userId === null || userId === undefined) {
+      tokenUserId = await getFallbackUser(this.client);
+    }
+    // verify required parameter 'resourceUri' is not null or undefined
+    if (resourceUri === null || resourceUri === undefined) {
+      throw new ArgumentRequiredError('resourceUri', 'Required parameter resourceUri was null or undefined when calling getUserRolesForResource.');
+    }
+
+    const url = `/v1/users/${encodeURIComponent(String(tokenUserId))}/resources/${encodeURIComponent(String(resourceUri))}/roles`;
+    const response = await this.client.get(url);
+    return response;
+  }
+
   async getUserResources(userId, resourceUri, limit, cursor, permission) {
     // verify required parameter 'userId' is not null or undefined
     let tokenUserId = userId;
