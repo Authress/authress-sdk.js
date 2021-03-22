@@ -69,6 +69,12 @@ export interface AccessRecord {
    */
   statements: Array<Statement>;
   /**
+   * The ISO8601 expected datetime of the last time an update to the record occurred.
+   * @type {string}
+   * @memberof AccessRecord
+   */
+  lastUpdated: string;
+  /**
    *
    * @type {Links}
    * @memberof AccessRecord
@@ -989,9 +995,10 @@ export interface AccessRecordsApi {
    * @summary Update an access record.
    * @param {string} recordId The identifier of the access record.
    * @param {AccessRecord} body
+   * @param {Date|string} expectedLastModifiedTime The expected last time that the access record was updated. Provide this value using the {@link AccessRecord.lastUpdated} time to prevent overwriting previous updates.
    * @throws {ArgumentRequiredError}
    */
-  updateRecord(recordId: string, body: AccessRecord): Promise<Response<AccessRecord>>;
+  updateRecord(recordId: string, body: AccessRecord, expectedLastModifiedTime?: Date): Promise<Response<AccessRecord>>;
 }
 
 /**

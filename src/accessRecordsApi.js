@@ -55,7 +55,7 @@ class AccessRecordsApi {
     return response;
   }
 
-  async updateRecord(recordId, body) {
+  async updateRecord(recordId, body, expectedLastModifiedTime) {
     // verify required parameter 'body' is not null or undefined
     if (body === null || body === undefined) {
       throw new ArgumentRequiredError('body', 'Required parameter body was null or undefined when calling updateRecord.');
@@ -66,7 +66,11 @@ class AccessRecordsApi {
       throw new ArgumentRequiredError('recordId', 'Required parameter recordId was null or undefined when calling updateRecord.');
     }
 
-    const response = await this.client.put(`/v1/records/${encodeURIComponent(String(recordId))}`, body);
+    const headers = {};
+    if (expectedLastModifiedTime) {
+      headers['If-Unmodified-Since'] = typeof expectedLastModifiedTime === 'string' ? expectedLastModifiedTime : expectedLastModifiedTime.toUTCString();
+    }
+    const response = await this.client.put(`/v1/records/${encodeURIComponent(String(recordId))}`, body, headers);
     return response;
   }
 }
