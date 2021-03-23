@@ -502,10 +502,10 @@ export interface ResourcePermissionsCollection {
 export interface ResourceUsersCollection {
   /**
    *
-   * @type {Array<User>}
+   * @type {Array<UserRoleCollection>}
    * @memberof ResourceUsersCollection
    */
-  users: Array<User>;
+  users: Array<UserRoleCollection>;
 
   /**
    *
