@@ -1260,9 +1260,9 @@ isexe@^2.0.0:
   integrity sha1-6PvzdNxVb/iUehDcsFctYz8s+hA=
 
 jose@^3.6.2:
-  version "3.6.2"
-  resolved "https://registry.yarnpkg.com/jose/-/jose-3.6.2.tgz#e35ebe187306c14a0633b33b277a1550a3a947ee"
-  integrity sha512-JzqHr6UqydWv25HwLzRdBJgMetiPkDBE/WJSyJjhNwN3+GmcHu4yoUgRle0NNViCdfAYMf9DuOG8o+mUW/DXdg==
+  version "3.11.4"
+  resolved "https://registry.yarnpkg.com/jose/-/jose-3.11.4.tgz#e3e9c3c66ecfe5f758799248857ac02877f06405"
+  integrity sha512-nYUGe7axercxj4O5amg7iDFMpfh2yJ15Gz+U1CrgCrRvmHzzYHUwSzTFsF5bj9xSvl6/d0GC8hPTALyhjQofDA==
 
 js-tokens@^4.0.0:
   version "4.0.0"
