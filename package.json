@@ -51,7 +51,12 @@
     "Authress client",
     "access management",
     "access management as a service",
-    "user security"
+    "user security",
+    "oso",
+    "polar",
+    "open source policy engine",
+    "embedded authorization",
+    "batteries included authorization"
   ],
   "author": "Authress Developers <developers@authress.io> (https://authress.io)",
   "license": "Apache-2.0",
