@@ -63,6 +63,12 @@ export interface AccessRecord {
    */
   admins?: Array<User>;
   /**
+  * The list of groups this record applies to. Users in these groups will be receive access to the resources listed.
+  * @type {Array<LinkedGroup>}
+  * @memberof AccessRecord
+  */
+  groups?: Array<LinkedGroup>;
+  /**
    * A list of statements which match roles to resources. Users in this record have all statements apply to them
    * @type {Array<Statement>}
    * @memberof AccessRecord
@@ -80,6 +86,19 @@ export interface AccessRecord {
    * @memberof AccessRecord
    */
   links?: Links;
+}
+
+/**
+ *
+ * @export
+ * @interface LinkedGroup
+ */
+export interface LinkedGroup {
+  /**
+   * @type {string}
+   * @memberof LinkedGroup
+   */
+  groupId: string;
 }
 
 /**
