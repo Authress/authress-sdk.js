@@ -1,5 +1,5 @@
 const { URL, URLSearchParams } = require('url');
-const jwtManager = require('jsonwebtoken');
+const jwtManager = require('./jwtManager');
 
 const ArgumentRequiredError = require('./argumentRequiredError');
 const UnauthorizedError = require('./unauthorizedError');

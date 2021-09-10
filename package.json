@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "axios": "^0.21",
+    "base64url": "^3.0.1",
     "jose": "^3.6.2",
     "jsonwebtoken": "^8.5",
     "jwk-to-pem": "^2.0.4"
