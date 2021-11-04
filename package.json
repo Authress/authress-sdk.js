@@ -25,6 +25,7 @@
     "@typescript-eslint/parser": "^3.1.0",
     "chai": "^4.2.0",
     "check-dts": "^0.4.4",
+    "ci-build-tools": "^1.0.13",
     "commander": "^4.0.1",
     "eslint": "^7.2.0",
     "eslint-config-cimpress-atsquad": "^1.0.67",

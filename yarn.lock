@@ -427,6 +427,13 @@ chokidar@3.3.0:
   optionalDependencies:
     fsevents "~2.1.1"
 
+ci-build-tools@^1.0.13:
+  version "1.0.13"
+  resolved "https://registry.yarnpkg.com/ci-build-tools/-/ci-build-tools-1.0.13.tgz#5c63e99d088a3052e06c2a07ebede586bd14cffc"
+  integrity sha1-XGPpnQiKMFLgbCoH6+3lhr0Uz/w=
+  dependencies:
+    semver "^5.0.3"
+
 ci-job-number@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/ci-job-number/-/ci-job-number-1.2.2.tgz#f4e5918fcaeeda95b604f214be7d7d4a961fe0c0"
