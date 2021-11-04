@@ -6,3 +6,4 @@ This is the changelog for [Authress SDK](readme.md).
 * Added `getUserRolesForResource` for access to user roles on a resource.
 * Add `Last-Modified` and `If-Unmodified-Since` support to access record updates.
 * Add `Groups` to `AccessRecords`
+* Add `ConnectionsApi` to fetch user credentials for a specific connection

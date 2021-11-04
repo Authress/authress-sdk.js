@@ -3,8 +3,8 @@ const { default: JwtSigner } = require('jose/jwt/sign');
 const { createPrivateKey } = require('crypto');
 
 module.exports = function(accessKey) {
-  return async () => {
-    if (this.cachedKeyData && this.cachedKeyData.token && this.cachedKeyData.expires > Date.now() + 3600000) {
+  const innerGetToken = async (overrideUserId, expOffset) => {
+    if (!overrideUserId && this.cachedKeyData && this.cachedKeyData.token && this.cachedKeyData.expires > Date.now() + 3600000) {
       return this.cachedKeyData.token;
     }
 
@@ -26,22 +26,31 @@ module.exports = function(accessKey) {
     const jwt = {
       aud: decodedAccessKey.audience,
       iss: `https://api.authress.io/v1/clients/${encodeURIComponent(decodedAccessKey.clientId)}`,
-      sub: decodedAccessKey.clientId,
+      sub: overrideUserId || decodedAccessKey.clientId,
       iat: now,
       // valid for 24 hours
-      exp: now + 60 * 60 * 24,
+      exp: now + (expOffset || 60 * 60 * 24),
       scope: 'openid'
     };
 
     if (alg === 'RS256') {
       const options = { algorithm: 'RS256', keyid: decodedAccessKey.keyId };
       const token = await jwtManager.sign(jwt, decodedAccessKey.privateKey, options);
-      this.cachedKeyData = { token, expires: jwt.exp * 1000 };
+      if (!overrideUserId) {
+        this.cachedKeyData = { token, expires: jwt.exp * 1000 };
+      }
       return token;
     }
 
     const importedKey = createPrivateKey({ key: Buffer.from(decodedAccessKey.privateKey, 'base64'), format: 'der', type: 'pkcs8' });
     const token = await new JwtSigner(jwt).setProtectedHeader({ alg: 'EdDSA', kid: decodedAccessKey.keyId }).sign(importedKey);
+    if (!overrideUserId) {
+      this.cachedKeyData = { token, expires: jwt.exp * 1000 };
+    }
     return token;
   };
+
+  innerGetToken.getToken = innerGetToken;
+  innerGetToken.createAuthorizationCode = userId => innerGetToken(userId, 60);
+  return innerGetToken;
 };
