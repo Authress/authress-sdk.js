@@ -1150,6 +1150,35 @@ export interface RolesApi {
 }
 
 /**
+ * The user credentials for this connection which can be used to access the connection provider APIs.
+ * @export
+ * @interface UserConnectionCredentials
+ */
+export interface UserConnectionCredentials {
+  /**
+   * The access token.
+   * @type {string}
+   * @memberof UserConnectionCredentials
+   */
+  accessToken: string;
+}
+
+/**
+ * ConnectionsApi
+ * @export
+ */
+export interface ConnectionsApi {
+  /**
+   * Get the credentials for the user that were generated as part of the latest user login flow. Returns an access token that can be used with originating connection provider, based on the original scopes and approved permissions by that service.
+   * @summary Get the user credentials for this connection.
+   * @param {string} connectionId The connection to get the stored credentials.
+   * @param {string} [userId] The user to get the stored credentials, if not specified will automatically be populated by the token specified in the request to Authress.
+   * @throws {ArgumentRequiredError}
+   */
+   getConnectionCredentials(connectionId: string, userId?: string): Promise<Response<UserConnectionCredentials>>;
+}
+
+/**
  * ServiceClientsApi
  * @export
  */
@@ -1224,46 +1253,46 @@ export interface UserPermissionsApi {
   /**
    * <i class=\"far fa-money-bill-alt text-primary\"></i> <span class=\"text-primary\">Billable</span> Permanently disable a token. To be used after the token has completed its use. Should be called on all tokens to ensure they are not active indefinitely.
    * @summary Disable a token
-   * @param {string} userId The user to create an impersonation token for.
+   * @param {string} [userId] The user to create an impersonation token for.
    * @param {string} tokenId The relevant token identifier
    * @throws {ArgumentRequiredError}
    */
-  disableUserToken(userId: string, tokenId: string): Promise<Response<void>>;
+  disableUserToken(userId?: string, tokenId: string): Promise<Response<void>>;
   /**
    * <i class=\"far fa-money-bill-alt text-primary\"></i> <span class=\"text-primary\">Billable</span> Get a summary of the permissions a user has to a particular resource.
    * @summary Get the permissions a user has to a resource.
-   * @param {string} userId The user to check permissions on
+   * @param {string} [userId] The user to check permissions on
    * @param {string} resourceUri The uri path of a resource to validate, must be URL encoded, uri segments are allowed.
    * @throws {ArgumentRequiredError}
    */
-  getUserPermissionsForResource(userId: string, resourceUri: string): Promise<Response<UserPermissions>>;
+  getUserPermissionsForResource(userId?: string, resourceUri: string): Promise<Response<UserPermissions>>;
   /**
    * <i class="far fa-money-bill-alt text-primary"></i> <span class="text-primary">Billable</span> Get a summary of the roles a user has to a particular resource. Users can be assigned roles from multiple access records, this may cause the same role to appear in the list more than once.<br><span class="badge badge-outline-secondary">READ: Authress:UserPermissions/{userId}</span>
    * @summary Get the roles a user has to a resource.
-   * @param {string} userId The user to get roles for.
+   * @param {string} [userId] The user to get roles for.
    * @param {string} resourceUri The uri path of a resource to get roles for, must be URL encoded. Checks for explicit resource roles, roles attached to parent resources are not returned.
    * @throws {ArgumentRequiredError}
    */
-   getUserRolesForResource(userId: string, resourceUri: string): Promise<Response<UserRoleCollection>>;
+   getUserRolesForResource(userId?: string, resourceUri: string): Promise<Response<UserRoleCollection>>;
   /**
    * <i class=\"far fa-money-bill-alt text-primary\"></i> <span class=\"text-primary\">Billable</span> Get the users resources. Get the users resources. This result is a list of resource uris that a user has an explicit permission to, a user with * access to all sub resources will return an empty list and {accessToAllSubResources} will be populated. To get a user's list of resources in these cases, it is recommended to also check explicit access to the collection resource, using the authorizeUser endpoint. In the case that the user only has access to a subset of resources in a collection, the list will be paginated.
    * @summary Get the resources a user has to permission to.
-   * @param {string} userId The user to check permissions on
+   * @param {string} [userId] The user to check permissions on
    * @param {string} [resourceUri] The top level uri path of a resource to query for. Will only match explicit or collection resource sub-resources. Will not partial match resource names.
    * @param {number} [limit] Max number of results to return
    * @param {string} [cursor] Continuation cursor for paging (will automatically be set)
    * @param {string} [permission] A required ALLOW action to check for. Resources a user does not have this permission will not be returned.
    * @throws {ArgumentRequiredError}
    */
-  getUserResources(userId: string, resourceUri?: string, limit?: number, cursor?: string, permission?: string): Promise<Response<UserResources>>;
+  getUserResources(userId?: string, resourceUri?: string, limit?: number, cursor?: string, permission?: string): Promise<Response<UserResources>>;
   /**
    * <i class=\"far fa-money-bill-alt text-primary\"></i> <span class=\"text-primary\">Billable</span> Get an Authress signed JWT access token using with userId as the sub. Additionally, can be configured to limit the permissions for this particular token and the length of time the token is valid. Token validation is real-time, so deleted tokens are restricted from being used as soon as they are deleted. This gives full control to the user and client creating the token. Client must have access to impersonating the user in order to generate tokens on their behalf.
    * @summary Request a user token with additional configuration
-   * @param {string} userId The user to create an impersonation token for.
+   * @param {string} [userId] The user to create an impersonation token for.
    * @param {TokenRequest} body The contents of the permission to set on the token. Will be used instead of the users or clients full permissions. Cannot include permissions that the user or client do not have.
    * @throws {ArgumentRequiredError}
    */
-  requestUserToken(userId: string, body: TokenRequest): Promise<Response<UserToken>>;
+  requestUserToken(userId?: string, body: TokenRequest): Promise<Response<UserToken>>;
 }
 
 /**
@@ -1294,28 +1323,34 @@ export class AuthressClient {
   serviceClients: ServiceClientsApi;
 
   /**
-   * @summary The UserPermissionsApi api
+   * @summary The UserPermissions api
    * @type {UserPermissionsApi}
    */
   userPermissions: UserPermissionsApi;
 
   /**
-   * @summary The ResourcesApi api
+   * @summary The Resources api
    * @type {ResourcesApi}
    */
   resources: ResourcesApi;
 
   /**
-   * @summary The AccountsApi api
+   * @summary The Accounts api
    * @type {AccountsApi}
    */
   accounts: AccountsApi;
 
   /**
-   * @summary The RolesApi api
+   * @summary The Roles api
    * @type {RolesApi}
    */
   roles: RolesApi;
+
+  /**
+   * @summary The Connections api
+   * @type {ConnectionsApi}
+   */
+  connections: ConnectionsApi;
 
   /**
    * @summary Set the users token here, so that requests made with this Authress Client will have the user's permissions

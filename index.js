@@ -5,6 +5,7 @@ const ServiceClientsApi = require('./src/serviceClientsApi');
 const ResourcesApi = require('./src/resourcesApi');
 const AccountsApi = require('./src/accountsApi');
 const RolesApi = require('./src/rolesApi');
+const ConnectionsApi = require('./src/connectionsApi');
 
 class AuthressClient {
   constructor(settings, tokenProvider) {
@@ -18,6 +19,7 @@ class AuthressClient {
     this.resources = new ResourcesApi(this.httpClient);
     this.accounts = new AccountsApi(this.httpClient);
     this.roles = new RolesApi(this.httpClient);
+    this.connections = new ConnectionsApi(this.httpClient);
   }
 
   setToken(token) {
