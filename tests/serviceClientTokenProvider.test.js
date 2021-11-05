@@ -38,13 +38,13 @@ describe('serviceClientTokenProvider.js', () => {
     });
   });
 
-  describe('createAuthorizationCode()', () => {
+  describe('generateUserLoginUrl()', () => {
     it('Validate cache tokens work', async () => {
-      const accessKey = 'SC|uEsXtFNjUbf1LEgAGeUhC3.uDeF.a43706ca-9647-40e4-aeae-7dcaa54bbab3.MC4CAQAwBQYDK2VwBCIEIE99LFw2c3DCiYwrY/Qkg1nIDiagoHtdCwb88RxarVYA';
+      const accessKey = 'clientId.uDeF.a43706ca-9647-40e4-aeae-7dcaa54bbab3.MC4CAQAwBQYDK2VwBCIEIE99LFw2c3DCiYwrY/Qkg1nIDiagoHtdCwb88RxarVYA';
       const tokenProvider = new ServiceClientTokenProvider(accessKey);
-      const initialToken = await tokenProvider.createAuthorizationCode('user1');
+      const initialToken = await tokenProvider.generateUserLoginUrl('https://redirect-url.com', 'state', 'clientId', 'user1');
       await new Promise(resolve => setTimeout(resolve, 1500));
-      const secondToken = await tokenProvider.createAuthorizationCode('user1');
+      const secondToken = await tokenProvider.generateUserLoginUrl('https://redirect-url.com', 'state', 'clientId', 'user1');
       expect(secondToken).to.not.eql(initialToken);
     });
   });

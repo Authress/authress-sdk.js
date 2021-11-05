@@ -1386,11 +1386,15 @@ export class ServiceClientTokenProvider {
   getToken(): Promise<string>;
 
   /**
-   * @summary Create an Authress auth code assertion to exchange with the Authress identity API to generate a JWT for the user
-   * @type {Function<Promise<void>>}
-   * @param {string} userId The user to generate a JWT for.
+   * Generate the url to redirect the user back to your application from your authentication server after their credentials have been successfully verified. All these parameters should be found passed through from the user's login attempt along with their credentials. The authentication server receives a request from the user to login, with these values. Then these are constructed and sent back to Authress to verify the generated login data.
+   * @summary Generate the url to redirect the user back to your application from your authentication server after their credentials have been successfully verified.
+   * @type {Function<Promise<string>>}
+   * @param {string} redirectUrl The url sent with the request for the user to login, this should match the Authress custom domain: https://authress.io/app/#/setup?focus=domain.
+   * @param {string} state The state parameter sent to the authentication server.
+   * @param {string} clientId The clientId parameter sent to the authentication server. This will be validated against the client's credentials specified in the {@link ServiceClientTokenProvider}
+   * @param {string} userId The user to request a JWT for.
    */
-  createAuthorizationCode(userId: string): Promise<string>;
+  generateUserLoginUrl(redirectUrl: string, state: string, clientId: string, userId: string): Promise<string>;
 }
 
 /**
