@@ -43,7 +43,7 @@ api.use((error, req, res, next) => {
 /** Start of Example section for integration with Authress */
 
 /** Setup middleware */
-const jwtManager = require('jsonwebtoken');
+const base64url = require('base64url');
 const { AuthressClient, ServiceClientTokenProvider, UnauthorizedError } = require('authress-sdk');
 
 // Some requests to authress request service client access and cannot use the user's JWT
@@ -59,7 +59,7 @@ api.use((request, response, next) => {
     return;
   }
   const token = authorizationHeader.replace(/Bearer\s+/i, '').trim();
-  const jwt = jwtManager.decode(token);
+  const jwt = JSON.parse(base64url.decode(token.split('.')[1]));
   response.locals.userId = jwt.sub;
   // Other requests to Authress can and should be done with the user's token when possible
   response.locals.authressClient = new AuthressClient({ baseUrl: authressDomain }, () => token);

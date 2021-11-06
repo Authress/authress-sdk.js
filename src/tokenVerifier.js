@@ -1,10 +1,22 @@
-const jwtManager = require('jsonwebtoken');
+const { default: verifyJwt } = require('jose/jwt/verify');
+const { default: parseJwk } = require('jose/jwk/parse');
+const base64url = require('base64url');
 const axios = require('axios');
 const { URL } = require('url');
-const jwkConverter = require('jwk-to-pem');
 
 const keyMap = {};
 const client = axios.create();
+
+function decode(token) {
+  try {
+    return token && {
+      header: JSON.parse(base64url.decode(token.split('.')[0])),
+      payload: JSON.parse(base64url.decode(token.split('.')[1]))
+    };
+  } catch (error) {
+    return null;
+  }
+}
 
 async function getPublicKey(jwkKeyListUrl, kid) {
   const hashKey = JSON.stringify({ jwkKeyListUrl, kid });
@@ -13,7 +25,7 @@ async function getPublicKey(jwkKeyListUrl, kid) {
     const result = await client.get(jwkKeyListUrl);
     const jwk = result.data.keys.find(key => key.kid === kid);
     if (jwk) {
-      return jwkConverter(jwk);
+      return jwk;
     }
 
     const error = new Error('No matching public key found for token');
@@ -33,14 +45,14 @@ async function getPublicKey(jwkKeyListUrl, kid) {
   }
 }
 
-module.exports = async function(authressCustomDomain, authenticationToken) {
+module.exports = async function(authressCustomDomain, authenticationToken, options = { verifierOptions: {} }) {
   if (!authenticationToken) {
     const error = new Error('Unauthorized');
     error.code = 'Unauthorized';
     throw error;
   }
 
-  const unverifiedToken = jwtManager.decode(authenticationToken, { complete: true });
+  const unverifiedToken = decode(authenticationToken);
   const kid = unverifiedToken && unverifiedToken.header && unverifiedToken.header.kid;
   if (!kid) {
     const error = new Error('Unauthorized: No KID in token');
@@ -64,8 +76,8 @@ module.exports = async function(authressCustomDomain, authenticationToken) {
   const key = await getPublicKey(`${issuer}/.well-known/openid-configuration/jwks`, kid);
 
   try {
-    const identity = jwtManager.verify(authenticationToken, key, { algorithms: ['RS256', 'RS384', 'RS512'], issuer });
-    return identity;
+    const verifiedToken = await verifyJwt(authenticationToken, await parseJwk(key), { algorithms: ['EdDSA', 'RS512'], issuer, ...options.verifierOptions });
+    return verifiedToken.payload;
   } catch (verifierError) {
     const error = new Error(`Unauthorized: ${verifierError.message}`);
     error.code = 'Unauthorized';
