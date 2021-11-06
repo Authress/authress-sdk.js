@@ -2,7 +2,6 @@
 This is the Authress SDK used to integrate with the authorization as a service provider Authress at https://authress.io.
 
 [![npm version](https://badge.fury.io/js/authress-sdk.svg)](https://badge.fury.io/js/authress-sdk)
-[![Build Status](https://travis-ci.com/authress/authress-sdk.js.svg?branch=master)](https://travis-ci.com/authress/authress-sdk.js)
 
 
 ## Usage
@@ -26,8 +25,7 @@ const { AuthressClient } = require('authress-sdk');
 ```js
 const { AuthressClient } = require('authress-sdk');
 
-// create an instance of the API class during service initialization
-// Replace DOMAIN with the Authress domain for your account
+// What is my baseUrl? => API Host: https://authress.io/app/#/api?route=overview
 const authressClient = new AuthressClient({ baseUrl: 'https://DOMAIN.api-REGION.authress.io' })
 
 // on api route
@@ -108,8 +106,7 @@ try {
   // Grab authorization cookie from the request, the best way to do this will be framework specific.
   const cookies = cookieManager.parse(request.headers.cookie || '');
   const userToken = cookies.authorization || request.headers.Authorization.split(' ')[1];
-  // Specify your custom domain for tokens. Configurable at https://authress.io/app/#/manage?focus=applications
-  // Replacing the domain with your login url
+  // What should my url be? => https://authress.io/app/#/setup?focus=domain
   const userIdentity = await TokenVerifier('https://login.application.com', userToken);
 } catch (error) {
   console.log('User is unauthorized', error);
