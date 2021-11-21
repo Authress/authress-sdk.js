@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-interface */
+/* eslint-disable no-shadow */
+
 export interface AuthressSettings {
   //** Authress baseUrl => API Host: https://authress.io/app/#/api?route=overview */
   baseUrl: string;
