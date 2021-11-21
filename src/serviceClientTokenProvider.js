@@ -10,8 +10,8 @@ module.exports = function(accessKey) {
 
   const issuer = `https://api.authress.io/v1/clients/${encodeURIComponent(decodedAccessKey.clientId)}`;
 
-  const innerGetToken = async (overrideUserId, expOffset) => {
-    if (!overrideUserId && this.cachedKeyData && this.cachedKeyData.token && this.cachedKeyData.expires > Date.now() + 3600000) {
+  const innerGetToken = async () => {
+    if (this.cachedKeyData && this.cachedKeyData.token && this.cachedKeyData.expires > Date.now() + 3600000) {
       return this.cachedKeyData.token;
     }
 
@@ -19,18 +19,16 @@ module.exports = function(accessKey) {
     const jwt = {
       aud: decodedAccessKey.audience,
       iss: issuer,
-      sub: overrideUserId || decodedAccessKey.clientId,
+      sub: decodedAccessKey.clientId,
       iat: now,
       // valid for 24 hours
-      exp: now + (expOffset || 60 * 60 * 24),
+      exp: now + 60 * 60 * 24,
       scope: 'openid'
     };
 
     const importedKey = createPrivateKey({ key: Buffer.from(decodedAccessKey.privateKey, 'base64'), format: 'der', type: 'pkcs8' });
     const token = await new JwtSigner(jwt).setProtectedHeader({ alg: 'EdDSA', kid: decodedAccessKey.keyId, typ: 'at+jwt' }).sign(importedKey);
-    if (!overrideUserId) {
-      this.cachedKeyData = { token, expires: jwt.exp * 1000 };
-    }
+    this.cachedKeyData = { token, expires: jwt.exp * 1000 };
     return token;
   };
 
@@ -48,8 +46,24 @@ module.exports = function(accessKey) {
     if (!userId) {
       throw new ArgumentRequiredError('userId', 'The user to generate a authorization code redirect for is required.');
     }
+
+    const now = Math.round(Date.now() / 1000);
+    const jwt = {
+      aud: decodedAccessKey.audience,
+      iss: issuer,
+      sub: userId,
+      client_id: decodedAccessKey.clientId,
+      iat: now,
+      exp: now + 60,
+      max_age: 60,
+      scope: 'openid'
+    };
+
+    const importedKey = createPrivateKey({ key: Buffer.from(decodedAccessKey.privateKey, 'base64'), format: 'der', type: 'pkcs8' });
+    const code = await new JwtSigner(jwt).setProtectedHeader({ alg: 'EdDSA', kid: decodedAccessKey.keyId, typ: 'oauth-authz-req+jwt' }).sign(importedKey);
+
     const url = new URL(redirectUrl);
-    url.searchParams.set('code', await innerGetToken(userId, 60));
+    url.searchParams.set('code', code);
     url.searchParams.set('iss', issuer);
     url.searchParams.set('state', state);
     return url.toString();
