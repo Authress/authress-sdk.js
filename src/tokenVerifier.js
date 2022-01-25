@@ -4,6 +4,8 @@ const base64url = require('base64url');
 const axios = require('axios');
 const { URL } = require('url');
 
+const ServiceClientTokenProvider = require('./serviceClientTokenProvider');
+
 const keyMap = {};
 const client = axios.create();
 
@@ -45,14 +47,28 @@ async function getPublicKey(jwkKeyListUrl, kid) {
   }
 }
 
-module.exports = async function(authressCustomDomain, authenticationToken, options = { verifierOptions: {} }) {
-  if (!authenticationToken) {
+module.exports = async function(authressCustomDomain, requestToken, options = { verifierOptions: {} }) {
+  if (!requestToken) {
     const error = new Error('Unauthorized');
     error.code = 'Unauthorized';
     throw error;
   }
 
-  const unverifiedToken = decode(authenticationToken);
+  let authenticationToken = requestToken;
+  let unverifiedToken = decode(requestToken);
+  if (!unverifiedToken) {
+    // Check if the token is a client secret and then create a token dynamically from that
+    try {
+      const replacementToken = await (new ServiceClientTokenProvider(requestToken))();
+      authenticationToken = replacementToken;
+      unverifiedToken = decode(replacementToken);
+    } catch (tokenError) {
+      const error = new Error('Unauthorized: Invalid token');
+      error.code = 'Unauthorized';
+      throw error;
+    }
+  }
+
   const kid = unverifiedToken && unverifiedToken.header && unverifiedToken.header.kid;
   if (!kid) {
     const error = new Error('Unauthorized: No KID in token');
