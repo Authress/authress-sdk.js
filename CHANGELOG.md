@@ -5,6 +5,7 @@ This is the changelog for [Authress SDK](readme.md).
 * Removed legacy support for RS512 service client tokens.
 * Add EdDSA support for `tokenVerifier()` class
 * Set the service client authorization request type to be `oauth-authz-req+jwt`
+* Handle malformed baseUrls in `httpClient`.
 
 ## 1.1 ##
 * Migrated to Github Actions

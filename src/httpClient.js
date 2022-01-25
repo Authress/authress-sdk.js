@@ -8,10 +8,10 @@ const defaultHeaders = {
 
 class HttpClient {
   constructor(baseUrl, tokenProvider) {
-    this.baseUrl = baseUrl;
+    this.baseUrl = new URL(`https://${baseUrl.replace(/^(https?:\/\/)/, '')}`).toString();
     this.tokenProvider = tokenProvider;
 
-    const client = axios.create({ baseURL: baseUrl });
+    const client = axios.create({ baseURL: this.baseUrl });
 
     client.interceptors.request.use(async config => {
       const token = await (typeof this.tokenProvider === 'function' ? this.tokenProvider() : this.tokenProvider.getToken());
