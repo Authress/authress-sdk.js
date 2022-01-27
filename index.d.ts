@@ -369,7 +369,7 @@ export interface ServiceClientCollection {
      * @type {Array<ServiceClient>}
      * @memberof ServiceClientCollection
      */
-    clients: Array<ServiceClient>;
+    clients: Array<ServiceClientSummary>;
     /**
      *
      * @type {CollectionLinks}
@@ -377,6 +377,32 @@ export interface ServiceClientCollection {
      */
     links: CollectionLinks;
 }
+/**
+ * A client configuration.
+ * @export
+ * @interface ServiceClientSummary
+ */
+export interface ServiceClientSummary {
+  /**
+   * The unique id of the client.
+   * @type {string}
+   * @memberof ServiceClientSummary
+   */
+  clientId: string;
+  /**
+   *
+   * @type {Date}
+   * @memberof ServiceClientSummary
+   */
+  createdTime?: Date;
+  /**
+   * The name of the client
+   * @type {string}
+   * @memberof ServiceClientSummary
+   */
+  name?: string;
+}
+
 /**
  * A client configuration.
  * @export
@@ -407,6 +433,13 @@ export interface ServiceClient {
      * @memberof ServiceClient
      */
     options?: ServiceClientOptions;
+
+    /**
+     * A list of the service client access keys.
+     * @type {Array<ClientAccessKey>}
+     * @memberof ServiceClient
+     */
+    verificationKeys?: Array<ClientAccessKey>;
 }
 /**
  * A client configuration.
