@@ -8,7 +8,7 @@ const defaultHeaders = {
 
 class HttpClient {
   constructor(baseUrl, tokenProvider) {
-    this.baseUrl = new URL(`https://${baseUrl.replace(/^(https?:\/\/)/, '')}`).toString();
+    this.baseUrl = new URL(`https://${baseUrl.replace(/^(https?:\/\/)/, '')}`).toString().replace(/\/$/, '');
     this.tokenProvider = tokenProvider;
 
     const client = axios.create({ baseURL: this.baseUrl });
