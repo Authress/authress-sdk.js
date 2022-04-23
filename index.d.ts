@@ -1411,9 +1411,10 @@ export class ServiceClientTokenProvider {
    * @constructor
    * @summary Create an instance of the service client token provider. Used to call the Authress API, when the user's token does not contain the necessary permissions.
    * @param {string} accessKey The service client access key, can be generated from https://authress.io/app/#/manage?focus=clients
+   * @param {string} authressCustomDomain The custom domain specified in your account under domain settings. What should my url be? => https://authress.io/app/#/setup?focus=domain
    */
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  constructor(accessKey: string);
+  constructor(accessKey: string, authressCustomDomain: string);
 
   /**
    * @summary Generate a token from this token provider. In most cases should only be used by this library itself

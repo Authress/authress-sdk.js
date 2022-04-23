@@ -2,13 +2,13 @@ const { default: JwtSigner } = require('jose/jwt/sign');
 const { createPrivateKey } = require('crypto');
 const ArgumentRequiredError = require('./argumentRequiredError');
 
-module.exports = function(accessKey) {
+module.exports = function(accessKey, authressCustomDomain) {
   const decodedAccessKey = {
     clientId: accessKey.split('.')[0], keyId: accessKey.split('.')[1],
     audience: `${accessKey.split('.')[2]}.accounts.authress.io`, privateKey: accessKey.split('.')[3]
   };
 
-  const issuer = `https://api.authress.io/v1/clients/${encodeURIComponent(decodedAccessKey.clientId)}`;
+  const issuer = `https://${authressCustomDomain || 'api.authress.io'}/v1/clients/${encodeURIComponent(decodedAccessKey.clientId)}`;
 
   const innerGetToken = async () => {
     if (this.cachedKeyData && this.cachedKeyData.token && this.cachedKeyData.expires > Date.now() + 3600000) {
