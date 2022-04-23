@@ -8,12 +8,12 @@ module.exports = function(accessKey) {
     audience: `${accessKey.split('.')[2]}.accounts.authress.io`, privateKey: accessKey.split('.')[3]
   };
 
-  const issuer = `https://api.authress.io/v1/clients/${encodeURIComponent(decodedAccessKey.clientId)}`;
-
-  const innerGetToken = async () => {
+  const innerGetToken = async authressCustomDomain => {
     if (this.cachedKeyData && this.cachedKeyData.token && this.cachedKeyData.expires > Date.now() + 3600000) {
       return this.cachedKeyData.token;
     }
+
+    const issuer = `https://${authressCustomDomain || 'api.authress.io'}/v1/clients/${encodeURIComponent(decodedAccessKey.clientId)}`;
 
     const now = Math.round(Date.now() / 1000);
     const jwt = {
@@ -33,7 +33,7 @@ module.exports = function(accessKey) {
   };
 
   innerGetToken.getToken = innerGetToken;
-  innerGetToken.generateUserLoginUrl = async (redirectUrl, state, clientId, userId) => {
+  innerGetToken.generateUserLoginUrl = async (redirectUrl, state, clientId, userId, authressCustomDomain) => {
     if (!redirectUrl) {
       throw new ArgumentRequiredError('redirectUrl', 'The redirectUrl is specified in the request, this should match the configured Authress custom domain');
     }
@@ -46,6 +46,8 @@ module.exports = function(accessKey) {
     if (!userId) {
       throw new ArgumentRequiredError('userId', 'The user to generate a authorization code redirect for is required.');
     }
+
+    const issuer = `https://${authressCustomDomain || 'api.authress.io'}/v1/clients/${encodeURIComponent(decodedAccessKey.clientId)}`;
 
     const now = Math.round(Date.now() / 1000);
     const jwt = {

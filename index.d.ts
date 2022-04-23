@@ -1418,8 +1418,9 @@ export class ServiceClientTokenProvider {
   /**
    * @summary Generate a token from this token provider. In most cases should only be used by this library itself
    * @type {Function<Promise<void>>}
+   * @param {string} authressCustomDomain The custom domain specified in your account under domain settings. What should my url be? => https://authress.io/app/#/setup?focus=domain
    */
-  getToken(): Promise<string>;
+  getToken(authressCustomDomain: string): Promise<string>;
 
   /**
    * Generate the url to redirect the user back to your application from your authentication server after their credentials have been successfully verified. All these parameters should be found passed through from the user's login attempt along with their credentials. The authentication server receives a request from the user to login, with these values. Then these are constructed and sent back to Authress to verify the generated login data.
@@ -1429,8 +1430,9 @@ export class ServiceClientTokenProvider {
    * @param {string} state The state parameter sent to the authentication server.
    * @param {string} clientId The clientId parameter sent to the authentication server. This will be validated against the client's credentials specified in the {@link ServiceClientTokenProvider}
    * @param {string} userId The user to request a JWT for.
+   * @param {string} authressCustomDomain The custom domain specified in your account under domain settings. What should my url be? => https://authress.io/app/#/setup?focus=domain
    */
-  generateUserLoginUrl(redirectUrl: string, state: string, clientId: string, userId: string): Promise<string>;
+  generateUserLoginUrl(redirectUrl: string, state: string, clientId: string, userId: string, authressCustomDomain: string): Promise<string>;
 }
 
 /**
