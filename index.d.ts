@@ -1337,6 +1337,20 @@ export interface UserPermissionsApi {
 }
 
 /**
+ * UsersApi
+ * @export
+ */
+export interface UsersApi {
+  /**
+   * Get an Authress user
+   * @summary Retrieve a user with user data.
+   * @param {string} [userId] The user te get.
+   * @throws {ArgumentRequiredError}
+   */
+  getUser(userId: string): Promise<Response<User>>;
+}
+
+/**
  * AuthressClient
  * @export
  * @summary Creates an instance of the authress client with properties for each of the APIs
@@ -1368,6 +1382,12 @@ export class AuthressClient {
    * @type {UserPermissionsApi}
    */
   userPermissions: UserPermissionsApi;
+
+  /**
+   * @summary The Users api
+   * @type {UsersApi}
+   */
+  users: UsersApi;
 
   /**
    * @summary The Resources api

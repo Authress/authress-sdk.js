@@ -7,6 +7,7 @@ This is the changelog for [Authress SDK](readme.md).
 * Set the service client authorization request type to be `oauth-authz-req+jwt`
 * Handle malformed baseUrls in `httpClient`.
 * Allow specifying the authress custom domain for service client machine to machine authentication.
+* Add `users.getUser(userId)` api method.
 
 ## 1.1 ##
 * Migrated to Github Actions
