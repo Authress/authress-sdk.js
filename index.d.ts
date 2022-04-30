@@ -1,20 +1,20 @@
+/* eslint-disable node/no-missing-import */
 /* eslint-disable @typescript-eslint/no-empty-interface */
 /* eslint-disable no-shadow */
+
+import { Response } from './src/response';
+
+import { ConnectionsApi } from './src/connections/api';
+export * from './src/connections/api';
+export * from './src/connections/dtos';
+
+import { TenantsApi } from './src/tenants/api';
+export * from './src/tenants/api';
+export * from './src/tenants/dtos';
 
 export interface AuthressSettings {
   //** Authress baseUrl => API Host: https://authress.io/app/#/api?route=overview */
   baseUrl: string;
-}
-
-export interface Response<ResponseType> {
-  /** Response data object on successful request */
-  data: ResponseType;
-
-  /** Response headers */
-  headers: Record<string, string>;
-
-  /** HTTP response status code for success responses */
-  status: number;
 }
 
 /**
@@ -1186,35 +1186,6 @@ export interface RolesApi {
 }
 
 /**
- * The user credentials for this connection which can be used to access the connection provider APIs.
- * @export
- * @interface UserConnectionCredentials
- */
-export interface UserConnectionCredentials {
-  /**
-   * The access token.
-   * @type {string}
-   * @memberof UserConnectionCredentials
-   */
-  accessToken: string;
-}
-
-/**
- * ConnectionsApi
- * @export
- */
-export interface ConnectionsApi {
-  /**
-   * Get the credentials for the user that were generated as part of the latest user login flow. Returns an access token that can be used with originating connection provider, based on the original scopes and approved permissions by that service.
-   * @summary Get the user credentials for this connection.
-   * @param {string} connectionId The connection to get the stored credentials.
-   * @param {string} [userId] The user to get the stored credentials, if not specified will automatically be populated by the token specified in the request to Authress.
-   * @throws {ArgumentRequiredError}
-   */
-   getConnectionCredentials(connectionId: string, userId?: string): Promise<Response<UserConnectionCredentials>>;
-}
-
-/**
  * ServiceClientsApi
  * @export
  */
@@ -1412,6 +1383,12 @@ export class AuthressClient {
    * @type {ConnectionsApi}
    */
   connections: ConnectionsApi;
+
+  /**
+   * @summary The Tenants api
+   * @type {TenantsApi}
+   */
+  tenants: TenantsApi;
 
   /**
    * @summary Set the users token here, so that requests made with this Authress Client will have the user's permissions
