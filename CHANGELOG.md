@@ -8,6 +8,7 @@ This is the changelog for [Authress SDK](readme.md).
 * Handle malformed baseUrls in `httpClient`.
 * Allow specifying the authress custom domain for service client machine to machine authentication.
 * Add `users.getUser(userId)` api method.
+* Add `connections` API to the SDK.
 
 ## 1.1 ##
 * Migrated to Github Actions
