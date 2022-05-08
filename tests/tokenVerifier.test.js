@@ -1,11 +1,14 @@
 const { describe, it, beforeEach, afterEach } = require('mocha');
 const sinon = require('sinon');
+const { ServiceClientTokenProvider } = require('..');
 
 const { TokenVerifier } = require('../index');
 
 let sandbox;
 beforeEach(() => { sandbox = sinon.createSandbox(); });
 afterEach(() => sandbox.restore());
+
+const customDomain = 'authress.token-validation.test';
 
 describe('tokenVerifier.js', () => {
   describe('verifyToken', () => {
@@ -14,9 +17,13 @@ describe('tokenVerifier.js', () => {
       await TokenVerifier('https://login.authress.io', userToken, { verifierOptions: { currentDate: new Date('2021-11-07') } });
     }).timeout(10000);
 
-    it.skip('Validate EdDSA token works', async () => {
-      const userToken = 'eyJhbGciOiJFZERTQSIsImtpZCI6InBYUHR0VXdXSG9lYUVHeVdmRU5oV2YiLCJ0eXAiOiJhdCtqd3QifQ.eyJpc3MiOiJodHRwczovL2F1dGhyZXNzLnRva2VuLXZhbGlkYXRpb24udGVzdCIsInN1YiI6InVzZXIxMTEiLCJpYXQiOjE2MzYyMDY0MzYsImV4cCI6MTYzNjI5MjgzNiwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCIsImF6cCI6ImF1dGhvcml6YXRpb24tc291cmNlIiwiY2xpZW50X2lkIjoiYXV0aHJlc3Mtc2RrLmpzIiwiYXVkIjpbInRlbmFudCJdfQ.rOLSy95ZK80AktkzvAeuKQXbyHETYj2Ee5_zAJmAUpPJx0EISB3urR6RV74YJiov94jAZ7iPsR8fJ3OWiWtTDw';
-      await TokenVerifier('https://login.authress.io', userToken, { verifierOptions: { currentDate: new Date('2021-11-07') } });
+    it('Validate EdDSA service client token', async () => {
+      const accessKey = 'sc_aAKceYi7VJDCU8vB7HcTo3Q.pogP.a43706ca-9647-40e4-aeae-7dcaa54bbab3.MC4CAQAwBQYDK2VwBCIEIDVjjrIVCH3dVRq4ixRzBwjVHSoB2QzZ2iJuHq1Wshwp';
+      const publicKey = { alg: 'EdDSA', kty: 'OKP', crv: 'Ed25519', x: 'JxtSC5tZZJuaW7Aeu5Kh_3tgCpPZRkHaaFyTj5sQ3KU' };
+      const tokenProvider = new ServiceClientTokenProvider(accessKey, customDomain);
+      const initialToken = await tokenProvider.getToken();
+
+      await TokenVerifier(`https://${customDomain}`, initialToken, { expectedPublicKey: publicKey, verifierOptions: { currentDate: new Date('2022-05-07') } });
     }).timeout(10000);
   });
 });

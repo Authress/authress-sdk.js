@@ -47,7 +47,7 @@ async function getPublicKey(jwkKeyListUrl, kid) {
   }
 }
 
-module.exports = async function(authressCustomDomain, requestToken, options = { verifierOptions: {} }) {
+module.exports = async function(authressCustomDomain, requestToken, options = { expectedPublicKey: {}, verifierOptions: {} }) {
   if (!requestToken) {
     const error = new Error('Unauthorized');
     error.code = 'Unauthorized';
@@ -83,13 +83,22 @@ module.exports = async function(authressCustomDomain, requestToken, options = { 
     throw error;
   }
 
-  if (issuer !== new URL(`https://${authressCustomDomain.replace(/^(https?:\/\/)/, '')}`).origin) {
+  const completeIssuerUrl = new URL(`https://${authressCustomDomain.replace(/^(https?:\/\/)/, '')}`);
+  if (new URL(issuer).origin !== completeIssuerUrl.origin) {
     const error = new Error(`Unauthorized: Invalid Issuer: ${issuer}`);
     error.code = 'Unauthorized';
     throw error;
   }
 
-  const key = await getPublicKey(`${issuer}/.well-known/openid-configuration/jwks`, kid);
+  // Handle service client checking
+  const clientIdMatcher = completeIssuerUrl.pathname.match(/^\/v\d\/clients\/([^/]+)$/);
+  if (clientIdMatcher && clientIdMatcher[1] !== unverifiedToken.payload.sub) {
+    const error = new Error(`Unauthorized: Invalid Sub found for service client token: ${unverifiedToken.payload.sub}`);
+    error.code = 'Unauthorized';
+    throw error;
+  }
+
+  const key = options.expectedPublicKey || await getPublicKey(`${issuer}/.well-known/openid-configuration/jwks`, kid);
 
   try {
     const verifiedToken = await verifyJwt(authenticationToken, await parseJwk(key), { algorithms: ['EdDSA', 'RS512'], issuer, ...options.verifierOptions });
