@@ -30,14 +30,14 @@ const authressClient = new AuthressClient({ baseUrl: 'https://DOMAIN.api-REGION.
 
 // on api route
 [route('/resources/<resourceId>')]
-function getResource(resourceId) {
+async function getResource(resourceId) {
   // Get the user token and pass it to authress
   const authorizationToken = request.headers.get('authorization');
   authressClient.setToken(authorizationToken);
 
   // Check Authress to authorize the user
   try {
-    authressClient.userPermissions.authorizeUser(userId, `resources/${resourceId}`, 'READ');
+    await authressClient.userPermissions.authorizeUser(userId, `resources/${resourceId}`, 'READ');
   } catch (error) {
     // Will throw except if the user is not authorized to read the resource
     if (error.status === 404) {
@@ -64,10 +64,10 @@ const authressClient = new AuthressClient({ baseUrl: 'https://DOMAIN.api-REGION.
 
 // on api route
 [route('/resources/<resourceId>')]
-function getResource(resourceId) {
+async function getResource(resourceId) {
   // Check Authress to authorize the user
   try {
-    authressClient.userPermissions.authorizeUser(userId, `resources/${resourceId}`, 'READ');
+    await authressClient.userPermissions.authorizeUser(userId, `resources/${resourceId}`, 'READ');
   } catch (error) {
     // Will throw except if the user is not authorized to read the resource
     if (error.status === 404) {
@@ -112,6 +112,25 @@ try {
   console.log('User is unauthorized', error);
   return { statusCode: 401 };
 }
+```
+
+#### Make direct API requests
+Authress supports extended functionality via the REST api, in specific cases it helps to make these direct calls. Each API call requires a URL and an access token. In the case you want use the access token for the user, directly pass it as the `bearer` in the `Authorization` header:
+```js
+const response = await client.get(url, { 'Authorization': `Bearer: ${userAccessToken}` });
+```
+
+In the case you want to make a request using the service client's secret key, use the `serviceClientTokenProvider` you've already configured:
+```js
+// Standard library configuration:
+const { AuthressClient, ServiceClientTokenProvider } = require('authress-sdk');
+const accessToken = 'eyJrZXlJ....';
+const serviceClientTokenProvider = new ServiceClientTokenProvider(accessToken);
+const authressClient = new AuthressClient({ baseUrl: 'https://DOMAIN.api-REGION.authress.io' }, serviceClientTokenProvider);
+
+// Get a temporary token and use it:
+const temporaryServiceClientAccessToken = await serviceClientTokenProvider.getToken();
+const response = await client.get(url, { 'Authorization': `Bearer: ${temporaryServiceClientAccessToken}` });
 ```
 
 ## Contributions
