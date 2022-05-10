@@ -138,6 +138,6 @@ const response = await client.get(url, { 'Authorization': `Bearer: ${temporarySe
 ### Adding new DTO and methods
 Auto generate the new code using this openapi generator, and merge the files into the appropriate locations:
 ```bash
-warren@palladium:~/git/authress/authress-sdk.js (release/1.2)$ curl -XPOST https://generator3.swagger.io/api/generate -H 'content-type: application/json' -d '{"specURL" : "https://api.authress.io/.well-known/openapi.json","lang" : "typescript-fetch","type" : "CLIENT","codegenVersion" : "V3"}'  --output generated_sdk.tar.gz
+curl -XPOST https://generator3.swagger.io/api/generate -H 'content-type: application/json' -d '{"specURL" : "https://api.authress.io/.well-known/openapi.json","lang" : "typescript-fetch","type" : "CLIENT","codegenVersion" : "V3"}'  --output generated_sdk.tar.gz
 
 ```
