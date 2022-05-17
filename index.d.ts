@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-empty-interface */
 /* eslint-disable no-shadow */
 
-import { Response } from './src/response';
+import { Response, IPaginated, Links, Cursor } from './src/response';
 
 import { ConnectionsApi } from './src/connections/api';
 export * from './src/connections/api';
@@ -123,19 +123,13 @@ export namespace AccessRecord {
  * @export
  * @interface AccessRecordCollection
  */
-export interface AccessRecordCollection {
+export interface AccessRecordCollection extends IPaginated<AccessRecordCollection> {
     /**
      *
      * @type {Array<AccessRecord>}
      * @memberof AccessRecordCollection
      */
     records: Array<AccessRecord>;
-    /**
-     *
-     * @type {CollectionLinks}
-     * @memberof AccessRecordCollection
-     */
-    links: CollectionLinks;
 }
 
 /**
@@ -325,7 +319,7 @@ export interface IdentityRequest {
  * @export
  * @interface UserResources
  */
-export interface UserResources {
+export interface UserResources extends IPaginated<UserResources> {
     /**
      *
      * @type {AccountLink}
@@ -350,12 +344,6 @@ export interface UserResources {
      * @memberof UserResources
      */
     accessToAllSubResources?: boolean;
-    /**
-     *
-     * @type {CollectionLinks}
-     * @memberof UserResources
-     */
-    links?: CollectionLinks;
 }
 
 /**
@@ -363,19 +351,13 @@ export interface UserResources {
  * @export
  * @interface ServiceClientCollection
  */
-export interface ServiceClientCollection {
+export interface ServiceClientCollection extends IPaginated<ServiceClientCollection> {
     /**
      * A list of clients
      * @type {Array<ServiceClient>}
      * @memberof ServiceClientCollection
      */
     clients: Array<ServiceClientSummary>;
-    /**
-     *
-     * @type {CollectionLinks}
-     * @memberof ServiceClientCollection
-     */
-    links: CollectionLinks;
 }
 /**
  * A client configuration.
@@ -554,20 +536,13 @@ export interface ResourcePermissionsCollection {
  * @export
  * @interface ResourceUsersCollection
  */
-export interface ResourceUsersCollection {
+export interface ResourceUsersCollection extends IPaginated<ResourceUsersCollection> {
   /**
    *
    * @type {Array<UserRoleCollection>}
    * @memberof ResourceUsersCollection
    */
   users: Array<UserRoleCollection>;
-
-  /**
-   *
-   * @type {CollectionLinks}
-   * @memberof ResourceUsersCollection
-   */
-  links: CollectionLinks;
 }
 
 /**
@@ -616,25 +591,6 @@ export interface Role {
     permissions: Array<PermissionObject>;
 }
 
-/**
- * A url linking object that complies to application/links+json RFC. Either is an IANA approved link relation or has a custom rel specified.
- * @export
- * @interface Link
- */
-export interface Link {
-    /**
-     * The absolute url pointing to the reference resource.
-     * @type {string}
-     * @memberof Link
-     */
-    href: string;
-    /**
-     * Optional property indicating the type of link if it is not a default IANA approved global link relation.
-     * @type {string}
-     * @memberof Link
-     */
-    rel?: string;
-}
 /**
  * Metadata and additional properties relevant.
  * @export
@@ -734,38 +690,13 @@ export interface ResourcePermission {
  * @export
  * @interface ResourcePermissionCollection
  */
-export interface ResourcePermissionCollection {
+export interface ResourcePermissionCollection extends IPaginated<ResourcePermissionCollection> {
     /**
      *
      * @type {Array<ResourcePermission>}
      * @memberof ResourcePermissionCollection
      */
     resources: Array<ResourcePermission>;
-    /**
-     *
-     * @type {CollectionLinks}
-     * @memberof ResourcePermissionCollection
-     */
-    links: CollectionLinks;
-}
-/**
- *
- * @export
- * @interface CollectionLinks
- */
-export interface CollectionLinks {
-    /**
-     *
-     * @type {Link}
-     * @memberof CollectionLinks
-     */
-    self: Link;
-    /**
-     *
-     * @type {Link}
-     * @memberof CollectionLinks
-     */
-    next?: Link;
 }
 
 /**
@@ -856,20 +787,6 @@ export interface ServiceClientOptions {
      * @memberof ServiceClientOptions
      */
     grantMetadataAccess?: boolean;
-}
-
-/**
- *
- * @export
- * @interface Links
- */
-export interface Links {
-  /**
-   *
-   * @type {Link}
-   * @memberof Links
-   */
-  self: Link;
 }
 
 /**
@@ -1039,12 +956,12 @@ export interface AccessRecordsApi {
    * <i class=\"far fa-money-bill-alt text-primary\"></i> <span class=\"text-primary\">Billable</span> Returns a paginated records list for the account. Only records the user has access to are returned.
    * @summary Get all account records.
    * @param {number} [limit] Max number of results to return
-   * @param {string} [cursor] Continuation cursor for paging (will automatically be set)
+   * @param {Cursor} [cursor] Continuation cursor for paging (will automatically be set)
    * @param {string} [filter] Filter to search records by. This is a case insensitive search through every text field.
    * @param {string} [status] Filter records by their current status.
    * @throws {ArgumentRequiredError}
    */
-  getRecords(limit?: number, cursor?: string, filter?: string, status?: string): Promise<Response<AccessRecordCollection>>;
+  getRecords(limit?: number, cursor?: Cursor, filter?: string, status?: string): Promise<Response<AccessRecordCollection>>;
   /**
    * Updates an access record adding or removing user permissions to resources.
    * @summary Update an access record.
@@ -1291,11 +1208,11 @@ export interface UserPermissionsApi {
    * @param {string} [userId] The user to check permissions on
    * @param {string} [resourceUri] The top level uri path of a resource to query for. Will only match explicit or collection resource sub-resources. Will not partial match resource names.
    * @param {number} [limit] Max number of results to return
-   * @param {string} [cursor] Continuation cursor for paging (will automatically be set)
+   * @param {Cursor} [cursor] Continuation cursor for paging (will automatically be set)
    * @param {string} [permission] A required ALLOW action to check for. Resources a user does not have this permission will not be returned.
    * @throws {ArgumentRequiredError}
    */
-  getUserResources(userId?: string, resourceUri?: string, limit?: number, cursor?: string, permission?: string): Promise<Response<UserResources>>;
+  getUserResources(userId?: string, resourceUri?: string, limit?: number, cursor?: Cursor, permission?: string): Promise<Response<UserResources>>;
   /**
    * <i class=\"far fa-money-bill-alt text-primary\"></i> <span class=\"text-primary\">Billable</span> Get an Authress signed JWT access token using with userId as the sub. Additionally, can be configured to limit the permissions for this particular token and the length of time the token is valid. Token validation is real-time, so deleted tokens are restricted from being used as soon as they are deleted. This gives full control to the user and client creating the token. Client must have access to impersonating the user in order to generate tokens on their behalf.
    * @summary Request a user token with additional configuration

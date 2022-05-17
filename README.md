@@ -133,6 +133,43 @@ const temporaryServiceClientAccessToken = await serviceClientTokenProvider.getTo
 const response = await client.get(url, { 'Authorization': `Bearer: ${temporaryServiceClientAccessToken}` });
 ```
 
+#### Paginating through a collection resource
+Some of the resources in the API are paginated. These resources contain a `pagination.next.cursor` property when there is a next page. The cursor can be passed to query to fetch the next page. Here's an example usage:
+
+```js
+const { AuthressClient } = require('authress-sdk');
+const authressClient = new AuthressClient({ baseUrl: 'https://DOMAIN.api-REGION.authress.io' })
+
+// on api route
+async function (resourceId) {
+  // Get the user token and pass it to authress
+  const authorizationToken = request.headers.get('authorization');
+  authressClient.setToken(authorizationToken);
+
+  // Get the users resources
+  const response = await authressClient.userPermissions.getUserResources(userId, `resources/*`, 10, null, 'READ');
+  for (const resource of response.data.resources) {
+    // Iterate on resource
+  }
+
+  // Get the next page:
+  const nextPageResponse = await authressClient.userPermissions.getUserResources(userId, `resources/*`, 10, response.data.pagination.next.cursor, 'READ');
+  for (const resource of nextPageResponse.data.resources) {
+    // Iterate on resource
+  }
+
+  // Get all the next pages:
+  let cursor = response.data.pagination?.next?.cursor;
+  while (cursor) {
+    const response = await authressClient.userPermissions.getUserResources(userId, `resources/*`, 10, cursor, 'READ');
+    cursor = response.data.pagination?.next?.cursor;
+    for (const resource of response.data.resources) {
+      // Iterate on resource
+    }
+  }
+}
+```
+
 ## Contributions
 
 ### Adding new DTO and methods
