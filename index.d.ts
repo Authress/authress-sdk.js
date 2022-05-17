@@ -1,20 +1,20 @@
+/* eslint-disable node/no-missing-import */
 /* eslint-disable @typescript-eslint/no-empty-interface */
 /* eslint-disable no-shadow */
+
+import { Response } from './src/response';
+
+import { ConnectionsApi } from './src/connections/api';
+export * from './src/connections/api';
+export * from './src/connections/dtos';
+
+import { TenantsApi } from './src/tenants/api';
+export * from './src/tenants/api';
+export * from './src/tenants/dtos';
 
 export interface AuthressSettings {
   //** Authress baseUrl => API Host: https://authress.io/app/#/api?route=overview */
   baseUrl: string;
-}
-
-export interface Response<ResponseType> {
-  /** Response data object on successful request */
-  data: ResponseType;
-
-  /** Response headers */
-  headers: Record<string, string>;
-
-  /** HTTP response status code for success responses */
-  status: number;
 }
 
 /**
@@ -1186,35 +1186,6 @@ export interface RolesApi {
 }
 
 /**
- * The user credentials for this connection which can be used to access the connection provider APIs.
- * @export
- * @interface UserConnectionCredentials
- */
-export interface UserConnectionCredentials {
-  /**
-   * The access token.
-   * @type {string}
-   * @memberof UserConnectionCredentials
-   */
-  accessToken: string;
-}
-
-/**
- * ConnectionsApi
- * @export
- */
-export interface ConnectionsApi {
-  /**
-   * Get the credentials for the user that were generated as part of the latest user login flow. Returns an access token that can be used with originating connection provider, based on the original scopes and approved permissions by that service.
-   * @summary Get the user credentials for this connection.
-   * @param {string} connectionId The connection to get the stored credentials.
-   * @param {string} [userId] The user to get the stored credentials, if not specified will automatically be populated by the token specified in the request to Authress.
-   * @throws {ArgumentRequiredError}
-   */
-   getConnectionCredentials(connectionId: string, userId?: string): Promise<Response<UserConnectionCredentials>>;
-}
-
-/**
  * ServiceClientsApi
  * @export
  */
@@ -1337,6 +1308,20 @@ export interface UserPermissionsApi {
 }
 
 /**
+ * UsersApi
+ * @export
+ */
+export interface UsersApi {
+  /**
+   * Get an Authress user
+   * @summary Retrieve a user with user data.
+   * @param {string} [userId] The user te get.
+   * @throws {ArgumentRequiredError}
+   */
+  getUser(userId: string): Promise<Response<User>>;
+}
+
+/**
  * AuthressClient
  * @export
  * @summary Creates an instance of the authress client with properties for each of the APIs
@@ -1370,6 +1355,12 @@ export class AuthressClient {
   userPermissions: UserPermissionsApi;
 
   /**
+   * @summary The Users api
+   * @type {UsersApi}
+   */
+  users: UsersApi;
+
+  /**
    * @summary The Resources api
    * @type {ResourcesApi}
    */
@@ -1394,6 +1385,12 @@ export class AuthressClient {
   connections: ConnectionsApi;
 
   /**
+   * @summary The Tenants api
+   * @type {TenantsApi}
+   */
+  tenants: TenantsApi;
+
+  /**
    * @summary Set the users token here, so that requests made with this Authress Client will have the user's permissions
    * @type {Function<void>}
    * @param {string} jwtToken The user's JWT access token.
@@ -1411,9 +1408,10 @@ export class ServiceClientTokenProvider {
    * @constructor
    * @summary Create an instance of the service client token provider. Used to call the Authress API, when the user's token does not contain the necessary permissions.
    * @param {string} accessKey The service client access key, can be generated from https://authress.io/app/#/manage?focus=clients
+   * @param {string} authressCustomDomain The custom domain specified in your account under domain settings. What should my url be? => https://authress.io/app/#/setup?focus=domain
    */
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  constructor(accessKey: string);
+  constructor(accessKey: string, authressCustomDomain: string);
 
   /**
    * @summary Generate a token from this token provider. In most cases should only be used by this library itself
