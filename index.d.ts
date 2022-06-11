@@ -1340,12 +1340,12 @@ export class ServiceClientTokenProvider {
    * Generate the url to redirect the user back to your application from your authentication server after their credentials have been successfully verified. All these parameters should be found passed through from the user's login attempt along with their credentials. The authentication server receives a request from the user to login, with these values. Then these are constructed and sent back to Authress to verify the generated login data.
    * @summary Generate the url to redirect the user back to your application from your authentication server after their credentials have been successfully verified.
    * @type {Function<Promise<string>>}
-   * @param {string} redirectUrl The url sent with the request for the user to login, this should match the Authress custom domain: https://authress.io/app/#/setup?focus=domain.
+   * @param {string} authressCustomDomainLoginUrl The url sent with the request for the user to login, this should match the Authress custom domain: https://authress.io/app/#/setup?focus=domain and end in /login for example https://login.domain.com/login. This value is sent as the `redirect_uri` query string parameter in the request for simplicity.
    * @param {string} state The state parameter sent to the authentication server.
    * @param {string} clientId The clientId parameter sent to the authentication server. This will be validated against the client's credentials specified in the {@link ServiceClientTokenProvider}
    * @param {string} userId The user to request a JWT for.
    */
-  generateUserLoginUrl(redirectUrl: string, state: string, clientId: string, userId: string): Promise<string>;
+  generateUserLoginUrl(authressCustomDomainLoginUrl: string, state: string, clientId: string, userId: string): Promise<string>;
 }
 
 /**

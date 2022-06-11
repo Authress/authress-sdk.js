@@ -2,13 +2,15 @@ const { default: JwtSigner } = require('jose/jwt/sign');
 const { createPrivateKey } = require('crypto');
 const ArgumentRequiredError = require('./argumentRequiredError');
 
+function getIssuer(authressCustomDomain, decodedAccessKey) {
+  return `https://${authressCustomDomain.replace(/^(https?:\/\/)/, '')}/v1/clients/${encodeURIComponent(decodedAccessKey.clientId)}`;
+}
+
 module.exports = function(accessKey, authressCustomDomain) {
   const decodedAccessKey = {
     clientId: accessKey.split('.')[0], keyId: accessKey.split('.')[1],
     audience: `${accessKey.split('.')[2]}.accounts.authress.io`, privateKey: accessKey.split('.')[3]
   };
-
-  const issuer = `https://${authressCustomDomain || 'api.authress.io'}/v1/clients/${encodeURIComponent(decodedAccessKey.clientId)}`;
 
   const innerGetToken = async () => {
     if (this.cachedKeyData && this.cachedKeyData.token && this.cachedKeyData.expires > Date.now() + 3600000) {
@@ -18,7 +20,7 @@ module.exports = function(accessKey, authressCustomDomain) {
     const now = Math.round(Date.now() / 1000);
     const jwt = {
       aud: decodedAccessKey.audience,
-      iss: issuer,
+      iss: getIssuer(authressCustomDomain || 'api.authress.io', decodedAccessKey),
       sub: decodedAccessKey.clientId,
       iat: now,
       // valid for 24 hours
@@ -33,9 +35,9 @@ module.exports = function(accessKey, authressCustomDomain) {
   };
 
   innerGetToken.getToken = innerGetToken;
-  innerGetToken.generateUserLoginUrl = async (redirectUrl, state, clientId, userId) => {
-    if (!redirectUrl) {
-      throw new ArgumentRequiredError('redirectUrl', 'The redirectUrl is specified in the request, this should match the configured Authress custom domain');
+  innerGetToken.generateUserLoginUrl = async (authressCustomDomainLoginUrl, state, clientId, userId) => {
+    if (!authressCustomDomainLoginUrl) {
+      throw new ArgumentRequiredError('authressCustomDomainLoginUrl', 'The authressCustomDomainLoginUrl is specified in the incoming login request, this should match the configured Authress custom domain.');
     }
     if (!state) {
       throw new ArgumentRequiredError('state', 'The state should match value to generate a authorization code redirect for is required.');
@@ -46,6 +48,9 @@ module.exports = function(accessKey, authressCustomDomain) {
     if (!userId) {
       throw new ArgumentRequiredError('userId', 'The user to generate a authorization code redirect for is required.');
     }
+
+    const customDomainFallback = new URL(authressCustomDomainLoginUrl).origin;
+    const issuer = getIssuer(authressCustomDomain || customDomainFallback, decodedAccessKey);
 
     const now = Math.round(Date.now() / 1000);
     const jwt = {
@@ -62,7 +67,7 @@ module.exports = function(accessKey, authressCustomDomain) {
     const importedKey = createPrivateKey({ key: Buffer.from(decodedAccessKey.privateKey, 'base64'), format: 'der', type: 'pkcs8' });
     const code = await new JwtSigner(jwt).setProtectedHeader({ alg: 'EdDSA', kid: decodedAccessKey.keyId, typ: 'oauth-authz-req+jwt' }).sign(importedKey);
 
-    const url = new URL(redirectUrl);
+    const url = new URL(authressCustomDomainLoginUrl);
     url.searchParams.set('code', code);
     url.searchParams.set('iss', issuer);
     url.searchParams.set('state', state);
