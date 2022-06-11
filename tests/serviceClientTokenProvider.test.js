@@ -3,7 +3,6 @@ const { expect } = require('chai');
 const sinon = require('sinon');
 
 const { ServiceClientTokenProvider } = require('../index');
-const jwtManager = require('../src/jwtManager');
 
 let sandbox;
 beforeEach(() => { sandbox = sinon.createSandbox(); });

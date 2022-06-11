@@ -69,6 +69,7 @@ export interface CollectionLinks {
  * @interface IPaginated<CollectionType>
  */
 // @ts-ignore
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export interface IPaginated<CollectionType> {
   /**
    *
