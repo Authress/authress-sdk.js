@@ -1,4 +1,4 @@
-const { default: JwtSigner } = require('jose/jwt/sign');
+const { SignJWT } = require('jose');
 const { createPrivateKey } = require('crypto');
 const ArgumentRequiredError = require('./argumentRequiredError');
 
@@ -29,7 +29,7 @@ module.exports = function(accessKey, authressCustomDomain) {
     };
 
     const importedKey = createPrivateKey({ key: Buffer.from(decodedAccessKey.privateKey, 'base64'), format: 'der', type: 'pkcs8' });
-    const token = await new JwtSigner(jwt).setProtectedHeader({ alg: 'EdDSA', kid: decodedAccessKey.keyId, typ: 'at+jwt' }).sign(importedKey);
+    const token = await new SignJWT(jwt).setProtectedHeader({ alg: 'EdDSA', kid: decodedAccessKey.keyId, typ: 'at+jwt' }).sign(importedKey);
     this.cachedKeyData = { token, expires: jwt.exp * 1000 };
     return token;
   };
@@ -65,7 +65,7 @@ module.exports = function(accessKey, authressCustomDomain) {
     };
 
     const importedKey = createPrivateKey({ key: Buffer.from(decodedAccessKey.privateKey, 'base64'), format: 'der', type: 'pkcs8' });
-    const code = await new JwtSigner(jwt).setProtectedHeader({ alg: 'EdDSA', kid: decodedAccessKey.keyId, typ: 'oauth-authz-req+jwt' }).sign(importedKey);
+    const code = await new SignJWT(jwt).setProtectedHeader({ alg: 'EdDSA', kid: decodedAccessKey.keyId, typ: 'oauth-authz-req+jwt' }).sign(importedKey);
 
     const url = new URL(authressCustomDomainLoginUrl);
     url.searchParams.set('code', code);

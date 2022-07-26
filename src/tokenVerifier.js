@@ -1,5 +1,4 @@
-const { default: verifyJwt } = require('jose/jwt/verify');
-const { default: parseJwk } = require('jose/jwk/parse');
+const { jwtVerify, importJWK } = require('jose');
 const base64url = require('base64url');
 const axios = require('axios');
 const { URL } = require('url');
@@ -101,7 +100,7 @@ module.exports = async function(authressCustomDomain, requestToken, options = { 
   const key = options.expectedPublicKey || await getPublicKey(`${issuer}/.well-known/openid-configuration/jwks`, kid);
 
   try {
-    const verifiedToken = await verifyJwt(authenticationToken, await parseJwk(key), { algorithms: ['EdDSA', 'RS512'], issuer, ...options.verifierOptions });
+    const verifiedToken = await jwtVerify(authenticationToken, await importJWK(key), { algorithms: ['EdDSA', 'RS512'], issuer, ...options.verifierOptions });
     return verifiedToken.payload;
   } catch (verifierError) {
     const error = new Error(`Unauthorized: ${verifierError.message}`);
