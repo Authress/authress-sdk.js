@@ -90,7 +90,7 @@ module.exports = async function(authressCustomDomain, requestToken, options = { 
   }
 
   // Handle service client checking
-  const clientIdMatcher = completeIssuerUrl.pathname.match(/^\/v\d\/clients\/([^/]+)$/);
+  const clientIdMatcher = new URL(issuer).pathname.match(/^\/v\d\/clients\/([^/]+)$/);
   if (clientIdMatcher && clientIdMatcher[1] !== unverifiedToken.payload.sub) {
     const error = new Error(`Unauthorized: Invalid Sub found for service client token: ${unverifiedToken.payload.sub}`);
     error.code = 'Unauthorized';
