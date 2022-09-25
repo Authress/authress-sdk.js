@@ -1,6 +1,9 @@
 /* eslint-disable no-shadow */
 /* eslint-disable no-redeclare */
 /* eslint-disable @typescript-eslint/no-namespace */
+
+import { IPaginated } from '../response.ts';
+
 /**
  *
  * @export
@@ -43,7 +46,7 @@ export interface Tenant {
 * @export
 * @interface TenantCollection
 */
-export interface TenantCollection {
+export interface TenantCollection extends IPaginated<TenantCollection> {
   /**
    *
    * @type {Array<Tenant>}

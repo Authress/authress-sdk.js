@@ -1,6 +1,9 @@
 /* eslint-disable no-shadow */
 /* eslint-disable no-redeclare */
 /* eslint-disable @typescript-eslint/no-namespace */
+
+import { IPaginated } from '../response.ts';
+
 /**
  *
  * @export
@@ -94,7 +97,7 @@ export namespace Connection {
  * @export
  * @interface ConnectionCollection
  */
-export interface ConnectionCollection {
+export interface ConnectionCollection extends IPaginated<ConnectionCollection> {
     /**
      *
      * @type {Array<Connection>}

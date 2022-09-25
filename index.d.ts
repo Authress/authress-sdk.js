@@ -12,6 +12,10 @@ import { TenantsApi } from './src/tenants/api';
 export * from './src/tenants/api';
 export * from './src/tenants/dtos';
 
+import { ExtensionsApi } from './src/extensions/api';
+export * from './src/extensions/api';
+export * from './src/extensions/dtos';
+
 export interface AuthressSettings {
   //** Authress baseUrl => API Host: https://authress.io/app/#/api?route=overview */
   baseUrl: string;
@@ -1300,6 +1304,12 @@ export class AuthressClient {
    * @type {ConnectionsApi}
    */
   connections: ConnectionsApi;
+
+  /**
+   * @summary The Extensions api
+   * @type {ExtensionsApi}
+   */
+  extensions: ExtensionsApi;
 
   /**
    * @summary The Tenants api
