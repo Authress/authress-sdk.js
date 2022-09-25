@@ -2,7 +2,8 @@
 /* eslint-disable no-redeclare */
 /* eslint-disable @typescript-eslint/no-namespace */
 
-import { IPaginated } from '../response.ts';
+// eslint-disable-next-line node/no-missing-import
+import { IPaginated } from '../response';
 
 /**
  *
