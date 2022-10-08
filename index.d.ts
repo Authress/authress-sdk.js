@@ -457,6 +457,13 @@ export interface AccessKeyResponse {
      * @memberof AccessKeyResponse
      */
     accessKey?: string;
+
+    /**
+     * The unencoded OAuth client secret used with the OAuth endpoints to request a JWT using the 'client_credentials' grant type. Pass the clientId and the clientSecret to the documented /tokens endpoint.
+     * @type {string}
+     * @memberof AccessKeyResponse
+     */
+    clientSecret?: string;
 }
 /**
  * A collect of permissions that the user has to a resource.
