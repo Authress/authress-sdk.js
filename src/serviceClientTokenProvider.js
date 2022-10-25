@@ -1,6 +1,7 @@
 const { SignJWT } = require('jose');
 const { createPrivateKey } = require('crypto');
 const ArgumentRequiredError = require('./argumentRequiredError');
+const InvalidAccessKeyError = require('./invalidAccessKeyError');
 
 function getIssuer(authressCustomDomain, decodedAccessKey) {
   return `https://${authressCustomDomain.replace(/^(https?:\/\/)/, '')}/v1/clients/${encodeURIComponent(decodedAccessKey.clientId)}`;
@@ -28,10 +29,17 @@ module.exports = function(accessKey, authressCustomDomain) {
       scope: 'openid'
     };
 
-    const importedKey = createPrivateKey({ key: Buffer.from(decodedAccessKey.privateKey, 'base64'), format: 'der', type: 'pkcs8' });
-    const token = await new SignJWT(jwt).setProtectedHeader({ alg: 'EdDSA', kid: decodedAccessKey.keyId, typ: 'at+jwt' }).sign(importedKey);
-    this.cachedKeyData = { token, expires: jwt.exp * 1000 };
-    return token;
+    try {
+      const importedKey = createPrivateKey({ key: Buffer.from(decodedAccessKey.privateKey, 'base64'), format: 'der', type: 'pkcs8' });
+      const token = await new SignJWT(jwt).setProtectedHeader({ alg: 'EdDSA', kid: decodedAccessKey.keyId, typ: 'at+jwt' }).sign(importedKey);
+      this.cachedKeyData = { token, expires: jwt.exp * 1000 };
+      return token;
+    } catch (error) {
+      if (error.code === 'ERR_OSSL_ASN1_NOT_ENOUGH_DATA') {
+        throw new InvalidAccessKeyError();
+      }
+      throw error;
+    }
   };
 
   innerGetToken.getToken = innerGetToken;
