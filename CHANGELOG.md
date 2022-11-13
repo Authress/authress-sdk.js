@@ -4,6 +4,7 @@ This is the changelog for [Authress SDK](readme.md).
 ## 1.3 ##
 * Add new `Pagination` type which pagination `next.cursor` to enable paging through resources.
 * Add `Extensions` api
+* Upgraded node to 14
 
 ## 1.2 ##
 * Removed legacy support for RS512 service client tokens.
