@@ -58,11 +58,11 @@ export interface AccessRecord {
    */
   account?: AccountLink;
   /**
-   * The list of users this record applies to
+   * The list of users this record applies to. Users can either be specified at the record level or at the statement level.
    * @type {Array<User>}
    * @memberof AccessRecord
    */
-  users: Array<User>;
+  users?: Array<User>;
   /**
    * The list of admin that can edit this record even if they do not have global record edit permissions. By default the creator of the record has admin access unless explicitly this property is set.
    * @type {Array<User>}
@@ -70,7 +70,7 @@ export interface AccessRecord {
    */
   admins?: Array<User>;
   /**
-  * The list of groups this record applies to. Users in these groups will be receive access to the resources listed.
+  * The list of groups this record applies to. Users in these groups will be receive access to the resources listed. Groups can either be specified at the record level or at the statement level.
   * @type {Array<LinkedGroup>}
   * @memberof AccessRecord
   */
@@ -895,6 +895,18 @@ export interface Statement {
    * @memberof Statement
    */
   resources: Array<Resource>;
+  /**
+   * The list of users this statement applies to
+   * @type {Array<User>}
+   * @memberof AccessRecord
+   */
+   users?: Array<User>;
+   /**
+   * The list of groups this statement applies to. Users in these groups will be receive access to the resources listed.
+   * @type {Array<LinkedGroup>}
+   * @memberof AccessRecord
+   */
+   groups?: Array<LinkedGroup>;
 }
 
 /**
