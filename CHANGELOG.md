@@ -6,6 +6,7 @@ This is the changelog for [Authress SDK](readme.md).
 * Add `Extensions` api
 * Upgraded node to 14
 * Add support for users and groups at the statement level of access records.
+* Enable passing just the access token as a string to `AuthressClient`.
 
 ## 1.2 ##
 * Removed legacy support for RS512 service client tokens.

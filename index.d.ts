@@ -1271,10 +1271,9 @@ export class AuthressClient {
    * @constructor
    * @summary Creates an instance of the Authress client.
    * @param {AuthressSettings} settings The authress settings
-   * @param {Function<string>} [tokenProvider] An optional {@link ServiceClientTokenProvider} which is used to generate an Authress client with the service clients permissions.
+   * @param {Promise<Function<string>> | Function<string> | string} [tokenProvider] An optional {@link ServiceClientTokenProvider} which is used to generate an Authress client with the service clients permissions.
    */
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  constructor(settings: AuthressSettings, tokenProvider: () => string | ServiceClientTokenProvider);
+  constructor(settings: AuthressSettings, tokenProvider: (() => Promise<string>) | (() => string) | ServiceClientTokenProvider | string);
 
   /**
    * @summary The AccessRecords api

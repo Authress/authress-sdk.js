@@ -26,7 +26,7 @@ const { AuthressClient } = require('authress-sdk');
 const { AuthressClient } = require('authress-sdk');
 
 // What is my baseUrl? => API Host: https://authress.io/app/#/api?route=overview
-const authressClient = new AuthressClient({ baseUrl: 'https://DOMAIN.api-REGION.authress.io' })
+const authressClient = new AuthressClient({ baseUrl: 'https://DOMAIN.api-REGION.authress.io' });
 
 // on api route
 [route('/resources/<resourceId>')]
@@ -52,7 +52,7 @@ async function getResource(resourceId) {
 
 #### Authorize with a service client
 ```js
-const { AuthressClient, ServiceClientTokenProvider } = require('authress-sdk');
+const { AuthressClient } = require('authress-sdk');
 
 // create an instance of the API class during service initialization
 // Replace DOMAIN with the Authress domain for your account
@@ -60,7 +60,7 @@ const { AuthressClient, ServiceClientTokenProvider } = require('authress-sdk');
 // Create a service client in the Authress management portal and past the access token here
 // This will generate a token automatically instead of passing the user token to the api
 const accessToken = 'eyJrZXlJ....';
-const authressClient = new AuthressClient({ baseUrl: 'https://DOMAIN.api-REGION.authress.io' }, new ServiceClientTokenProvider(accessToken));
+const authressClient = new AuthressClient({ baseUrl: 'https://DOMAIN.api-REGION.authress.io' }, accessToken);
 
 // on api route
 [route('/resources/<resourceId>')]

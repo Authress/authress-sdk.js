@@ -9,11 +9,12 @@ const RolesApi = require('./src/rolesApi');
 const ConnectionsApi = require('./src/connectionsApi');
 const ExtensionsApi = require('./src/extensionsApi');
 const TenantsApi = require('./src/tenantsApi');
+const ServiceClientTokenProvider = require('./src/serviceClientTokenProvider');
 
 class AuthressClient {
   constructor(settings, tokenProvider) {
     this.settings = settings || {};
-    this.tokenProvider = tokenProvider;
+    this.tokenProvider = (tokenProvider && typeof tokenProvider === 'string') ? new ServiceClientTokenProvider(tokenProvider) : tokenProvider;
 
     this.httpClient = new httpClient(this.settings.baseUrl, this.tokenProvider);
     this.accessRecords = new AccessRecordsApi(this.httpClient);
@@ -33,7 +34,6 @@ class AuthressClient {
   }
 }
 
-const ServiceClientTokenProvider = require('./src/serviceClientTokenProvider');
 const TokenVerifier = require('./src/tokenVerifier');
 const UnauthorizedError = require('./src/unauthorizedError');
 module.exports = { AuthressClient, ServiceClientTokenProvider, UnauthorizedError, TokenVerifier };
