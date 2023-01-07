@@ -1,12 +1,15 @@
 # Change log
 This is the changelog for [Authress SDK](readme.md).
 
+## 2.0 ##
+* Enable passing just the access token as a string to `AuthressClient`.
+* Fix the issuer path for service client tokens to include the accountId when the custom domain is not specified. The default issuer is converted from `api.authress.io` to `accountId.api.authress.io`. if this fallback issuer domain was specified in your authorizer, upgrading this library without changing your defined issuer, which prevent future access.
+
 ## 1.3 ##
 * Add new `Pagination` type which pagination `next.cursor` to enable paging through resources.
 * Add `Extensions` api
 * Upgraded node to 14
 * Add support for users and groups at the statement level of access records.
-* Enable passing just the access token as a string to `AuthressClient`.
 
 ## 1.2 ##
 * Removed legacy support for RS512 service client tokens.

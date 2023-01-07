@@ -8,9 +8,10 @@ function getIssuer(authressCustomDomain, decodedAccessKey) {
 }
 
 module.exports = function(accessKey, authressCustomDomain) {
+  const accountId = accessKey.split('.')[2];
   const decodedAccessKey = {
     clientId: accessKey.split('.')[0], keyId: accessKey.split('.')[1],
-    audience: `${accessKey.split('.')[2]}.accounts.authress.io`, privateKey: accessKey.split('.')[3]
+    audience: `${accountId}.accounts.authress.io`, privateKey: accessKey.split('.')[3]
   };
 
   const innerGetToken = async () => {
@@ -21,7 +22,7 @@ module.exports = function(accessKey, authressCustomDomain) {
     const now = Math.round(Date.now() / 1000);
     const jwt = {
       aud: decodedAccessKey.audience,
-      iss: getIssuer(authressCustomDomain || 'api.authress.io', decodedAccessKey),
+      iss: getIssuer(authressCustomDomain || `${accountId}.api.authress.io`, decodedAccessKey),
       sub: decodedAccessKey.clientId,
       iat: now,
       // valid for 24 hours
