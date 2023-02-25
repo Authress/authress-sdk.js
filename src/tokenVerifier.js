@@ -46,7 +46,7 @@ async function getPublicKey(jwkKeyListUrl, kid) {
   }
 }
 
-module.exports = async function(authressCustomDomain, requestToken, options = { expectedPublicKey: {}, verifierOptions: {} }) {
+module.exports = async function(authressCustomDomain, requestToken, options = { expectedPublicKey: null, verifierOptions: {} }) {
   if (!requestToken) {
     const error = new Error('Unauthorized');
     error.code = 'Unauthorized';
