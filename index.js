@@ -14,7 +14,7 @@ const ServiceClientTokenProvider = require('./src/serviceClientTokenProvider');
 class AuthressClient {
   constructor(settings, tokenProvider) {
     this.settings = settings || {};
-    this.tokenProvider = (tokenProvider && typeof tokenProvider === 'string') ? new ServiceClientTokenProvider(tokenProvider) : tokenProvider;
+    this.tokenProvider = typeof tokenProvider === 'string' ? new ServiceClientTokenProvider(tokenProvider, this.settings.baseUrl) : tokenProvider;
 
     this.httpClient = new httpClient(this.settings.baseUrl, this.tokenProvider);
     this.accessRecords = new AccessRecordsApi(this.httpClient);

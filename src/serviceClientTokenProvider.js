@@ -14,15 +14,19 @@ module.exports = function(accessKey, authressCustomDomain) {
     audience: `${accountId}.accounts.authress.io`, privateKey: accessKey.split('.')[3]
   };
 
-  const innerGetToken = async () => {
+  // Injects the custom domain in case the original service provider wasn't specified with it initially
+  const innerGetToken = async fallbackAuthressCustomDomain => {
     if (this.cachedKeyData && this.cachedKeyData.token && this.cachedKeyData.expires > Date.now() + 3600000) {
       return this.cachedKeyData.token;
     }
 
+    // Do not set the issuer to be ${accountId}.api-region.authress.io it should always be set as the authress custom domain, the custom domain, or the generic api.authress.io one
+    const useFallbackAuthressCustomDomain = fallbackAuthressCustomDomain && !fallbackAuthressCustomDomain.match(/authress\.io/);
+
     const now = Math.round(Date.now() / 1000);
     const jwt = {
       aud: decodedAccessKey.audience,
-      iss: getIssuer(authressCustomDomain || `${accountId}.api.authress.io`, decodedAccessKey),
+      iss: getIssuer(authressCustomDomain || useFallbackAuthressCustomDomain && fallbackAuthressCustomDomain || `${accountId}.api.authress.io`, decodedAccessKey),
       sub: decodedAccessKey.clientId,
       iat: now,
       // valid for 24 hours
