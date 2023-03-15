@@ -1197,7 +1197,7 @@ export interface UserPermissionsApi {
    * @throws {UnauthorizedError}
    */
   // @ts-ignore
-  authorizeUser(userId?: string, resourceUri: string, permission: string): Promise<Response<void>>;
+  authorizeUser(userId?: string | null, resourceUri: string, permission: string): Promise<Response<void>>;
   /**
    * <i class=\"far fa-money-bill-alt text-primary\"></i> <span class=\"text-primary\">Billable</span> Permanently disable a token. To be used after the token has completed its use. Should be called on all tokens to ensure they are not active indefinitely.
    * @summary Disable a token
@@ -1206,7 +1206,7 @@ export interface UserPermissionsApi {
    * @throws {ArgumentRequiredError}
    */
   // @ts-ignore
-  disableUserToken(userId?: string, tokenId: string): Promise<Response<void>>;
+  disableUserToken(userId?: string | null, tokenId: string): Promise<Response<void>>;
   /**
    * <i class=\"far fa-money-bill-alt text-primary\"></i> <span class=\"text-primary\">Billable</span> Get a summary of the permissions a user has to a particular resource.
    * @summary Get the permissions a user has to a resource.
@@ -1215,7 +1215,7 @@ export interface UserPermissionsApi {
    * @throws {ArgumentRequiredError}
    */
   // @ts-ignore
-  getUserPermissionsForResource(userId?: string, resourceUri: string): Promise<Response<UserPermissions>>;
+  getUserPermissionsForResource(userId?: string | null, resourceUri: string): Promise<Response<UserPermissions>>;
   /**
    * <i class="far fa-money-bill-alt text-primary"></i> <span class="text-primary">Billable</span> Get a summary of the roles a user has to a particular resource. Users can be assigned roles from multiple access records, this may cause the same role to appear in the list more than once.<br><span class="badge badge-outline-secondary">READ: Authress:UserPermissions/{userId}</span>
    * @summary Get the roles a user has to a resource.
@@ -1224,7 +1224,7 @@ export interface UserPermissionsApi {
    * @throws {ArgumentRequiredError}
    */
   // @ts-ignore
-   getUserRolesForResource(userId?: string, resourceUri: string): Promise<Response<UserRoleCollection>>;
+   getUserRolesForResource(userId?: string | null, resourceUri: string): Promise<Response<UserRoleCollection>>;
   /**
    * <i class=\"far fa-money-bill-alt text-primary\"></i> <span class=\"text-primary\">Billable</span> Get the users resources. Get the users resources. This result is a list of resource uris that a user has an explicit permission to, a user with * access to all sub resources will return an empty list and {accessToAllSubResources} will be populated. To get a user's list of resources in these cases, it is recommended to also check explicit access to the collection resource, using the authorizeUser endpoint. In the case that the user only has access to a subset of resources in a collection, the list will be paginated.
    * @summary Get the resources a user has to permission to.
@@ -1235,7 +1235,7 @@ export interface UserPermissionsApi {
    * @param {string} [permission] A required ALLOW action to check for. Resources a user does not have this permission will not be returned.
    * @throws {ArgumentRequiredError}
    */
-  getUserResources(userId?: string, resourceUri?: string, limit?: number, cursor?: Cursor, permission?: string): Promise<Response<UserResources>>;
+  getUserResources(userId?: string | null, resourceUri?: string, limit?: number, cursor?: Cursor, permission?: string): Promise<Response<UserResources>>;
   /**
    * <i class=\"far fa-money-bill-alt text-primary\"></i> <span class=\"text-primary\">Billable</span> Get an Authress signed JWT access token using with userId as the sub. Additionally, can be configured to limit the permissions for this particular token and the length of time the token is valid. Token validation is real-time, so deleted tokens are restricted from being used as soon as they are deleted. This gives full control to the user and client creating the token. Client must have access to impersonating the user in order to generate tokens on their behalf.
    * @summary Request a user token with additional configuration
@@ -1244,7 +1244,7 @@ export interface UserPermissionsApi {
    * @throws {ArgumentRequiredError}
    */
   // @ts-ignore
-  requestUserToken(userId?: string, body: TokenRequest): Promise<Response<UserToken>>;
+  requestUserToken(userId?: string | null, body: TokenRequest): Promise<Response<UserToken>>;
 }
 
 /**
@@ -1273,7 +1273,7 @@ export class AuthressClient {
    * @param {AuthressSettings} settings The authress settings
    * @param {Promise<Function<string>> | Function<string> | string} [tokenProvider] An optional {@link ServiceClientTokenProvider} which is used to generate an Authress client with the service clients permissions.
    */
-  constructor(settings: AuthressSettings, tokenProvider: (() => Promise<string>) | (() => string) | ServiceClientTokenProvider | string);
+  constructor(settings: AuthressSettings, tokenProvider?: (() => Promise<string>) | (() => string) | ServiceClientTokenProvider | string);
 
   /**
    * @summary The AccessRecords api
