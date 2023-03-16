@@ -803,15 +803,36 @@ export interface ServiceClientOptions {
 /**
  *
  * @export
- * @interface User
+ * @interface UserIdentity
  */
-export interface User {
+export interface UserIdentity {
   /**
    *
    * @type {string}
-   * @memberof User
+   * @memberof UserIdentity
    */
   userId: string;
+
+  /**
+   *
+   * @type {string}
+   * @memberof UserIdentity
+   */
+  picture?: string;
+
+  /**
+   *
+   * @type {string}
+   * @memberof UserIdentity
+   */
+  name?: string;
+
+  /**
+   *
+   * @type {string}
+   * @memberof UserIdentity
+   */
+  email?: string;
 }
 
 /**
@@ -1258,7 +1279,7 @@ export interface UsersApi {
    * @param {string} [userId] The user te get.
    * @throws {ArgumentRequiredError}
    */
-  getUser(userId: string): Promise<Response<User>>;
+  getUser(userId: string): Promise<Response<UserIdentity>>;
 }
 
 /**
