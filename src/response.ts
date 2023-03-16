@@ -114,4 +114,4 @@ export interface PageMetadata {
   cursor: Cursor;
 }
 
-export type Cursor = string;
+export type Cursor = string | null;

@@ -1420,7 +1420,7 @@ export class UnauthorizedError extends Error {
  * @summary Thrown when the api request fails expectedly with 4XX, may also be thrown as a 5XX
 */
 export class ApiError extends Error {
-  status: int;
+  status: number;
   body: string;
   headers: string;
 }
