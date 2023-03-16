@@ -1415,6 +1415,17 @@ export class UnauthorizedError extends Error {
 }
 
 /**
+ * ApiError
+ * @export
+ * @summary Thrown when the api request fails expectedly with 4XX, may also be thrown as a 5XX
+*/
+export class ApiError extends Error {
+  status: int;
+  body: string;
+  headers: string;
+}
+
+/**
  * TokenVerificationError
  * @export
  * @summary Thrown when the user access token is invalid.
