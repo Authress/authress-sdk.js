@@ -740,7 +740,7 @@ export interface UserResourcesResources {
      * @type {string}
      * @memberof UserResourcesResources
      */
-    resourceUri?: string;
+    resourceUri: string;
 }
 /**
  * A JWT token with represents the user.
