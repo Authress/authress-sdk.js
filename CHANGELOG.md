@@ -7,6 +7,7 @@ This is the changelog for [Authress SDK](readme.md).
 * Add automatic retries to all requests.
 * Fix service client token generated tokens so that they automatically get the custom domain injected in during using in the SDK.
 * Fix TokenVerifier return type to be a `Promise`.
+* Add the `TokenVerificationError` error and `verifyToken` method directly to the Authress Client interface.
 
 ## 1.3 ##
 * Add new `Pagination` type which pagination `next.cursor` to enable paging through resources.

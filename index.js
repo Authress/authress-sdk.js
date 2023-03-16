@@ -10,6 +10,7 @@ const ConnectionsApi = require('./src/connectionsApi');
 const ExtensionsApi = require('./src/extensionsApi');
 const TenantsApi = require('./src/tenantsApi');
 const ServiceClientTokenProvider = require('./src/serviceClientTokenProvider');
+const TokenVerifier = require('./src/tokenVerifier');
 
 class AuthressClient {
   constructor(settings, tokenProvider) {
@@ -32,9 +33,12 @@ class AuthressClient {
   setToken(token) {
     this.httpClient.tokenProvider = () => token;
   }
+
+  verifyToken(token) {
+    return TokenVerifier(this.settings.baseUrl, token);
+  }
 }
 
-const TokenVerifier = require('./src/tokenVerifier');
 const UnauthorizedError = require('./src/unauthorizedError');
 module.exports = { AuthressClient, ServiceClientTokenProvider, UnauthorizedError, TokenVerifier };
 

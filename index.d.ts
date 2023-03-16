@@ -1341,6 +1341,15 @@ export class AuthressClient {
    * @param {string} jwtToken The user's JWT access token.
    */
   setToken(jwtToken: string): void;
+
+  /**
+   * @summary Verify an incoming Authress JWT request access token here.
+   * @type {Function<Promise<Record<string, unknown>>>}
+   * @param {string} jwtToken The user's JWT access token.
+   * @returns {Promise<Record<string, unknown>>} The user's verified identity.
+   * @throws {TokenVerificationError}
+   */
+  verifyToken(jwtToken: string): Promise<Record<string, unknown>>;
 }
 
 /**
@@ -1404,3 +1413,10 @@ export class UnauthorizedError extends Error {
   resourceUri: string;
   permission: string;
 }
+
+/**
+ * TokenVerificationError
+ * @export
+ * @summary Thrown when the user access token is invalid.
+*/
+export class TokenVerificationError extends Error {}

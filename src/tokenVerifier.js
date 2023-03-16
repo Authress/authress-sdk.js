@@ -4,6 +4,7 @@ const axios = require('axios');
 const { URL } = require('url');
 
 const ServiceClientTokenProvider = require('./serviceClientTokenProvider');
+const TokenVerificationError = require('./tokenVerificationError');
 
 const keyMap = {};
 const client = axios.create();
@@ -29,9 +30,7 @@ async function getPublicKey(jwkKeyListUrl, kid) {
       return jwk;
     }
 
-    const error = new Error('No matching public key found for token');
-    error.code = 'Unauthorized';
-    throw error;
+    throw new TokenVerificationError('No matching public key found for token');
   };
 
   if (!keyMap[hashKey]) {
@@ -48,9 +47,7 @@ async function getPublicKey(jwkKeyListUrl, kid) {
 
 module.exports = async function(authressCustomDomain, requestToken, options = { expectedPublicKey: null, verifierOptions: {} }) {
   if (!requestToken) {
-    const error = new Error('Unauthorized');
-    error.code = 'Unauthorized';
-    throw error;
+    throw new TokenVerificationError('Unauthorized: Token not specified');
   }
 
   let authenticationToken = requestToken;
@@ -62,39 +59,29 @@ module.exports = async function(authressCustomDomain, requestToken, options = { 
       authenticationToken = replacementToken;
       unverifiedToken = decode(replacementToken);
     } catch (tokenError) {
-      const error = new Error('Unauthorized: Invalid token');
-      error.code = 'Unauthorized';
-      throw error;
+      throw new TokenVerificationError('Unauthorized: Invalid token');
     }
   }
 
   const kid = unverifiedToken && unverifiedToken.header && unverifiedToken.header.kid;
   if (!kid) {
-    const error = new Error('Unauthorized: No KID in token');
-    error.code = 'Unauthorized';
-    throw error;
+    throw new TokenVerificationError('Unauthorized: No KID in token');
   }
 
   const issuer = unverifiedToken && unverifiedToken.payload && unverifiedToken.payload.iss;
   if (!issuer) {
-    const error = new Error('Unauthorized: No Issuer found');
-    error.code = 'Unauthorized';
-    throw error;
+    throw new TokenVerificationError('Unauthorized: No Issuer found');
   }
 
   const completeIssuerUrl = new URL(`https://${authressCustomDomain.replace(/^(https?:\/\/)/, '')}`);
   if (new URL(issuer).origin !== completeIssuerUrl.origin) {
-    const error = new Error(`Unauthorized: Invalid Issuer: ${issuer}`);
-    error.code = 'Unauthorized';
-    throw error;
+    throw new TokenVerificationError(`Unauthorized: Invalid Issuer: ${issuer}`);
   }
 
   // Handle service client checking
   const clientIdMatcher = new URL(issuer).pathname.match(/^\/v\d\/clients\/([^/]+)$/);
   if (clientIdMatcher && clientIdMatcher[1] !== unverifiedToken.payload.sub) {
-    const error = new Error(`Unauthorized: Invalid Sub found for service client token: ${unverifiedToken.payload.sub}`);
-    error.code = 'Unauthorized';
-    throw error;
+    throw new TokenVerificationError(`Unauthorized: Invalid Sub found for service client token: ${unverifiedToken.payload.sub}`);
   }
 
   const key = options.expectedPublicKey || await getPublicKey(`${issuer}/.well-known/openid-configuration/jwks`, kid);
@@ -103,8 +90,6 @@ module.exports = async function(authressCustomDomain, requestToken, options = { 
     const verifiedToken = await jwtVerify(authenticationToken, await importJWK(key), { algorithms: ['EdDSA', 'RS512'], issuer, ...options.verifierOptions });
     return verifiedToken.payload;
   } catch (verifierError) {
-    const error = new Error(`Unauthorized: ${verifierError.message}`);
-    error.code = 'Unauthorized';
-    throw error;
+    throw new TokenVerificationError(`Unauthorized: ${verifierError.message}`);
   }
 };
