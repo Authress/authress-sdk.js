@@ -8,7 +8,7 @@ class InvalidAccessKeyError extends Error {
   constructor() {
     super('The provided access key is invalid');
     this.name = 'InvalidAccessKeyError';
-    this.code = 'InvalidAccessKey';
+    this.code = 'InvalidAccessKeyError';
   }
 }
 
