@@ -34,6 +34,10 @@ module.exports = function(accessKey, authressCustomDomain) {
       scope: 'openid'
     };
 
+    if (!decodedAccessKey.privateKey) {
+      throw new InvalidAccessKeyError();
+    }
+
     try {
       const importedKey = createPrivateKey({ key: Buffer.from(decodedAccessKey.privateKey, 'base64'), format: 'der', type: 'pkcs8' });
       const token = await new SignJWT(jwt).setProtectedHeader({ alg: 'EdDSA', kid: decodedAccessKey.keyId, typ: 'at+jwt' }).sign(importedKey);

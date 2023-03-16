@@ -8,7 +8,7 @@ class TokenVerificationError extends Error {
   constructor(message) {
     super(message);
     this.name = 'TokenVerificationError';
-    this.code = 'Unauthorized';
+    this.code = 'TokenVerificationError';
   }
 }
 
