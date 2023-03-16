@@ -6,6 +6,7 @@ This is the changelog for [Authress SDK](readme.md).
 * Fix the issuer path for service client tokens to include the accountId when the custom domain is not specified. The default issuer is converted from `api.authress.io` to `accountId.api.authress.io`. if this fallback issuer domain was specified in your authorizer, upgrading this library without changing your defined issuer, which prevent future access.
 * Add automatic retries to all requests.
 * Fix service client token generated tokens so that they automatically get the custom domain injected in during using in the SDK.
+* Fix TokenVerifier return type to be a `Promise`.
 
 ## 1.3 ##
 * Add new `Pagination` type which pagination `next.cursor` to enable paging through resources.
