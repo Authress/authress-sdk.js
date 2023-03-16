@@ -40,5 +40,6 @@ class AuthressClient {
 }
 
 const UnauthorizedError = require('./src/unauthorizedError');
-module.exports = { AuthressClient, ServiceClientTokenProvider, UnauthorizedError, TokenVerifier };
+const ApiError = require('./src/apiError');
+module.exports = { AuthressClient, ServiceClientTokenProvider, UnauthorizedError, ApiError, TokenVerifier };
 
