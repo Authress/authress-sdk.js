@@ -86,7 +86,7 @@ export interface AccessRecord {
    * @type {string}
    * @memberof AccessRecord
    */
-  lastUpdated: string;
+  lastUpdated?: string;
   /**
    *
    * @type {Links}
