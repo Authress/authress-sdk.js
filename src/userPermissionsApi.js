@@ -87,7 +87,7 @@ class UserPermissionsApi {
     return response;
   }
 
-  async getUserResources(userId, resourceUri, limit, cursor, permission) {
+  async getUserResources(userId, resourceUri, limit, cursor, permission, collectionConfiguration) {
     // verify required parameter 'userId' is not null or undefined
     let tokenUserId = userId;
     if (userId === null || userId === undefined) {
@@ -111,6 +111,7 @@ class UserPermissionsApi {
       if (limit) { qs.limit = limit; }
       if (cursor) { qs.cursor = cursor; }
       if (permission) { qs.permissions = permission; }
+      if (collectionConfiguration) { qs.collectionConfiguration = collectionConfiguration; }
       url.search = new URLSearchParams(qs).toString();
 
       const response = await this.client.get(url);

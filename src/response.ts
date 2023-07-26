@@ -115,3 +115,17 @@ export interface PageMetadata {
 }
 
 export type Cursor = string | null;
+
+/**
+ *
+ * @export
+ * @interface AccountLink
+ */
+export interface AccountLink {
+  /**
+   *
+   * @type {string}
+   * @memberof AccountLink
+   */
+  accountId?: string;
+}
