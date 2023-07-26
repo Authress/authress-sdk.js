@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-empty-interface */
 /* eslint-disable no-shadow */
 
-import { Response, IPaginated, Links, Cursor } from './src/response';
+import { Response, IPaginated, Links, Cursor, AccountLink } from './src/response';
 
 import { ConnectionsApi } from './src/connections/api';
 export * from './src/connections/api';
@@ -15,6 +15,11 @@ export * from './src/tenants/dtos';
 import { ExtensionsApi } from './src/extensions/api';
 export * from './src/extensions/api';
 export * from './src/extensions/dtos';
+
+import { UserPermissionsApi } from './src/userPermissions/api';
+import { UserRoleCollection, PermissionObject } from './src/userPermissions/dtos';
+export * from './src/userPermissions/api';
+export * from './src/userPermissions/dtos';
 
 export interface AuthressSettings {
   //** Authress baseUrl => API Host: https://authress.io/app/#/api?route=overview */
@@ -318,37 +323,6 @@ export interface IdentityRequest {
      */
     preferredAudience?: string;
 }
-/**
- * A collect of permissions that the user has to a resource.
- * @export
- * @interface UserResources
- */
-export interface UserResources extends IPaginated<UserResources> {
-    /**
-     *
-     * @type {AccountLink}
-     * @memberof UserResources
-     */
-    account?: AccountLink;
-    /**
-     *
-     * @type {string}
-     * @memberof UserResources
-     */
-    userId: string;
-    /**
-     * A list of the resources the user has some permission to.
-     * @type {Array<UserResourcesResources>}
-     * @memberof UserResources
-     */
-    resources?: Array<UserResourcesResources>;
-    /**
-     * If the user has access to all sub-resources, then instead of resources being a list, this property will be populated `true`.
-     * @type {Array<UserResourcesResources>}
-     * @memberof UserResources
-     */
-    accessToAllSubResources?: boolean;
-}
 
 /**
  * The collection of a list of clients
@@ -465,68 +439,6 @@ export interface AccessKeyResponse {
      */
     clientSecret?: string;
 }
-/**
- * A collect of permissions that the user has to a resource.
- * @export
- * @interface UserPermissions
- */
-export interface UserPermissions {
-    /**
-     *
-     * @type {AccountLink}
-     * @memberof UserPermissions
-     */
-    account?: AccountLink;
-    /**
-     *
-     * @type {string}
-     * @memberof UserPermissions
-     */
-    userId: string;
-    /**
-     * A list of the permissions
-     * @type {Array<PermissionObject>}
-     * @memberof UserPermissions
-     */
-    permissions: Array<PermissionObject>;
-}
-/**
- * A JWT token with represents the user.
- * @export
- * @interface UserToken
- */
-export interface UserToken {
-    /**
-     *
-     * @type {AccountLink}
-     * @memberof UserToken
-     */
-    account?: AccountLink;
-    /**
-     *
-     * @type {string}
-     * @memberof UserToken
-     */
-    userId: string;
-    /**
-     * The unique identifier for the token
-     * @type {string}
-     * @memberof UserToken
-     */
-    tokenId: string;
-    /**
-     * The access token
-     * @type {string}
-     * @memberof UserToken
-     */
-    token: string;
-    /**
-     *
-     * @type {Links}
-     * @memberof UserToken
-     */
-    links?: Links;
-}
 
 /**
  *
@@ -627,37 +539,7 @@ export interface MetadataObject {
      */
     metadata: Record<string, unknown>;
 }
-/**
- * The collective action and associate grants on a permission
- * @export
- * @interface PermissionObject
- */
-export interface PermissionObject {
-    /**
-     * The action the permission grants, can be scoped using `:` and parent actions imply sub-action permissions, action:* or action implies action:sub-action. This property is case-insensitive, it will always be cast to lowercase before comparing actions to user permissions.
-     * @type {string}
-     * @memberof PermissionObject
-     */
-    action: string;
-    /**
-     * Does this permission grant the user the ability to execute the action?
-     * @type {boolean}
-     * @memberof PermissionObject
-     */
-    allow: boolean;
-    /**
-     * Allows the user to give the permission to others without being able to execute the action.
-     * @type {boolean}
-     * @memberof PermissionObject
-     */
-    grant: boolean;
-    /**
-     * Allows delegating or granting the permission to others without being able to execute tha action.
-     * @type {boolean}
-     * @memberof PermissionObject
-     */
-    delegate: boolean;
-}
+
 /**
  * A collect of permissions that the user has to a resource.
  * @export
@@ -729,19 +611,7 @@ export interface TokenRequest {
      */
     expires: Date;
 }
-/**
- *
- * @export
- * @interface UserResourcesResources
- */
-export interface UserResourcesResources {
-    /**
-     * The resourceUri that matches the requested resourceUri that the user has access to.
-     * @type {string}
-     * @memberof UserResourcesResources
-     */
-    resourceUri: string;
-}
+
 /**
  * A JWT token with represents the user.
  * @export
@@ -873,20 +743,6 @@ export namespace ResourcePermissionsObject {
 /**
  *
  * @export
- * @interface AccountLink
- */
-export interface AccountLink {
-  /**
-   *
-   * @type {string}
-   * @memberof AccountLink
-   */
-  accountId?: string;
-}
-
-/**
- *
- * @export
  * @interface Resource
  */
 export interface Resource {
@@ -928,39 +784,6 @@ export interface Statement {
    * @memberof AccessRecord
    */
    groups?: Array<LinkedGroup>;
-}
-
-/**
- *
- * @export
- * @interface UserRoleCollection
- */
-export interface UserRoleCollection {
-  /**
-   * @type {string}
-   * @memberof UserRoleCollection
-   */
-  userId: string;
-  /**
-   * A list of the attached user roles
-   * @type {Array<UserRole>}
-   * @memberof UserRoleCollection
-   */
-  roles: Array<UserRole>;
-}
-
-/**
- *
- * @export
- * @interface UserRole
- */
-export interface UserRole {
-  /**
-   * The identifier of the role.
-   * @type {string}
-   * @memberof UserRole
-   */
-  roleId: string;
 }
 
 /**
@@ -1201,71 +1024,6 @@ export interface ServiceClientsApi {
    * @throws {ArgumentRequiredError}
    */
   updateClient(clientId: string, body: ServiceClient): Promise<Response<ServiceClient>>;
-}
-
-/**
- * UserPermissionsApi
- * @export
- */
-export interface UserPermissionsApi {
-  /**
-   * <i class=\"far fa-money-bill-alt text-primary\"></i> <span class=\"text-primary\">Billable</span> Does the user have the specified permissions to the resource?
-   * @summary Check to see if a user has permissions to a resource.
-   * @param {string} [userId] The user to check permissions on
-   * @param {string} resourceUri The uri path of a resource to validate, must be URL encoded, uri segments are allowed, the resource must be a full path, and permissions are not inherited by sub-resources.
-   * @param {string} permission Permission to check, &#x27;*&#x27; and scoped permissions can also be checked here.
-   * @throws {ArgumentRequiredError}
-   * @throws {UnauthorizedError}
-   */
-  // @ts-ignore
-  authorizeUser(userId?: string | null, resourceUri: string, permission: string): Promise<Response<void>>;
-  /**
-   * <i class=\"far fa-money-bill-alt text-primary\"></i> <span class=\"text-primary\">Billable</span> Permanently disable a token. To be used after the token has completed its use. Should be called on all tokens to ensure they are not active indefinitely.
-   * @summary Disable a token
-   * @param {string} [userId] The user to create an impersonation token for.
-   * @param {string} tokenId The relevant token identifier
-   * @throws {ArgumentRequiredError}
-   */
-  // @ts-ignore
-  disableUserToken(userId?: string | null, tokenId: string): Promise<Response<void>>;
-  /**
-   * <i class=\"far fa-money-bill-alt text-primary\"></i> <span class=\"text-primary\">Billable</span> Get a summary of the permissions a user has to a particular resource.
-   * @summary Get the permissions a user has to a resource.
-   * @param {string} [userId] The user to check permissions on
-   * @param {string} resourceUri The uri path of a resource to validate, must be URL encoded, uri segments are allowed.
-   * @throws {ArgumentRequiredError}
-   */
-  // @ts-ignore
-  getUserPermissionsForResource(userId?: string | null, resourceUri: string): Promise<Response<UserPermissions>>;
-  /**
-   * <i class="far fa-money-bill-alt text-primary"></i> <span class="text-primary">Billable</span> Get a summary of the roles a user has to a particular resource. Users can be assigned roles from multiple access records, this may cause the same role to appear in the list more than once.<br><span class="badge badge-outline-secondary">READ: Authress:UserPermissions/{userId}</span>
-   * @summary Get the roles a user has to a resource.
-   * @param {string} [userId] The user to get roles for.
-   * @param {string} resourceUri The uri path of a resource to get roles for, must be URL encoded. Checks for explicit resource roles, roles attached to parent resources are not returned.
-   * @throws {ArgumentRequiredError}
-   */
-  // @ts-ignore
-   getUserRolesForResource(userId?: string | null, resourceUri: string): Promise<Response<UserRoleCollection>>;
-  /**
-   * <i class=\"far fa-money-bill-alt text-primary\"></i> <span class=\"text-primary\">Billable</span> Get the users resources. Get the users resources. This result is a list of resource uris that a user has an explicit permission to, a user with * access to all sub resources will return an empty list and {accessToAllSubResources} will be populated. To get a user's list of resources in these cases, it is recommended to also check explicit access to the collection resource, using the authorizeUser endpoint. In the case that the user only has access to a subset of resources in a collection, the list will be paginated.
-   * @summary Get the resources a user has to permission to.
-   * @param {string} [userId] The user to check permissions on
-   * @param {string} [resourceUri] The top level uri path of a resource to query for. Will only match explicit or collection resource sub-resources. Will not partial match resource names.
-   * @param {number} [limit] Max number of results to return
-   * @param {Cursor} [cursor] Continuation cursor for paging (will automatically be set)
-   * @param {string} [permission] A required ALLOW action to check for. Resources a user does not have this permission will not be returned.
-   * @throws {ArgumentRequiredError}
-   */
-  getUserResources(userId?: string | null, resourceUri?: string, limit?: number, cursor?: Cursor, permission?: string): Promise<Response<UserResources>>;
-  /**
-   * <i class=\"far fa-money-bill-alt text-primary\"></i> <span class=\"text-primary\">Billable</span> Get an Authress signed JWT access token using with userId as the sub. Additionally, can be configured to limit the permissions for this particular token and the length of time the token is valid. Token validation is real-time, so deleted tokens are restricted from being used as soon as they are deleted. This gives full control to the user and client creating the token. Client must have access to impersonating the user in order to generate tokens on their behalf.
-   * @summary Request a user token with additional configuration
-   * @param {string} [userId] The user to create an impersonation token for.
-   * @param {TokenRequest} body The contents of the permission to set on the token. Will be used instead of the users or clients full permissions. Cannot include permissions that the user or client do not have.
-   * @throws {ArgumentRequiredError}
-   */
-  // @ts-ignore
-  requestUserToken(userId?: string | null, body: TokenRequest): Promise<Response<UserToken>>;
 }
 
 /**
