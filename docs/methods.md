@@ -21,7 +21,7 @@ async function getResource(resourceId) {
     await authressClient.userPermissions.authorizeUser(userId, `resources/${resourceId}`, 'READ');
   } catch (error) {
     // Will throw except if the user is not authorized to read the resource
-    if (error.status === 404) {
+    if (error.code === 'UnauthorizedError') {
       return 404;
     }
     throw error;
@@ -29,6 +29,7 @@ async function getResource(resourceId) {
 
   // On success, continue with the route code to load resource and return it
   return { resource: {}, statusCode: 200 };
+}
 ```
 
 ### Authorize with a service client
@@ -51,7 +52,7 @@ async function getResource(resourceId) {
     await authressClient.userPermissions.authorizeUser(userId, `resources/${resourceId}`, 'READ');
   } catch (error) {
     // Will throw except if the user is not authorized to read the resource
-    if (error.status === 404) {
+    if (error.code === 'UnauthorizedError') {
       return 404;
     }
     throw error;
@@ -59,6 +60,7 @@ async function getResource(resourceId) {
 
   // On success, continue with the route code to load resource and return it
   return { resource: {}, statusCode: 200 };
+}
 ```
 
 ### Creating resources
