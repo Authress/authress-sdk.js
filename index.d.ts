@@ -21,6 +21,11 @@ import { UserRoleCollection, PermissionObject } from './src/userPermissions/dtos
 export * from './src/userPermissions/api';
 export * from './src/userPermissions/dtos';
 
+import { InvitesApi } from './src/invites/api';
+import { Statement, LinkedGroup, User } from './src/records/dtos';
+export * from './src/invites/api';
+export * from './src/invites/dtos';
+
 export interface AuthressSettings {
   //** Authress baseUrl => API Host: https://authress.io/app/#/api?route=overview */
   baseUrl: string;
@@ -98,19 +103,6 @@ export interface AccessRecord {
    * @memberof AccessRecord
    */
   links?: Links;
-}
-
-/**
- *
- * @export
- * @interface LinkedGroup
- */
-export interface LinkedGroup {
-  /**
-   * @type {string}
-   * @memberof LinkedGroup
-   */
-  groupId: string;
 }
 
 /**
@@ -469,20 +461,6 @@ export interface ResourceUsersCollection extends IPaginated<ResourceUsersCollect
 }
 
 /**
- *
- * @export
- * @interface User
- */
-export interface User {
-  /**
-   *
-   * @type {string}
-   * @memberof User
-   */
-  userId: string;
-}
-
-/**
  * The role which contains a list of permissions.
  * @export
  * @interface Role
@@ -738,52 +716,6 @@ export namespace ResourcePermissionsObject {
       CLAIM = 'CLAIM',
       PUBLIC = 'PUBLIC'
   }
-}
-
-/**
- *
- * @export
- * @interface Resource
- */
-export interface Resource {
-  /**
-   * A resource path which can be top level, fully qualified, or end with a *. Parent resources imply permissions to sub-resources.
-   * @type {string}
-   * @memberof Resource
-   */
-  resourceUri: string;
-}
-
-/**
- *
- * @export
- * @interface Statement
- */
-export interface Statement {
-  /**
-   *
-   * @type {Array<string>}
-   * @memberof Statement
-   */
-  roles: Array<string>;
-  /**
-   *
-   * @type {Array<Resource>}
-   * @memberof Statement
-   */
-  resources: Array<Resource>;
-  /**
-   * The list of users this statement applies to
-   * @type {Array<User>}
-   * @memberof AccessRecord
-   */
-   users?: Array<User>;
-   /**
-   * The list of groups this statement applies to. Users in these groups will be receive access to the resources listed.
-   * @type {Array<LinkedGroup>}
-   * @memberof AccessRecord
-   */
-   groups?: Array<LinkedGroup>;
 }
 
 /**
@@ -1059,6 +991,12 @@ export class AuthressClient {
    * @type {AccessRecordsApi}
    */
   accessRecords: AccessRecordsApi;
+
+  /**
+   * @summary The Invites api
+   * @type {InvitesApi}
+   */
+  invites: InvitesApi;
 
   /**
    * @summary The ServiceClients api

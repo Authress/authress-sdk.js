@@ -10,6 +10,7 @@ This is the changelog for [Authress SDK](readme.md).
 * Add the `TokenVerificationError` error and `verifyToken` method directly to the Authress Client interface.
 * Add the `ApiError` error type
 * Include `email`, `picture`, and `name` in `UserIdentity` ts definition.
+* Add the `invites` api.
 
 ## 1.3 ##
 * Add new `Pagination` type which pagination `next.cursor` to enable paging through resources.

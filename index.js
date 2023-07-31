@@ -1,5 +1,6 @@
 const httpClient = require('./src/httpClient');
 const AccessRecordsApi = require('./src/accessRecordsApi');
+const InvitesApi = require('./src/invitesApi');
 const UserPermissionsApi = require('./src/userPermissionsApi');
 const UsersApi = require('./src/usersApi');
 const ServiceClientsApi = require('./src/serviceClientsApi');
@@ -19,6 +20,7 @@ class AuthressClient {
 
     this.httpClient = new httpClient(this.settings.baseUrl, this.tokenProvider);
     this.accessRecords = new AccessRecordsApi(this.httpClient);
+    this.invites = new InvitesApi(this.httpClient);
     this.serviceClients = new ServiceClientsApi(this.httpClient);
     this.userPermissions = new UserPermissionsApi(this.httpClient);
     this.users = new UsersApi(this.httpClient);
@@ -41,5 +43,6 @@ class AuthressClient {
 
 const UnauthorizedError = require('./src/unauthorizedError');
 const ApiError = require('./src/apiError');
+
 module.exports = { AuthressClient, ServiceClientTokenProvider, UnauthorizedError, ApiError, TokenVerifier };
 
