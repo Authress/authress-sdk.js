@@ -16,13 +16,13 @@ export interface Invite {
    * @type {string}
    * @memberof Invite
    */
-  inviteId: string;
+  inviteId?: string;
   /**
    * Specify the tenant associated with the invite. The invited user must use this tenant's connection configuration to log in.
    * @type {string}
    * @memberof Invite
    */
-  tenantId: boolean;
+  tenantId?: boolean;
   /**
    * A list of statements which match roles to resources. The invited user will all statements apply to them
    * @type {Array<Statement>}
