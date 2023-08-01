@@ -12,7 +12,7 @@ import { Statement } from '../records/dtos';
  */
 export interface Invite {
   /**
-   * The unique identifier for the invite. Use this ID to accept the invite.
+   * The unique identifier for the invite. Use this ID to accept the invite. This parameter is ignored during invite creation.
    * @type {string}
    * @memberof Invite
    */
