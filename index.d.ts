@@ -27,8 +27,13 @@ export * from './src/invites/api';
 export * from './src/invites/dtos';
 
 export interface AuthressSettings {
-  //** Authress baseUrl => API Host: https://authress.io/app/#/api?route=overview */
-  baseUrl: string;
+  /**
+   * @deprecated Use the @see authressApiUrl property instead
+   */
+  baseUrl?: string;
+
+  /** Authress baseUrl => API Host: https://authress.io/app/#/api?route=overview */
+  authressApiUrl?: string;
 }
 
 /**

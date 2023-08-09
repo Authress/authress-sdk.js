@@ -16,9 +16,9 @@ const TokenVerifier = require('./src/tokenVerifier');
 class AuthressClient {
   constructor(settings, tokenProvider) {
     this.settings = settings || {};
-    this.tokenProvider = typeof tokenProvider === 'string' ? new ServiceClientTokenProvider(tokenProvider, this.settings.baseUrl) : tokenProvider;
+    this.tokenProvider = typeof tokenProvider === 'string' ? new ServiceClientTokenProvider(tokenProvider, this.settings.baseUrl || this.settings.authressApiUrl) : tokenProvider;
 
-    this.httpClient = new httpClient(this.settings.baseUrl, this.tokenProvider);
+    this.httpClient = new httpClient(this.settings.baseUrl || this.settings.authressApiUrl, this.tokenProvider);
     this.accessRecords = new AccessRecordsApi(this.httpClient);
     this.invites = new InvitesApi(this.httpClient);
     this.serviceClients = new ServiceClientsApi(this.httpClient);
@@ -37,7 +37,7 @@ class AuthressClient {
   }
 
   verifyToken(token) {
-    return TokenVerifier(this.settings.baseUrl, token);
+    return TokenVerifier(this.settings.baseUrl || this.settings.authressApiUrl, token);
   }
 }
 
