@@ -26,7 +26,8 @@ async function retryExecutor(func) {
 
 class HttpClient {
   constructor(baseUrl, tokenProvider) {
-    this.baseUrl = new URL(`https://${baseUrl.replace(/^(https?:\/\/)/, '')}`).toString().replace(/\/$/, '');
+    const sanitizedBaseUrl = baseUrl.match('localhost') ? `http://${baseUrl.replace(/^(https?:\/\/)/, '')}` : `https://${baseUrl.replace(/^(https?:\/\/)/, '')}`;
+    this.baseUrl = new URL(sanitizedBaseUrl).toString().replace(/\/$/, '');
     this.tokenProvider = tokenProvider;
 
     const client = axios.create({ baseURL: this.baseUrl });
