@@ -25,10 +25,11 @@ async function retryExecutor(func) {
 }
 
 class HttpClient {
-  constructor(baseUrl, tokenProvider) {
+  constructor(baseUrl, tokenProvider, userAgent) {
     const sanitizedBaseUrl = baseUrl.match('localhost') ? `http://${baseUrl.replace(/^(https?:\/\/)/, '')}` : `https://${baseUrl.replace(/^(https?:\/\/)/, '')}`;
     this.baseUrl = new URL(sanitizedBaseUrl).toString().replace(/\/$/, '');
     this.tokenProvider = tokenProvider;
+    this.userAgentSuffix = userAgent || '';
 
     const client = axios.create({ baseURL: this.baseUrl });
 
@@ -41,7 +42,7 @@ class HttpClient {
       };
 
       if (process && process.versions && process.versions.node) {
-        config.headers['User-Agent'] = `Javascript AuthressSDK version: ${packageInfo.version}`;
+        config.headers['User-Agent'] = `Authress SDK; Javascript; ${packageInfo.version}; ${this.userAgentSuffix}`;
       }
       return config;
     }, error => {

@@ -34,6 +34,9 @@ export interface AuthressSettings {
 
   /** Authress baseUrl => API Host: https://authress.io/app/#/api?route=overview */
   authressApiUrl?: string;
+
+  /** Set a custom user agent to identify this client, this is helpful for debugging problems and creating support tickets in the Authress Support Portal. */
+  userAgent?: string;
 }
 
 /**

@@ -18,7 +18,7 @@ class AuthressClient {
     this.settings = settings || {};
     this.tokenProvider = typeof tokenProvider === 'string' ? new ServiceClientTokenProvider(tokenProvider, this.settings.baseUrl || this.settings.authressApiUrl) : tokenProvider;
 
-    this.httpClient = new httpClient(this.settings.baseUrl || this.settings.authressApiUrl, this.tokenProvider);
+    this.httpClient = new httpClient(this.settings.baseUrl || this.settings.authressApiUrl, this.tokenProvider, this.settings.userAgent);
     this.accessRecords = new AccessRecordsApi(this.httpClient);
     this.invites = new InvitesApi(this.httpClient);
     this.serviceClients = new ServiceClientsApi(this.httpClient);
