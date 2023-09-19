@@ -6,8 +6,8 @@
 ```js
 const { AuthressClient } = require('authress-sdk');
 
-// What is my baseUrl? => API Host: https://authress.io/app/#/api?route=overview
-const authressClient = new AuthressClient({ baseUrl: 'https://DOMAIN.api-REGION.authress.io' });
+// What is my authressApiUrl? => API Host: https://authress.io/app/#/api?route=overview
+const authressClient = new AuthressClient({ authressApiUrl: 'https://login.company.com' });
 
 // on api route
 [route('/resources/<resourceId>')]
@@ -42,7 +42,7 @@ const { AuthressClient } = require('authress-sdk');
 // Create a service client in the Authress management portal and past the access token here
 // This will generate a token automatically instead of passing the user token to the api
 const accessToken = 'eyJrZXlJ....';
-const authressClient = new AuthressClient({ baseUrl: 'https://DOMAIN.api-REGION.authress.io' }, accessToken);
+const authressClient = new AuthressClient({ authressApiUrl: 'https://login.company.com' }, accessToken);
 
 // on api route
 [route('/resources/<resourceId>')]
@@ -109,7 +109,7 @@ In the case you want to make a request using the service client's secret key, us
 const { AuthressClient, ServiceClientTokenProvider } = require('authress-sdk');
 const accessToken = 'eyJrZXlJ....';
 const serviceClientTokenProvider = new ServiceClientTokenProvider(accessToken);
-const authressClient = new AuthressClient({ baseUrl: 'https://DOMAIN.api-REGION.authress.io' }, serviceClientTokenProvider);
+const authressClient = new AuthressClient({ authressApiUrl: 'https://login.company.com' }, serviceClientTokenProvider);
 
 // Get a temporary token and use it:
 const temporaryServiceClientAccessToken = await serviceClientTokenProvider.getToken();
@@ -121,7 +121,7 @@ Some of the resources in the API are paginated. These resources contain a `pagin
 
 ```js
 const { AuthressClient } = require('authress-sdk');
-const authressClient = new AuthressClient({ baseUrl: 'https://DOMAIN.api-REGION.authress.io' })
+const authressClient = new AuthressClient({ authressApiUrl: 'https://login.company.com' })
 
 // on api route
 async function (resourceId) {
