@@ -20,11 +20,11 @@ function decode(token) {
   }
 }
 
-async function getPublicKey(jwkKeyListUrl, kid) {
+async function getPublicKey(httpClient, jwkKeyListUrl, kid) {
   const hashKey = JSON.stringify({ jwkKeyListUrl, kid });
 
   const getKeyUnCached = async () => {
-    const result = await client.get(jwkKeyListUrl);
+    const result = await httpClient.get(jwkKeyListUrl);
     const jwk = result.data.keys.find(key => key.kid === kid);
     if (jwk) {
       return jwk;
@@ -45,7 +45,10 @@ async function getPublicKey(jwkKeyListUrl, kid) {
   }
 }
 
-module.exports = async function(authressCustomDomain, requestToken, options = { expectedPublicKey: null, verifierOptions: {} }) {
+module.exports = async function(authressCustomDomainOrHttpClient, requestToken, options = { expectedPublicKey: null, verifierOptions: {} }) {
+  const httpClient = typeof authressCustomDomainOrHttpClient === 'object' ? authressCustomDomainOrHttpClient : client;
+  const authressCustomDomain = typeof authressCustomDomainOrHttpClient === 'object' ? authressCustomDomainOrHttpClient.baseUrl : authressCustomDomainOrHttpClient;
+
   if (!requestToken) {
     throw new TokenVerificationError('Unauthorized: Token not specified');
   }
@@ -55,7 +58,7 @@ module.exports = async function(authressCustomDomain, requestToken, options = { 
   if (!unverifiedToken) {
     // Check if the token is a client secret and then create a token dynamically from that
     try {
-      const replacementToken = await (new ServiceClientTokenProvider(requestToken))();
+      const replacementToken = await (new ServiceClientTokenProvider(requestToken, authressCustomDomain))();
       authenticationToken = replacementToken;
       unverifiedToken = decode(replacementToken);
     } catch (tokenError) {
@@ -74,7 +77,11 @@ module.exports = async function(authressCustomDomain, requestToken, options = { 
   }
 
   const completeIssuerUrl = new URL(`https://${authressCustomDomain.replace(/^(https?:\/\/)/, '')}`);
-  if (new URL(issuer).origin !== completeIssuerUrl.origin) {
+  try {
+    if (new URL(issuer).origin !== completeIssuerUrl.origin) {
+      throw new TokenVerificationError(`Unauthorized: Invalid Issuer: ${issuer}`);
+    }
+  } catch (error) {
     throw new TokenVerificationError(`Unauthorized: Invalid Issuer: ${issuer}`);
   }
 
@@ -84,7 +91,7 @@ module.exports = async function(authressCustomDomain, requestToken, options = { 
     throw new TokenVerificationError(`Unauthorized: Invalid Sub found for service client token: ${unverifiedToken.payload.sub}`);
   }
 
-  const key = options.expectedPublicKey || await getPublicKey(`${issuer}/.well-known/openid-configuration/jwks`, kid);
+  const key = options.expectedPublicKey || await getPublicKey(httpClient, `${issuer}/.well-known/openid-configuration/jwks`, kid);
 
   try {
     const verifiedToken = await jwtVerify(authenticationToken, await importJWK(key), { algorithms: ['EdDSA', 'RS512'], issuer, ...options.verifierOptions });

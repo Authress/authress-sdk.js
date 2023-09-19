@@ -41,6 +41,7 @@ class HttpClient {
         // 'X-Powered-By': `Javascript AuthressSDK version: ${packageInfo.version}`,
       };
 
+      // Avoid breaking SDK usages in UIs that depend on this library, since we aren't allowed to set User-Agent in a browser context
       if (process && process.versions && process.versions.node) {
         config.headers['User-Agent'] = `Authress SDK; Javascript; ${packageInfo.version}; ${this.userAgentSuffix}`;
       }

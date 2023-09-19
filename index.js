@@ -37,7 +37,7 @@ class AuthressClient {
   }
 
   verifyToken(token) {
-    return TokenVerifier(this.settings.baseUrl || this.settings.authressApiUrl, token);
+    return TokenVerifier(this.httpClient, token);
   }
 }
 
