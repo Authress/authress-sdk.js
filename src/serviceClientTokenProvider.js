@@ -44,7 +44,7 @@ module.exports = function(accessKey, authressCustomDomain) {
       this.cachedKeyData = { token, expires: jwt.exp * 1000 };
       return token;
     } catch (error) {
-      if (error.code === 'ERR_OSSL_ASN1_NOT_ENOUGH_DATA') {
+      if (error.code === 'ERR_OSSL_ASN1_NOT_ENOUGH_DATA' || error.code === 'ERR_OSSL_ASN1_HEADER_TOO_LONG') {
         throw new InvalidAccessKeyError();
       }
       throw error;
