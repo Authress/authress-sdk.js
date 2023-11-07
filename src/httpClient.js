@@ -27,7 +27,7 @@ async function retryExecutor(func) {
 class HttpClient {
   constructor(baseUrl, tokenProvider, userAgent) {
     const sanitizedBaseUrl = baseUrl.match('localhost') ? `http://${baseUrl.replace(/^(https?:\/\/)/, '')}` : `https://${baseUrl.replace(/^(https?:\/\/)/, '')}`;
-    this.baseUrl = new URL(sanitizedBaseUrl).toString().replace(/\/$/, '');
+    this.baseUrl = new URL(sanitizedBaseUrl).toString().replace(/\/+$/, '');
     this.tokenProvider = tokenProvider;
     this.userAgentSuffix = userAgent || '';
 
