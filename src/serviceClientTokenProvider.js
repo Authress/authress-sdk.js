@@ -3,8 +3,9 @@ const { createPrivateKey } = require('crypto');
 const ArgumentRequiredError = require('./argumentRequiredError');
 const InvalidAccessKeyError = require('./invalidAccessKeyError');
 
-function getIssuer(authressCustomDomain, decodedAccessKey) {
-  return `https://${authressCustomDomain.replace(/^(https?:\/\/)/, '')}/v1/clients/${encodeURIComponent(decodedAccessKey.clientId)}`;
+function getIssuer(unsanitizedAuthressCustomDomain, decodedAccessKey) {
+  const authressCustomDomain = unsanitizedAuthressCustomDomain.replace(/^(https?:\/\/)/, '').replace(/\/+$/, '');
+  return `https://${authressCustomDomain}/v1/clients/${encodeURIComponent(decodedAccessKey.clientId)}`;
 }
 
 module.exports = function(accessKey, authressCustomDomain) {
