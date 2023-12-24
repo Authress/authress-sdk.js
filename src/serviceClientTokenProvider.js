@@ -2,10 +2,11 @@ const { SignJWT } = require('jose');
 const { createPrivateKey } = require('crypto');
 const ArgumentRequiredError = require('./argumentRequiredError');
 const InvalidAccessKeyError = require('./invalidAccessKeyError');
+const { sanitizeUrl } = require('./util');
 
 function getIssuer(unsanitizedAuthressCustomDomain, decodedAccessKey) {
-  const authressCustomDomain = unsanitizedAuthressCustomDomain.replace(/^(https?:\/\/)/, '').replace(/\/+$/, '');
-  return `https://${authressCustomDomain}/v1/clients/${encodeURIComponent(decodedAccessKey.clientId)}`;
+  const authressCustomDomain = sanitizeUrl(unsanitizedAuthressCustomDomain).replace(/\/+$/, '');
+  return `${authressCustomDomain}/v1/clients/${encodeURIComponent(decodedAccessKey.clientId)}`;
 }
 
 module.exports = function(accessKey, authressCustomDomain) {

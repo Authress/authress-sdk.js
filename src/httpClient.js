@@ -1,6 +1,7 @@
 const axios = require('axios');
 
 const packageInfo = require('../package.json');
+const { sanitizeUrl } = require('./util');
 
 const defaultHeaders = {
   'Content-Type': 'application/json'
@@ -26,7 +27,7 @@ async function retryExecutor(func) {
 
 class HttpClient {
   constructor(baseUrl, tokenProvider, userAgent) {
-    const sanitizedBaseUrl = baseUrl.match('localhost') ? `http://${baseUrl.replace(/^(https?:\/\/)/, '')}` : `https://${baseUrl.replace(/^(https?:\/\/)/, '')}`;
+    const sanitizedBaseUrl = sanitizeUrl(baseUrl);
     this.baseUrl = new URL(sanitizedBaseUrl).toString().replace(/\/+$/, '');
     this.tokenProvider = tokenProvider;
     this.userAgentSuffix = userAgent || '';
