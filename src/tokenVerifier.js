@@ -5,6 +5,7 @@ const { URL } = require('url');
 
 const ServiceClientTokenProvider = require('./serviceClientTokenProvider');
 const TokenVerificationError = require('./tokenVerificationError');
+const { sanitizeUrl } = require('./util');
 
 const keyMap = {};
 const client = axios.create();
@@ -76,7 +77,7 @@ module.exports = async function(authressCustomDomainOrHttpClient, requestToken, 
     throw new TokenVerificationError('Unauthorized: No Issuer found');
   }
 
-  const completeIssuerUrl = new URL(`https://${authressCustomDomain.replace(/^(https?:\/\/)/, '')}`);
+  const completeIssuerUrl = new URL(sanitizeUrl(authressCustomDomain));
   try {
     if (new URL(issuer).origin !== completeIssuerUrl.origin) {
       throw new TokenVerificationError(`Unauthorized: Invalid Issuer: ${issuer}`);
