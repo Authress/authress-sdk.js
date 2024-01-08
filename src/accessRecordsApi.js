@@ -68,7 +68,7 @@ class AccessRecordsApi {
 
     const headers = {};
     if (expectedLastModifiedTime) {
-      headers['If-Unmodified-Since'] = typeof expectedLastModifiedTime === 'string' ? expectedLastModifiedTime : expectedLastModifiedTime.toUTCString();
+      headers['If-Unmodified-Since'] = typeof expectedLastModifiedTime === 'string' ? expectedLastModifiedTime : expectedLastModifiedTime.toISOString();
     }
     const response = await this.client.put(`/v1/records/${encodeURIComponent(String(recordId))}`, body, headers);
     return response;
