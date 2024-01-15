@@ -1,5 +1,5 @@
 {
-  "name": "authress-sdk",
+  "name": "@authress/sdk",
   "version": "0.0.0",
   "description": "Client SDK for Authress authorization as a service. Provides managed authorization api to secure service resources including user data.",
   "main": "./index.js",

@@ -4,7 +4,7 @@
 
 ### Authorize using a user token
 ```js
-const { AuthressClient } = require('authress-sdk');
+const { AuthressClient } = require('@authress/sdk');
 
 // What is my authressApiUrl? => API Host: https://authress.io/app/#/api?route=overview
 const authressClient = new AuthressClient({ authressApiUrl: 'https://login.company.com' });
@@ -34,7 +34,7 @@ async function getResource(resourceId) {
 
 ### Authorize with a service client
 ```js
-const { AuthressClient } = require('authress-sdk');
+const { AuthressClient } = require('@authress/sdk');
 
 // create an instance of the API class during service initialization
 // Replace DOMAIN with the Authress domain for your account
@@ -82,7 +82,7 @@ await authressClient.accessRecords.createRecord({
 
 ### Verifying a token using the token verifier
 ```js
-const { TokenVerifier } = require('authress-sdk');
+const { TokenVerifier } = require('@authress/sdk');
 const cookieManager = require('cookie');
 
 try {
@@ -106,7 +106,7 @@ const response = await client.get(url, { 'Authorization': `Bearer: ${userAccessT
 In the case you want to make a request using the service client's secret key, use the `serviceClientTokenProvider` you've already configured:
 ```js
 // Standard library configuration:
-const { AuthressClient, ServiceClientTokenProvider } = require('authress-sdk');
+const { AuthressClient, ServiceClientTokenProvider } = require('@authress/sdk');
 const accessToken = 'eyJrZXlJ....';
 const serviceClientTokenProvider = new ServiceClientTokenProvider(accessToken);
 const authressClient = new AuthressClient({ authressApiUrl: 'https://login.company.com' }, serviceClientTokenProvider);
@@ -120,7 +120,7 @@ const response = await client.get(url, { 'Authorization': `Bearer: ${temporarySe
 Some of the resources in the API are paginated. These resources contain a `pagination.next.cursor` property when there is a next page. The cursor can be passed to query to fetch the next page. Here's an example usage:
 
 ```js
-const { AuthressClient } = require('authress-sdk');
+const { AuthressClient } = require('@authress/sdk');
 const authressClient = new AuthressClient({ authressApiUrl: 'https://login.company.com' })
 
 // on api route

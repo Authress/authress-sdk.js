@@ -30,7 +30,7 @@ jobs:
       run: yarn lint && yarn test
     - name: Deploy to NPM
       if: github.repository_owner == 'Authress' && github.ref != 'refs/heads/main' && github.ref != 'refs/heads/master' && github.event_name == 'push'
-      run: npm publish
+      run: npm publish --access public
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
 

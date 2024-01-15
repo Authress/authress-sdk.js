@@ -1,18 +1,18 @@
 # authress-sdk.js
 This is the Authress SDK used to integrate with the authorization as a service provider Authress at https://authress.io.
 
-[![npm version](https://badge.fury.io/js/authress-sdk.svg)](https://badge.fury.io/js/authress-sdk)
+[![npm version](https://badge.fury.io/js/@authress%2Fsdk.svg)](https://www.npmjs.com/package/@authress/sdk)
 
 
 ## Usage
 
 ```sh
-npm install authress-sdk
+npm install @authress/sdk
 ```
 
 Then required the package:
 ```js
-const { AuthressClient } = require('authress-sdk');
+const { AuthressClient } = require('@authress/sdk');
 ```
 
 ## Getting Started
