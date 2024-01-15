@@ -5,7 +5,7 @@
 # authress-sdk.js
 
 <p align="center">
-    <a href="https://badge.fury.io/js/authress-sdk" alt="Authress SDK on npm"><img src="https://badge.fury.io/js/authress-sdk.svg"></a>
+    <a href="https://www.npmjs.com/package/@authress/sdk" alt="Authress SDK on npm"><img src="https://badge.fury.io/js/@authress%2Fsdk.svg"></a>
     <a href="./LICENSE" alt="Apache-2.0"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"></a>
     <a href="https://authress.io/community" alt="authress community"><img src="https://img.shields.io/badge/Community-Authress-fbaf0b.svg"></a>
 </p>
@@ -16,12 +16,12 @@ This is the Authress SDK used to integrate with the authorization as a service p
 ## Usage
 
 ```sh
-npm install authress-sdk
+npm install @authress/sdk
 ```
 
 Then required the package:
 ```js
-const { AuthressClient } = require('authress-sdk');
+const { AuthressClient } = require('@authress/sdk');
 ```
 
 ## Getting Started

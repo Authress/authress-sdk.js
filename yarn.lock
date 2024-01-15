@@ -2,6 +2,23 @@
 # yarn lockfile v1
 
 
+"@authress/login@^2.3.277":
+  version "2.3.277"
+  resolved "https://registry.yarnpkg.com/@authress/login/-/login-2.3.277.tgz#978f29f798f2dbb116c40df2a65337e9fdb6b472"
+  integrity sha512-vSZPu3JWelY3F16RZjGgld8UHmj8NI5iSVVevjRvQhbc9WPHezxuUoCzBHYQw86HyC+vH8HcVC5n3bEYJjkfcA==
+  dependencies:
+    cookie "^0.5.0"
+    lodash.take "^4.1.1"
+
+"@authress/sdk@^2.2.106":
+  version "2.2.106"
+  resolved "https://registry.yarnpkg.com/@authress/sdk/-/sdk-2.2.106.tgz#cfd9b3bce68047c360cefd8c1a4af947969429c1"
+  integrity sha512-eWjMDYKVMaIuZv35+icL3OQvQ+Gt6XexQrzHfJnTVd40YGBvcuaQ0k5lmkZ0oSLR2Xf8CqwCllRPTHGcDb2vWA==
+  dependencies:
+    axios "^0.21"
+    base64url "^3.0.1"
+    jose "^4.8.3"
+
 "@eslint/eslintrc@^1.3.3":
   version "1.3.3"
   resolved "https://registry.yarnpkg.com/@eslint/eslintrc/-/eslintrc-1.3.3.tgz#2b044ab39fdfa75b4688184f9e573ce3c5b0ff95"
@@ -430,6 +447,11 @@ concat-map@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
   integrity sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==
+
+cookie@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.5.0.tgz#d1f5d71adec6558c58f389987c366aa47e994f8b"
+  integrity sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==
 
 cross-spawn@^7.0.2:
   version "7.0.3"
@@ -1294,6 +1316,11 @@ lodash.merge@^4.6.2:
   version "4.6.2"
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
   integrity sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
+
+lodash.take@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/lodash.take/-/lodash.take-4.1.1.tgz#0b4146dcb7a70c6153495187fc10b12b71fefadf"
+  integrity sha512-3T118EQjnhr9c0aBKCCMhQn0OBwRMz/O2WaRU6VH0TSKoMCmFtUpr0iUp+eWKODEiRXtYOK7R7SiBneKHdk7og==
 
 lodash@^4.17.15:
   version "4.17.21"
