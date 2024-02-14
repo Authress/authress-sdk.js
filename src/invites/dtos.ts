@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 
 // eslint-disable-next-line node/no-missing-import
-import { Statement } from '../records/dtos';
+import { Resource } from '../records/dtos';
 
 /**
  * The user invite used to invite users to your application or to Authress as an admin.
@@ -25,9 +25,28 @@ export interface Invite {
   tenantId?: boolean;
   /**
    * A list of statements which match roles to resources. The invited user will all statements apply to them when the invite is accepted.
-   * @type {Array<Statement>}
+   * @type {Array<InviteStatement>}
    * @memberof Invite
    */
-  statements?: Array<Statement>;
+  statements?: Array<InviteStatement>;
 }
 
+/**
+ *
+ * @export
+ * @interface InviteStatement
+ */
+export interface InviteStatement {
+  /**
+   *
+   * @type {Array<string>}
+   * @memberof InviteStatement
+   */
+  roles: Array<string>;
+  /**
+   *
+   * @type {Array<Resource>}
+   * @memberof InviteStatement
+   */
+  resources: Array<Resource>;
+}
