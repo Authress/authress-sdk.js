@@ -22,7 +22,7 @@ export interface Invite {
    * @type {string}
    * @memberof Invite
    */
-  tenantId?: boolean;
+  tenantId?: string;
   /**
    * A list of statements which match roles to resources. The invited user will all statements apply to them when the invite is accepted.
    * @type {Array<InviteStatement>}
