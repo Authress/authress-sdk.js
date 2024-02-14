@@ -1,6 +1,9 @@
 # Change log
 This is the changelog for [Authress SDK](readme.md).
 
+## 2.2 ##
+* Fix `Invite` to use the correct `InviteStatement` type for `Invite` statements.
+
 ## 2.0 ##
 * Enable passing just the access token as a string to `AuthressClient`.
 * Fix the issuer path for service client tokens to include the accountId when the custom domain is not specified. The default issuer is converted from `api.authress.io` to `accountId.api.authress.io`. if this fallback issuer domain was specified in your authorizer, upgrading this library without changing your defined issuer, which prevent future access.
