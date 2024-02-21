@@ -2,7 +2,7 @@
   <img src="https://authress.io/static/images/linkedin-banner.png" alt="Authress media banner">
 </p>
 
-# authress-sdk.js
+# Authress SDK for Javascript/Typscript
 
 <p align="center">
     <a href="https://www.npmjs.com/package/@authress/sdk" alt="Authress SDK on npm"><img src="https://badge.fury.io/js/@authress%2Fsdk.svg"></a>
