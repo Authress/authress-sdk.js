@@ -1,5 +1,5 @@
 <p align="center">
-  <img height="300px" src="https://authress.io/static/images/media-banner.png" alt="Authress media banner">
+  <img src="https://authress.io/static/images/linkedin-banner.png" alt="Authress media banner">
 </p>
 
 # authress-sdk.js
