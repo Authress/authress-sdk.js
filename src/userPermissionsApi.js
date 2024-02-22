@@ -94,29 +94,35 @@ class UserPermissionsApi {
       tokenUserId = await getFallbackUser(this.client);
     }
 
-    try {
-      await this.authorizeUser(userId, resourceUri, permission);
-      return {
-        status: 200,
-        headers: {},
-        data: {
-          userId: tokenUserId,
-          accessToAllSubResources: true,
-          resources: null
-        }
-      };
-    } catch (error) {
-      const url = new URL(`${this.client.baseUrl}/v1/users/${encodeURIComponent(String(tokenUserId))}/resources`);
-      const qs = { resourceUri };
-      if (limit) { qs.limit = limit; }
-      if (cursor) { qs.cursor = cursor; }
-      if (permission) { qs.permissions = permission; }
-      if (collectionConfiguration) { qs.collectionConfiguration = collectionConfiguration; }
-      url.search = new URLSearchParams(qs).toString();
-
-      const response = await this.client.get(url);
-      return response;
+    // If just checking the top level or the collectionConfiguration isn't set then assume we need to check for explicit top level.
+    // * Otherwise we can recurse down using the collectionConfiguration type.
+    if (!collectionConfiguration || collectionConfiguration === 'TOP_LEVEL_ONLY') {
+      try {
+        await this.authorizeUser(userId, resourceUri, permission);
+        return {
+          status: 200,
+          headers: {},
+          data: {
+            userId: tokenUserId,
+            accessToAllSubResources: true,
+            resources: null
+          }
+        };
+      } catch (error) {
+        // If the user doesn't have permission to everything, then use the query API.
+      }
     }
+
+    const url = new URL(`${this.client.baseUrl}/v1/users/${encodeURIComponent(String(tokenUserId))}/resources`);
+    const qs = { resourceUri };
+    if (limit) { qs.limit = limit; }
+    if (cursor) { qs.cursor = cursor; }
+    if (permission) { qs.permissions = permission; }
+    if (collectionConfiguration) { qs.collectionConfiguration = collectionConfiguration; }
+    url.search = new URLSearchParams(qs).toString();
+
+    const response = await this.client.get(url);
+    return response;
   }
 
   async requestUserToken(userId, body) {
