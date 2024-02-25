@@ -25,5 +25,23 @@ describe('tokenVerifier.js', () => {
 
       await TokenVerifier(`https://${customDomain}`, initialToken, { expectedPublicKey: publicKey, verifierOptions: { currentDate: new Date('2022-05-07') } });
     }).timeout(10000);
+
+    it('Ensure incorrect domain specification for issuer still works', async () => {
+      const accessKey = 'sc_aAKceYi7VJDCU8vB7HcTo3Q.pogP.a43706ca-9647-40e4-aeae-7dcaa54bbab3.MC4CAQAwBQYDK2VwBCIEIDVjjrIVCH3dVRq4ixRzBwjVHSoB2QzZ2iJuHq1Wshwp';
+      const publicKey = { alg: 'EdDSA', kty: 'OKP', crv: 'Ed25519', x: 'JxtSC5tZZJuaW7Aeu5Kh_3tgCpPZRkHaaFyTj5sQ3KU' };
+      const tokenProvider = new ServiceClientTokenProvider(accessKey, 'account.login.authress.io');
+      const initialToken = await tokenProvider.getToken();
+
+      await TokenVerifier('account.api-eu-west.authress.io', initialToken, { expectedPublicKey: publicKey, verifierOptions: { currentDate: new Date('2022-05-07') } });
+    }).timeout(10000);
+
+    it('Ensure incorrect domain specification for issuer still works if both are incorrectly set', async () => {
+      const accessKey = 'sc_aAKceYi7VJDCU8vB7HcTo3Q.pogP.a43706ca-9647-40e4-aeae-7dcaa54bbab3.MC4CAQAwBQYDK2VwBCIEIDVjjrIVCH3dVRq4ixRzBwjVHSoB2QzZ2iJuHq1Wshwp';
+      const publicKey = { alg: 'EdDSA', kty: 'OKP', crv: 'Ed25519', x: 'JxtSC5tZZJuaW7Aeu5Kh_3tgCpPZRkHaaFyTj5sQ3KU' };
+      const tokenProvider = new ServiceClientTokenProvider(accessKey, 'account.api-eu-west.authress.io');
+      const initialToken = await tokenProvider.getToken();
+
+      await TokenVerifier('account.api-eu-west.authress.io', initialToken, { expectedPublicKey: publicKey, verifierOptions: { currentDate: new Date('2022-05-07') } });
+    }).timeout(10000);
   });
 });

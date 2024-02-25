@@ -46,6 +46,22 @@ async function getPublicKey(httpClient, jwkKeyListUrl, kid) {
   }
 }
 
+function getSanitizedIssuerUrl(rawUrlStrng) {
+  let sanitizedUrl = rawUrlStrng;
+  if (!sanitizedUrl.startsWith('http')) {
+    sanitizedUrl = sanitizedUrl.match(/^(localhost|authress.localhost.localstack.cloud:4566$)/) ? `http://${sanitizedUrl}` : `https://${sanitizedUrl}`;
+  }
+
+  const url = new URL(sanitizedUrl);
+  const domainBaseUrlMatch = url.host.match(/^([a-z0-9-]+)[.][a-z0-9-]+[.]authress[.]io$/);
+  if (domainBaseUrlMatch) {
+    url.host = `${domainBaseUrlMatch[1]}.login.authress.io`;
+    sanitizedUrl = url.toString();
+  }
+
+  return sanitizedUrl.replace(/[/]+$/, '');
+}
+
 module.exports = async function(authressCustomDomainOrHttpClient, requestToken, options = { expectedPublicKey: null, verifierOptions: {} }) {
   const httpClient = typeof authressCustomDomainOrHttpClient === 'object' ? authressCustomDomainOrHttpClient : client;
   const authressCustomDomain = typeof authressCustomDomainOrHttpClient === 'object' ? authressCustomDomainOrHttpClient.baseUrl : authressCustomDomainOrHttpClient;
@@ -77,9 +93,10 @@ module.exports = async function(authressCustomDomainOrHttpClient, requestToken, 
     throw new TokenVerificationError('Unauthorized: No Issuer found');
   }
 
-  const completeIssuerUrl = new URL(sanitizeUrl(authressCustomDomain));
+  const completeIssuerUrl = new URL(getSanitizedIssuerUrl(authressCustomDomain));
+  const altIssuerUrl = new URL(sanitizeUrl(authressCustomDomain));
   try {
-    if (new URL(issuer).origin !== completeIssuerUrl.origin) {
+    if (new URL(issuer).origin !== completeIssuerUrl.origin && new URL(issuer).origin !== altIssuerUrl.origin) {
       throw new TokenVerificationError(`Unauthorized: Invalid Issuer: ${issuer}`);
     }
   } catch (error) {
