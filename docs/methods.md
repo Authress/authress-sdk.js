@@ -7,7 +7,7 @@
 const { AuthressClient } = require('@authress/sdk');
 
 // What is my authressApiUrl? => API Host: https://authress.io/app/#/api?route=overview
-const authressClient = new AuthressClient({ authressApiUrl: 'https://login.company.com' });
+const authressClient = new AuthressClient({ authressApiUrl: 'https://auth.yourdomain.com' });
 
 // on api route
 [route('/resources/<resourceId>')]
@@ -42,7 +42,7 @@ const { AuthressClient } = require('@authress/sdk');
 // Create a service client in the Authress management portal and past the access token here
 // This will generate a token automatically instead of passing the user token to the api
 const accessToken = 'eyJrZXlJ....';
-const authressClient = new AuthressClient({ authressApiUrl: 'https://login.company.com' }, accessToken);
+const authressClient = new AuthressClient({ authressApiUrl: 'https://auth.yourdomain.com' }, accessToken);
 
 // on api route
 [route('/resources/<resourceId>')]
@@ -82,15 +82,17 @@ await authressClient.accessRecords.createRecord({
 
 ### Verifying a token using the token verifier
 ```js
-const { TokenVerifier } = require('@authress/sdk');
+const { AuthressClient } = require('@authress/sdk');
 const cookieManager = require('cookie');
+
+const authressClient = new AuthressClient({ authressApiUrl: 'https://auth.yourdomain.com' });
 
 try {
   // Grab authorization cookie from the request, the best way to do this will be framework specific.
   const cookies = cookieManager.parse(request.headers.cookie || '');
   const userToken = cookies.authorization || request.headers.Authorization.split(' ')[1];
   // What should my url be? => https://authress.io/app/#/setup?focus=domain
-  const userIdentity = await TokenVerifier('https://login.application.com', userToken);
+  const userIdentity = await authressClient.verifyToken(userToken);
 } catch (error) {
   console.log('User is unauthorized', error);
   return { statusCode: 401 };
@@ -109,7 +111,7 @@ In the case you want to make a request using the service client's secret key, us
 const { AuthressClient, ServiceClientTokenProvider } = require('@authress/sdk');
 const accessToken = 'eyJrZXlJ....';
 const serviceClientTokenProvider = new ServiceClientTokenProvider(accessToken);
-const authressClient = new AuthressClient({ authressApiUrl: 'https://login.company.com' }, serviceClientTokenProvider);
+const authressClient = new AuthressClient({ authressApiUrl: 'https://auth.yourdomain.com' }, serviceClientTokenProvider);
 
 // Get a temporary token and use it:
 const temporaryServiceClientAccessToken = await serviceClientTokenProvider.getToken();
@@ -121,7 +123,7 @@ Some of the resources in the API are paginated. These resources contain a `pagin
 
 ```js
 const { AuthressClient } = require('@authress/sdk');
-const authressClient = new AuthressClient({ authressApiUrl: 'https://login.company.com' })
+const authressClient = new AuthressClient({ authressApiUrl: 'https://auth.yourdomain.com' })
 
 // on api route
 async function (resourceId) {
