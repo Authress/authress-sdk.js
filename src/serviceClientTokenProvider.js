@@ -30,6 +30,7 @@ module.exports = function(accessKey, authressCustomDomain) {
       aud: decodedAccessKey.audience,
       iss: getIssuer(authressCustomDomain || useFallbackAuthressCustomDomain && fallbackAuthressCustomDomain || `${accountId}.api.authress.io`, decodedAccessKey),
       sub: decodedAccessKey.clientId,
+      client_id: decodedAccessKey.clientId,
       iat: now,
       // valid for 24 hours
       exp: now + 60 * 60 * 24,
