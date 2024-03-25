@@ -579,44 +579,6 @@ export interface ResourcePermissionCollection extends IPaginated<ResourcePermiss
 }
 
 /**
- * A JWT token with represents the user.
- * @export
- * @interface UserToken
- */
-export interface UserToken {
-  /**
-   *
-   * @type {AccountLink}
-   * @memberof UserToken
-   */
-  account?: AccountLink;
-  /**
-   *
-   * @type {string}
-   * @memberof UserToken
-   */
-  userId: string;
-  /**
-   * The unique identifier for the token
-   * @type {string}
-   * @memberof UserToken
-   */
-  tokenId: string;
-  /**
-   * The access token
-   * @type {string}
-   * @memberof UserToken
-   */
-  token: string;
-  /**
-   *
-   * @type {Links}
-   * @memberof UserToken
-   */
-  links?: Links;
-}
-
-/**
  * A map of client specific options
  * @export
  * @interface ServiceClientOptions

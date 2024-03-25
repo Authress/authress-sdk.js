@@ -1,6 +1,6 @@
 /* eslint-disable node/no-missing-import */
 import { Response, Cursor } from '../response';
-import { UserPermissions, UserResources, UserToken, UserRoleCollection, GetUserResourcesParams } from './dtos';
+import { UserPermissions, UserResources, UserRoleCollection, GetUserResourcesParams } from './dtos';
 
 /**
  * UserPermissionsApi
@@ -59,3 +59,4 @@ INCLUDE_NESTED - will return all sub-resources as well as deeply nested resource
    */
   getUserResources(userId?: string | null, resourceUri?: string, limit?: number, cursor?: Cursor, permission?: string, collectionConfiguration?: GetUserResourcesParams.CollectionConfiguration):
     Promise<Response<UserResources>>;
+}

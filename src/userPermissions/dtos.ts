@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 
 // eslint-disable-next-line node/no-missing-import
-import { IPaginated, AccountLink, Links } from '../response';
+import { IPaginated, AccountLink } from '../response';
 
 /**
  * The collective action and associate grants on a permission
@@ -140,44 +140,6 @@ export interface UserResourcesResources {
    * @memberof UserResourcesResources
    */
   resourceUri: string;
-}
-
-/**
- * A JWT token with represents the user.
- * @export
- * @interface UserToken
- */
-export interface UserToken {
-  /**
-   *
-   * @type {AccountLink}
-   * @memberof UserToken
-   */
-  account?: AccountLink;
-  /**
-   *
-   * @type {string}
-   * @memberof UserToken
-   */
-  userId: string;
-  /**
-   * The unique identifier for the token
-   * @type {string}
-   * @memberof UserToken
-   */
-  tokenId: string;
-  /**
-   * The access token
-   * @type {string}
-   * @memberof UserToken
-   */
-  token: string;
-  /**
-   *
-   * @type {Links}
-   * @memberof UserToken
-   */
-  links?: Links;
 }
 
 /**
