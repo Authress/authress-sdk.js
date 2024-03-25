@@ -124,20 +124,6 @@ class UserPermissionsApi {
     const response = await this.client.get(url);
     return response;
   }
-
-  async requestUserToken(userId, body) {
-    // verify required parameter 'body' is not null or undefined
-    if (body === null || body === undefined) {
-      throw new ArgumentRequiredError('body', 'Required parameter body was null or undefined when calling requestUserToken.');
-    }
-    // verify required parameter 'userId' is not null or undefined
-    if (userId === null || userId === undefined) {
-      throw new ArgumentRequiredError('userId', 'Required parameter userId was null or undefined when calling requestUserToken.');
-    }
-    const url = `/v1/users/${encodeURIComponent(String(userId))}/tokens`;
-    const response = await this.client.post(url, body);
-    return response;
-  }
 }
 
 module.exports = UserPermissionsApi;

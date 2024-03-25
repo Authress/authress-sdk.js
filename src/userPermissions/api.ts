@@ -59,13 +59,3 @@ INCLUDE_NESTED - will return all sub-resources as well as deeply nested resource
    */
   getUserResources(userId?: string | null, resourceUri?: string, limit?: number, cursor?: Cursor, permission?: string, collectionConfiguration?: GetUserResourcesParams.CollectionConfiguration):
     Promise<Response<UserResources>>;
-  /**
-   * <i class=\"far fa-money-bill-alt text-primary\"></i> <span class=\"text-primary\">Billable</span> Get an Authress signed JWT access token using with userId as the sub. Additionally, can be configured to limit the permissions for this particular token and the length of time the token is valid. Token validation is real-time, so deleted tokens are restricted from being used as soon as they are deleted. This gives full control to the user and client creating the token. Client must have access to impersonating the user in order to generate tokens on their behalf.
-   * @summary Request a user token with additional configuration
-   * @param {string} [userId] The user to create an impersonation token for.
-   * @param {TokenRequest} body The contents of the permission to set on the token. Will be used instead of the users or clients full permissions. Cannot include permissions that the user or client do not have.
-   * @throws {ArgumentRequiredError}
-   */
-  // @ts-ignore
-  requestUserToken(userId?: string | null, body: TokenRequest): Promise<Response<UserToken>>;
-}
