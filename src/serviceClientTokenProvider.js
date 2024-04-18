@@ -55,10 +55,23 @@ module.exports = function(accessKey, authressCustomDomain) {
   };
 
   innerGetToken.getToken = innerGetToken;
-  innerGetToken.generateUserLoginUrl = async (authressCustomDomainLoginUrl, state, clientId, userId) => {
-    if (!authressCustomDomainLoginUrl) {
+  innerGetToken.generateUserLoginUrl = async (authressCustomDomainLoginUrlInput, stateInput, clientIdInput, userIdInput) => {
+    if (!authressCustomDomainLoginUrlInput) {
       throw new ArgumentRequiredError('authressCustomDomainLoginUrl', 'The authressCustomDomainLoginUrl is specified in the incoming login request, this should match the configured Authress custom domain.');
     }
+
+    let authressCustomDomainLoginUrl = authressCustomDomainLoginUrlInput;
+    let state = stateInput;
+    let clientId = clientIdInput;
+    let userId = userIdInput;
+    if (typeof authressCustomDomainLoginUrlInput === 'object' && authressCustomDomainLoginUrlInput.authenticationUrl) {
+      userId = stateInput;
+      const parameters = [...new URL(authressCustomDomainLoginUrlInput.authenticationUrl).searchParams.entries()].reduce((acc, [k, v]) => ({ ...acc, [k]: v }), {});
+      authressCustomDomainLoginUrl = authressCustomDomainLoginUrlInput.authenticationUrl;
+      clientId = parameters.client_id;
+      state = parameters.state;
+    }
+    
     if (!state) {
       throw new ArgumentRequiredError('state', 'The state should match value to generate a authorization code redirect for is required.');
     }

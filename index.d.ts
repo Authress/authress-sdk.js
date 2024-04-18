@@ -2,6 +2,8 @@
 /* eslint-disable @typescript-eslint/no-empty-interface */
 /* eslint-disable no-shadow */
 
+import { AuthenticateResponse } from '@authress/login';
+
 import { Response, IPaginated, Links, Cursor, AccountLink } from './src/response';
 
 import { ConnectionsApi } from './src/connections/api';
@@ -1052,6 +1054,16 @@ export class ServiceClientTokenProvider {
    * @returns {Promise<string>} A url to redirect the user to complete login.
    */
   generateUserLoginUrl(authressCustomDomainLoginUrl: string, state: string, clientId: string, userId: string): Promise<string>;
+
+  /**
+   * Generate the url to redirect the user back to your application from your authentication server after their credentials have been successfully verified. All these parameters should be found passed through from the user's login attempt along with their credentials. The authentication server receives a request from the user to login, with these values. Then these are constructed and sent back to Authress to verify the generated login data.
+   * @summary Generate the url to redirect the user back to your application from your authentication server after their credentials have been successfully verified.
+   * @type {Function<Promise<string>>}
+   * @param {AuthenticateResponse} authenticateResponse The response object returned from the {@link @authress/login} SDK, it contains all the necessary information into order to correctly authenticate a user.
+   * @param {string} userId The user to request a JWT for.
+   * @returns {Promise<string>} A url to redirect the user to complete login.
+   */
+  generateUserLoginUrl(authenticateResponse: AuthenticateResponse, userId: string): Promise<string>;
 }
 
 /**

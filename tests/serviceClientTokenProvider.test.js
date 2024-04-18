@@ -40,6 +40,9 @@ describe('serviceClientTokenProvider.js', () => {
 
       const issuer = new URL(initialToken).searchParams.get('iss');
       expect(issuer).to.eql('https://login.redirect-url.com/v1/clients/clientId');
+
+      const state = new URL(initialToken).searchParams.get('state');
+      expect(state).to.eql('state');
     });
 
     it('Validate cache tokens work use custom domain fallback', async () => {
@@ -48,6 +51,9 @@ describe('serviceClientTokenProvider.js', () => {
       const url = await tokenProvider.generateUserLoginUrl('https://login.redirect-url.com/login', 'state', 'clientId', 'user1');
       const issuer = new URL(url).searchParams.get('iss');
       expect(issuer).to.eql('https://login.redirect-url.com/v1/clients/clientId');
+
+      const state = new URL(url).searchParams.get('state');
+      expect(state).to.eql('state');
     });
 
     it('Validate cache tokens work use custom domain', async () => {
@@ -56,6 +62,21 @@ describe('serviceClientTokenProvider.js', () => {
       const url = await tokenProvider.generateUserLoginUrl('https://login.something-wrong.com/login', 'state', 'clientId', 'user1');
       const issuer = new URL(url).searchParams.get('iss');
       expect(issuer).to.eql('https://login.redirect-url.com/v1/clients/clientId');
+
+      const state = new URL(url).searchParams.get('state');
+      expect(state).to.eql('state');
+    });
+
+    it('Validate authentication response from the @authress/login SDK correctly generates the correct result', async () => {
+      const accessKey = 'clientId.uDeF.a43706ca-9647-40e4-aeae-7dcaa54bbab3.MC4CAQAwBQYDK2VwBCIEIE99LFw2c3DCiYwrY/Qkg1nIDiagoHtdCwb88RxarVYA';
+      const tokenProvider = new ServiceClientTokenProvider(accessKey);
+      const initialToken = await tokenProvider.generateUserLoginUrl({ authenticationUrl: 'https://login.redirect-url.com?client_id=clientId&state=state' }, 'user1');
+
+      const issuer = new URL(initialToken).searchParams.get('iss');
+      expect(issuer).to.eql('https://login.redirect-url.com/v1/clients/clientId');
+
+      const state = new URL(initialToken).searchParams.get('state');
+      expect(state).to.eql('state');
     });
   });
 });
