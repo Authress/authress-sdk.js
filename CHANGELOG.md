@@ -5,6 +5,7 @@ This is the changelog for [Authress SDK](readme.md).
 * Improve support for collectionConfiguration to skip `accessToAllSubResources` check when using `INCLUDE_NESTED` in the query.
 * Add explicit `clientId` into the generate service token JWT.
 * Support `AuthenticateResponse` from the `@authress/login` SDK.
+* Automatically set the `email_verified` property to be `true` for `generateUserLoginUrl`, when the user ID is an email address.
 
 ## 2.2 ##
 * Fix `Invite` to use the correct `InviteStatement` type for `Invite` statements.
