@@ -97,6 +97,11 @@ module.exports = function(accessKey, authressCustomDomain) {
       scope: 'openid'
     };
 
+    if (userId.match(/@/)) {
+      jwt.email = userId;
+      jwt.email_verified = true;
+    }
+
     const importedKey = createPrivateKey({ key: Buffer.from(decodedAccessKey.privateKey, 'base64'), format: 'der', type: 'pkcs8' });
     const code = await new SignJWT(jwt).setProtectedHeader({ alg: 'EdDSA', kid: decodedAccessKey.keyId, typ: 'oauth-authz-req+jwt' }).sign(importedKey);
 
