@@ -113,7 +113,7 @@ describe('serviceClientTokenProvider.js', () => {
         await serviceClientTokenProvider.generateUserLoginUrl('https://login.redirect-url.com', null, 'clientId', 'user1');
       } catch (error) {
         expect(error).to.be.instanceOf(ArgumentRequiredError);
-        expect(error.message).to.eql('The state should match value to generate a authorization code redirect for is required.');
+        expect(error.message).to.eql('The state is required to generate a authorization code redirect for is required, and should be present in the authenticationUrl.');
       }
     });
 
@@ -125,7 +125,7 @@ describe('serviceClientTokenProvider.js', () => {
         await serviceClientTokenProvider.generateUserLoginUrl('https://login.redirect-url.com', 'state', 'wrongClientId', 'user1');
       } catch (error) {
         expect(error).to.be.instanceOf(ArgumentRequiredError);
-        expect(error.message).to.eql('The clientId specifying the origin of the authentication request. This should match the service client ID');
+        expect(error.message).to.eql('The clientId should be specified in the authenticationUrl. It should match the service client ID.');
       }
     });
 
@@ -137,7 +137,7 @@ describe('serviceClientTokenProvider.js', () => {
         await serviceClientTokenProvider.generateUserLoginUrl('https://login.redirect-url.com', 'state', 'clientId', null);
       } catch (error) {
         expect(error).to.be.instanceOf(ArgumentRequiredError);
-        expect(error.message).to.eql('The user to generate a authorization code redirect for is required.');
+        expect(error.message).to.eql('The user to generate an authorization code redirect for is required.');
       }
     });
 
