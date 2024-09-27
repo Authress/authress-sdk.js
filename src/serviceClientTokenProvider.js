@@ -57,7 +57,7 @@ module.exports = function(accessKey, authressCustomDomain) {
   innerGetToken.getToken = innerGetToken;
   innerGetToken.generateUserLoginUrl = async (authressCustomDomainLoginUrlInput, stateInput, clientIdInput, userIdInput) => {
     if (!authressCustomDomainLoginUrlInput) {
-      throw new ArgumentRequiredError('authressCustomDomainLoginUrl', 'The authressCustomDomainLoginUrl is specified in the incoming login request, this should match the configured Authress custom domain.');
+      throw new ArgumentRequiredError('authressCustomDomainLoginUrl', 'The authressCustomDomainLoginUrl is not specified in the incoming login request, this should match the configured Authress custom domain.');
     }
 
     let authressCustomDomainLoginUrl = authressCustomDomainLoginUrlInput;
@@ -73,13 +73,13 @@ module.exports = function(accessKey, authressCustomDomain) {
     }
     
     if (!state) {
-      throw new ArgumentRequiredError('state', 'The state should match value to generate a authorization code redirect for is required.');
+      throw new ArgumentRequiredError('state', 'The state is required to generate a authorization code redirect for is required, and should be present in the authenticationUrl.');
     }
     if (!clientId || clientId !== decodedAccessKey.clientId) {
-      throw new ArgumentRequiredError('clientId', 'The clientId specifying the origin of the authentication request. This should match the service client ID');
+      throw new ArgumentRequiredError('clientId', 'The clientId should be specified in the authenticationUrl. It should match the service client ID.');
     }
     if (!userId) {
-      throw new ArgumentRequiredError('userId', 'The user to generate a authorization code redirect for is required.');
+      throw new ArgumentRequiredError('userId', 'The user to generate an authorization code redirect for is required.');
     }
 
     const customDomainFallback = new URL(authressCustomDomainLoginUrl).origin;
