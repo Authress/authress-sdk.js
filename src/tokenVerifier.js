@@ -31,7 +31,7 @@ async function getPublicKey(httpClient, jwkKeyListUrl, kid) {
       return jwk;
     }
 
-    throw new TokenVerificationError('No matching public key found for token');
+    throw new TokenVerificationError('The Service Client Access Key is not valid yet or has been deleted. For new Access Keys just created, key validation is cached and can take up to 5 minutes before new keys can be used.');
   };
 
   if (!keyMap[hashKey]) {
@@ -109,7 +109,7 @@ module.exports = async function(authressCustomDomainOrHttpClient, requestToken, 
     throw new TokenVerificationError(`Unauthorized: Invalid Sub found for service client token: ${unverifiedToken.payload.sub}`);
   }
 
-  const key = options.expectedPublicKey || await getPublicKey(httpClient, `${issuer}/.well-known/openid-configuration/jwks`, kid);
+  const key = options.expectedPublicKey || await getPublicKey(httpClient, `${issuer}/.well-known/openid-configuration/jwks?kid=${kid}`, kid);
 
   try {
     const verifiedToken = await jwtVerify(authenticationToken, await importJWK(key), { algorithms: ['EdDSA', 'RS512'], issuer, ...options.verifierOptions });
