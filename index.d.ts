@@ -372,13 +372,13 @@ export interface ServiceClientSummary {
  */
 export interface ServiceClient {
     /**
-     * The unique id of the client.
+     * The unique id of the client. (ReadOnly)
      * @type {string}
      * @memberof ServiceClient
      */
-    clientId: string;
+    clientId?: string;
     /**
-     *
+     * (ReadOnly)
      * @type {Date}
      * @memberof ServiceClient
      */
@@ -934,9 +934,17 @@ export class AuthressClient {
    * @constructor
    * @summary Creates an instance of the Authress client.
    * @param {AuthressSettings} settings The authress settings
-   * @param {Promise<Function<string>> | Function<string> | string} [tokenProvider] An optional {@link ServiceClientTokenProvider} which is used to generate an Authress client with the service clients permissions.
+   * @param {Promise<Function<string>> | Function<string> | string} [accessKey] The Service Client SDK Access Key.
    */
-  constructor(settings: AuthressSettings, tokenProvider?: (() => Promise<string>) | (() => string) | ServiceClientTokenProvider | string);
+  constructor(settings: AuthressSettings, accessKey?: string);
+
+  /**
+   * @constructor
+   * @summary Creates an instance of the Authress client.
+   * @param {AuthressSettings} settings The authress settings
+   * @param {Promise<Function<string>> | Function<string> | string} [tokenProvider] A {@link ServiceClientTokenProvider} which can generate an Authress client with the service clients permissions.
+   */
+  constructor(settings: AuthressSettings, tokenProvider?: (() => Promise<string>) | (() => string) | ServiceClientTokenProvider);
 
   /**
    * @summary The AccessRecords api
