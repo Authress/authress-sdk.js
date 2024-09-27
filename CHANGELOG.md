@@ -2,6 +2,7 @@
 This is the changelog for [Authress SDK](readme.md).
 
 ## 2.3 ##
+* Require minimum Node version to be 16.
 * Improve support for collectionConfiguration to skip `accessToAllSubResources` check when using `INCLUDE_NESTED` in the query.
 * Add explicit `clientId` into the generate service token JWT.
 * Support `AuthenticateResponse` from the `@authress/login` SDK.

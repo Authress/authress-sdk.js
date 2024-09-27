@@ -46,8 +46,8 @@ async function getPublicKey(httpClient, jwkKeyListUrl, kid) {
   }
 }
 
-function getSanitizedIssuerUrl(rawUrlStrng) {
-  let sanitizedUrl = rawUrlStrng;
+function getSanitizedIssuerUrl(rawUrlString) {
+  let sanitizedUrl = rawUrlString;
   if (!sanitizedUrl.startsWith('http')) {
     sanitizedUrl = sanitizedUrl.match(/^(localhost|authress.localhost.localstack.cloud:4566$)/) ? `http://${sanitizedUrl}` : `https://${sanitizedUrl}`;
   }
