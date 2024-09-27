@@ -39,7 +39,6 @@ class HttpClient {
       config.headers = {
         ...config.headers,
         Authorization: `Bearer ${token}`
-        // 'X-Powered-By': `Javascript AuthressSDK version: ${packageInfo.version}`,
       };
 
       // Avoid breaking SDK usages in UIs that depend on this library, since we aren't allowed to set User-Agent in a browser context

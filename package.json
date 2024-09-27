@@ -10,12 +10,13 @@
     "src"
   ],
   "scripts": {
-    "lint": "check-dts index.d.ts && eslint --ext .js,.ts tests src make.js index.js index.d.ts",
-    "test": "mocha tests/**/*.test.js -R spec"
+    "lint": "check-dts index.d.ts && eslint --ext .js,.ts tests tests_integration src make.js index.js index.d.ts",
+    "test": "mocha tests/*.test.js tests/**/*.test.js -R spec",
+    "integration": "mocha tests_integration/*.test.js -R spec"
   },
   "dependencies": {
     "@authress/login": "*",
-    "axios": "^0.21",
+    "axios": "^0.28.1",
     "base64url": "^3.0.1",
     "jose": "^4.8.3"
   },
