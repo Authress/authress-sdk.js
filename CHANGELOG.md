@@ -7,6 +7,7 @@ This is the changelog for [Authress SDK](readme.md).
 * Add explicit `clientId` into the generate service token JWT.
 * Support `AuthenticateResponse` from the `@authress/login` SDK.
 * Automatically set the `email_verified` property to be `true` for `generateUserLoginUrl`, when the user ID is an email address.
+* [Deprecate] Begin the removal of property `accessToAllSubResources` in `userPermissions.getUserResources`, recommendation: remove all references to this property.
 
 ## 2.2 ##
 * Fix `Invite` to use the correct `InviteStatement` type for `Invite` statements.
