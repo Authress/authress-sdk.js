@@ -120,13 +120,6 @@ export interface UserResources extends IPaginated<UserResources> {
    * @memberof UserResources
    */
   resources?: Array<UserResourcesResources>;
-  /**
-   * If the user has access to all sub-resources, then instead of resources being a list, this property will be populated `true`.
-   * @type {Array<UserResourcesResources>}
-   * @memberof UserResources
-   * @deprecated This property will always be false in later versions. To know if a user has access to all sub-resources, either call {@link authorizerUser} or specify the {@link collectionConfiguration} as {@link collectionConfiguration.INCLUDE_NESTED}.
-   */
-  accessToAllSubResources?: boolean;
 }
 
 /**
