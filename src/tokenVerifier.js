@@ -6,9 +6,15 @@ const { URL } = require('url');
 const ServiceClientTokenProvider = require('./serviceClientTokenProvider');
 const TokenVerificationError = require('./tokenVerificationError');
 const { sanitizeUrl } = require('./util');
+const packageInfo = require('../package.json');
 
 const keyMap = {};
 const client = axios.create();
+
+// Avoid breaking SDK usages in UIs that depend on this library, since we aren't allowed to set User-Agent in a browser context
+if (process && process.versions && process.versions.node) {
+  client.defaults.headers.common['User-Agent'] = `Authress SDK; Javascript; ${packageInfo.version};`;
+}
 
 function decode(token) {
   try {
