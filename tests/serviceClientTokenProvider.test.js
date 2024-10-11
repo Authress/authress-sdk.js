@@ -43,10 +43,12 @@ describe('serviceClientTokenProvider.js', () => {
 
   describe('generateUserLoginUrl()', () => {
     it('Validate that new urls are generated on every request', async () => {
+      const clock = sandbox.useFakeTimers();
+
       const accessKey = 'clientId.uDeF.acc-test_account_id.MC4CAQAwBQYDK2VwBCIEIE99LFw2c3DCiYwrY/Qkg1nIDiagoHtdCwb88RxarVYA';
       const tokenProvider = new ServiceClientTokenProvider(accessKey);
       const initialToken = await tokenProvider.generateUserLoginUrl('https://login.redirect-url.com', 'state', 'clientId', 'user1');
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      await clock.tick(1500);
       const secondToken = await tokenProvider.generateUserLoginUrl('https://login.redirect-url.com', 'state', 'clientId', 'user1');
       expect(secondToken).to.not.eql(initialToken);
 
@@ -55,6 +57,7 @@ describe('serviceClientTokenProvider.js', () => {
 
       const state = new URL(initialToken).searchParams.get('state');
       expect(state).to.eql('state');
+      clock.restore();
     });
 
     it('Validate cache tokens work use custom domain fallback', async () => {
