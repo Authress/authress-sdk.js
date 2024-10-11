@@ -4,6 +4,7 @@ This is the changelog for [Authress SDK](readme.md).
 ## 3.0 ##
 * [Breaking] UserId is now required in all `userPermissions` apis. This improves **Security By Default** requiring explicit check on who the user is.
 * [Breaking] Removal of property `accessToAllSubResources`.
+* [Breaking] `ServiceClientTokenProvider` is now a first-class Javascript Class, it cannot be used as a function.
 
 ## 2.3 ##
 * Require minimum Node version to be 16.

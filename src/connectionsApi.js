@@ -2,9 +2,14 @@ const ArgumentRequiredError = require('./argumentRequiredError');
 const jwtManager = require('./jwtManager');
 
 async function getFallbackUser(httpClient) {
-  const token = await httpClient.tokenProvider();
+  let token;
+  if (typeof httpClient.tokenProvider === 'function') {
+    token = await httpClient.tokenProvider();
+  } else if (typeof httpClient.tokenProvider === 'object') {
+    token = await httpClient.tokenProvider.getToken();
+  }
   const decodedJwt = jwtManager.decode(token);
-  return decodedJwt.sub;
+  return decodedJwt?.sub;
 }
 
 class ConnectionsApi {

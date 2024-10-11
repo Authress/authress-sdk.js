@@ -1,14 +1,7 @@
 const { URL, URLSearchParams } = require('url');
-const jwtManager = require('./jwtManager');
 
 const ArgumentRequiredError = require('./argumentRequiredError');
 const UnauthorizedError = require('./unauthorizedError');
-
-async function getFallbackUser(httpClient) {
-  const token = await httpClient.tokenProvider();
-  const decodedJwt = jwtManager.decode(token);
-  return decodedJwt.sub;
-}
 
 class UserPermissionsApi {
   constructor(client) {

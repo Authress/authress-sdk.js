@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "nextjs",
+    "target": "esnext",
     "module": "commonJS"
   },
   "exclude": []
