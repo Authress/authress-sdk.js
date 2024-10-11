@@ -93,14 +93,15 @@ module.exports = async function(authressCustomDomainOrHttpClient, requestToken, 
     throw new TokenVerificationError('Unauthorized: No Issuer found');
   }
 
-  const completeIssuerUrl = new URL(getSanitizedIssuerUrl(authressCustomDomain));
-  const altIssuerUrl = new URL(sanitizeUrl(authressCustomDomain));
+  const completeIssuerUrlOrigin = new URL(getSanitizedIssuerUrl(authressCustomDomain)).origin;
+  const altIssuerUrlOrigin = new URL(sanitizeUrl(authressCustomDomain)).origin;
+  const altGlobalIssuerUrlOrigin = new URL(sanitizeUrl(authressCustomDomain)).origin.replace(/^https:\/\/([a-z0-9-]+)[.][a-z0-9-]+[.]authress[.]io$/, 'https://$1.api.authress.io');
   try {
-    if (new URL(issuer).origin !== completeIssuerUrl.origin && new URL(issuer).origin !== altIssuerUrl.origin) {
-      throw new TokenVerificationError(`Unauthorized: Invalid Issuer: ${issuer}`);
+    if (new URL(issuer).origin !== completeIssuerUrlOrigin && new URL(issuer).origin !== altIssuerUrlOrigin && new URL(issuer).origin !== altGlobalIssuerUrlOrigin) {
+      throw new TokenVerificationError(`Unauthorized: Invalid Issuer: ${issuer}, Expected: ${completeIssuerUrlOrigin}`);
     }
   } catch (error) {
-    throw new TokenVerificationError(`Unauthorized: Invalid Issuer: ${issuer}`);
+    throw new TokenVerificationError(`Unauthorized: Invalid Issuer: ${issuer}, Expected: ${completeIssuerUrlOrigin}`);
   }
 
   // Handle service client checking
