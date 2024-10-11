@@ -35,7 +35,13 @@ class HttpClient {
     const client = axios.create({ baseURL: this.baseUrl });
 
     client.interceptors.request.use(async config => {
-      const token = await (typeof this.tokenProvider === 'function' ? this.tokenProvider(this.baseUrl) : this.tokenProvider.getToken(this.baseUrl));
+      let token;
+      if (typeof this.tokenProvider === 'function') {
+        token = await this.tokenProvider(this.baseUrl);
+      } else if (typeof this.tokenProvider === 'object') {
+        this.tokenProvider.authressCustomDomain = this.tokenProvider.authressCustomDomain || this.baseUrl;
+        token = await this.tokenProvider.getToken();
+      }
       config.headers = {
         ...config.headers,
         Authorization: `Bearer ${token}`

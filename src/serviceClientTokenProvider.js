@@ -9,41 +9,45 @@ function getIssuer(unsanitizedAuthressCustomDomain, decodedAccessKey) {
   return `${authressCustomDomain}/v1/clients/${encodeURIComponent(decodedAccessKey.clientId)}`;
 }
 
-module.exports = function(accessKey, authressCustomDomain) {
-  const accountId = accessKey.split('.')[2];
-  const decodedAccessKey = {
-    clientId: accessKey.split('.')[0], keyId: accessKey.split('.')[1],
-    audience: `${accountId}.accounts.authress.io`, privateKey: accessKey.split('.')[3]
-  };
+class ServiceClientTokenProvider {
+  constructor(accessKey, authressCustomDomain) {
+    const accountId = accessKey.split('.')[2];
+    this.accountId = accountId;
+    this.authressCustomDomain = authressCustomDomain;
+    this.decodedAccessKey = {
+      clientId: accessKey.split('.')[0], keyId: accessKey.split('.')[1],
+      audience: `${accountId}.accounts.authress.io`, privateKey: accessKey.split('.')[3]
+    };
+  }
 
-  // Injects the custom domain in case the original service provider wasn't specified with it initially
-  const innerGetToken = async fallbackAuthressCustomDomain => {
+  async getToken(options = { jwtOverrides: { header: {}, payload: {} } }) {
     if (this.cachedKeyData && this.cachedKeyData.token && this.cachedKeyData.expires > Date.now() + 3600000) {
       return this.cachedKeyData.token;
     }
 
     // Do not set the issuer to be ${accountId}.api-region.authress.io it should always be set as the authress custom domain, the custom domain, or the generic api.authress.io one
-    const useFallbackAuthressCustomDomain = fallbackAuthressCustomDomain && !fallbackAuthressCustomDomain.match(/authress\.io/);
+    const useAuthressCustomDomain = this.authressCustomDomain && !this.authressCustomDomain.match(/authress\.io/);
 
     const now = Math.round(Date.now() / 1000);
-    const jwt = {
-      aud: decodedAccessKey.audience,
-      iss: getIssuer(authressCustomDomain || useFallbackAuthressCustomDomain && fallbackAuthressCustomDomain || `${accountId}.api.authress.io`, decodedAccessKey),
-      sub: decodedAccessKey.clientId,
-      client_id: decodedAccessKey.clientId,
+    const jwt = Object.assign({
+      aud: this.decodedAccessKey.audience,
+      iss: getIssuer(useAuthressCustomDomain && this.authressCustomDomain || `${this.accountId}.api.authress.io`, this.decodedAccessKey),
+      sub: this.decodedAccessKey.clientId,
+      client_id: this.decodedAccessKey.clientId,
       iat: now,
       // valid for 24 hours
       exp: now + 60 * 60 * 24,
       scope: 'openid'
-    };
+    }, options?.jwtOverrides?.payload || {});
 
-    if (!decodedAccessKey.privateKey) {
+    if (!this.decodedAccessKey.privateKey) {
       throw new InvalidAccessKeyError();
     }
 
     try {
-      const importedKey = createPrivateKey({ key: Buffer.from(decodedAccessKey.privateKey, 'base64'), format: 'der', type: 'pkcs8' });
-      const token = await new SignJWT(jwt).setProtectedHeader({ alg: 'EdDSA', kid: decodedAccessKey.keyId, typ: 'at+jwt' }).sign(importedKey);
+      const importedKey = createPrivateKey({ key: Buffer.from(this.decodedAccessKey.privateKey, 'base64'), format: 'der', type: 'pkcs8' });
+      const header = Object.assign({ alg: 'EdDSA', kid: this.decodedAccessKey.keyId, typ: 'at+jwt' }, options?.jwtOverrides?.header || {});
+      const token = await new SignJWT(jwt).setProtectedHeader(header).sign(importedKey);
       this.cachedKeyData = { token, expires: jwt.exp * 1000 };
       return token;
     } catch (error) {
@@ -52,10 +56,9 @@ module.exports = function(accessKey, authressCustomDomain) {
       }
       throw error;
     }
-  };
+  }
 
-  innerGetToken.getToken = innerGetToken;
-  innerGetToken.generateUserLoginUrl = async (authressCustomDomainLoginUrlInput, stateInput, clientIdInput, userIdInput) => {
+  async generateUserLoginUrl(authressCustomDomainLoginUrlInput, stateInput, clientIdInput, userIdInput) {
     if (!authressCustomDomainLoginUrlInput) {
       throw new ArgumentRequiredError('authressCustomDomainLoginUrl', 'The authressCustomDomainLoginUrl is not specified in the incoming login request, this should match the configured Authress custom domain.');
     }
@@ -75,7 +78,7 @@ module.exports = function(accessKey, authressCustomDomain) {
     if (!state) {
       throw new ArgumentRequiredError('state', 'The state is required to generate a authorization code redirect for is required, and should be present in the authenticationUrl.');
     }
-    if (!clientId || clientId !== decodedAccessKey.clientId) {
+    if (!clientId || clientId !== this.decodedAccessKey.clientId) {
       throw new ArgumentRequiredError('clientId', 'The clientId should be specified in the authenticationUrl. It should match the service client ID.');
     }
     if (!userId) {
@@ -83,14 +86,14 @@ module.exports = function(accessKey, authressCustomDomain) {
     }
 
     const customDomainFallback = new URL(authressCustomDomainLoginUrl).origin;
-    const issuer = getIssuer(authressCustomDomain || customDomainFallback, decodedAccessKey);
+    const issuer = getIssuer(this.authressCustomDomain || customDomainFallback, this.decodedAccessKey);
 
     const now = Math.round(Date.now() / 1000);
     const jwt = {
-      aud: decodedAccessKey.audience,
+      aud: this.decodedAccessKey.audience,
       iss: issuer,
       sub: userId,
-      client_id: decodedAccessKey.clientId,
+      client_id: this.decodedAccessKey.clientId,
       iat: now,
       exp: now + 60,
       max_age: 60,
@@ -102,14 +105,15 @@ module.exports = function(accessKey, authressCustomDomain) {
       jwt.email_verified = true;
     }
 
-    const importedKey = createPrivateKey({ key: Buffer.from(decodedAccessKey.privateKey, 'base64'), format: 'der', type: 'pkcs8' });
-    const code = await new SignJWT(jwt).setProtectedHeader({ alg: 'EdDSA', kid: decodedAccessKey.keyId, typ: 'oauth-authz-req+jwt' }).sign(importedKey);
+    const importedKey = createPrivateKey({ key: Buffer.from(this.decodedAccessKey.privateKey, 'base64'), format: 'der', type: 'pkcs8' });
+    const code = await new SignJWT(jwt).setProtectedHeader({ alg: 'EdDSA', kid: this.decodedAccessKey.keyId, typ: 'oauth-authz-req+jwt' }).sign(importedKey);
 
     const url = new URL(authressCustomDomainLoginUrl);
     url.searchParams.set('code', code);
     url.searchParams.set('iss', issuer);
     url.searchParams.set('state', state);
     return url.toString();
-  };
-  return innerGetToken;
-};
+  }
+}
+
+module.exports = ServiceClientTokenProvider;
