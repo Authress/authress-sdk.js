@@ -32,6 +32,9 @@ class AuthressClient {
     this.tenants = new TenantsApi(this.httpClient);
   }
 
+  /**
+   * Deprecated: Will be removed in library version 4.0
+   */
   setToken(token) {
     this.httpClient.tokenProvider = () => token;
   }

@@ -1026,13 +1026,6 @@ export class AuthressClient {
   tenants: TenantsApi;
 
   /**
-   * @summary Set the users token here, so that requests made with this Authress Client will have the user's permissions
-   * @type {Function<void>}
-   * @param {string} jwtToken The user's JWT access token.
-   */
-  setToken(jwtToken: string): void;
-
-  /**
    * @summary Verify an incoming Authress JWT request access token here.
    * @type {Function<Promise<Record<string, unknown>>>}
    * @param {string} jwtToken The user's JWT access token.

@@ -6,15 +6,14 @@
 ```js
 const { AuthressClient } = require('@authress/sdk');
 
-// What is my authressApiUrl? => API Host: https://authress.io/app/#/api?route=overview
-const authressClient = new AuthressClient({ authressApiUrl: 'https://auth.yourdomain.com' });
-
 // on api route
 [route('/resources/<resourceId>')]
 async function getResource(resourceId) {
   // Get the user token and pass it to authress
   const authorizationToken = request.headers.get('authorization');
-  authressClient.setToken(authorizationToken);
+
+  // What is my authressApiUrl? => API Host: https://authress.io/app/#/api?route=overview
+  const authressClient = new AuthressClient({ authressApiUrl: 'https://auth.yourdomain.com' }, () => authorizationToken);
 
   // Check Authress to authorize the user
   try {
@@ -123,13 +122,12 @@ Some of the resources in the API are paginated. These resources contain a `pagin
 
 ```js
 const { AuthressClient } = require('@authress/sdk');
-const authressClient = new AuthressClient({ authressApiUrl: 'https://auth.yourdomain.com' })
 
 // on api route
 async function (resourceId) {
   // Get the user token and pass it to authress
   const authorizationToken = request.headers.get('authorization');
-  authressClient.setToken(authorizationToken);
+  const authressClient = new AuthressClient({ authressApiUrl: 'https://auth.yourdomain.com' }, () => authorizationToken);
 
   // Get the users resources
   const response = await authressClient.userPermissions.getUserResources(userId, `resources/*`, 10, null, 'READ');
