@@ -22,7 +22,13 @@ export interface Invite {
    * @type {string}
    * @memberof Invite
    */
-  tenantId?: string;
+  defaultLoginTenantId?: string;
+  /**
+   * Provided by Authress as a unique URI that can be used to start the Authress Login flow for the user. Provide this property in the `request_uri` property, when not using the Authress Login UI SDK. This parameter is ignored during invite creation.
+   * @type {string}
+   * @memberof Invite
+   */
+  authenticationRequestUri?: string;
   /**
    * A list of statements which match roles to resources. The invited user will all statements apply to them when the invite is accepted.
    * @type {Array<InviteStatement>}
