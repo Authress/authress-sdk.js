@@ -67,6 +67,6 @@
   },
   "homepage": "https://authress.io",
   "engines": {
-    "node": ">=16"
+    "node": ">=18"
   }
 }
