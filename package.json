@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@authress/login": "*",
-    "axios": "^0.28.1",
+    "axios": "*",
     "base64url": "^3.0.1",
     "jose": "^4.8.3"
   },
