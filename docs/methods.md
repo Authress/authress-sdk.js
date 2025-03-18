@@ -107,10 +107,9 @@ const response = await client.get(url, { 'Authorization': `Bearer: ${userAccessT
 In the case you want to make a request using the service client's secret key, use the `serviceClientTokenProvider` you've already configured:
 ```js
 // Standard library configuration:
-const { AuthressClient, ServiceClientTokenProvider } = require('@authress/sdk');
+const { ServiceClientTokenProvider } = require('@authress/sdk');
 const accessToken = 'eyJrZXlJ....';
-const serviceClientTokenProvider = new ServiceClientTokenProvider(accessToken);
-const authressClient = new AuthressClient({ authressApiUrl: 'https://auth.yourdomain.com' }, serviceClientTokenProvider);
+const serviceClientTokenProvider = new ServiceClientTokenProvider(accessToken, 'https://auth.yourdomain.com');
 
 // Get a temporary token and use it:
 const temporaryServiceClientAccessToken = await serviceClientTokenProvider.getToken();
