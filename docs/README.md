@@ -17,68 +17,68 @@ Class | Method | HTTP request | Description
 *authress.accessRecords* | [**getRequests**](./AccessRecordsApi.md#getRequests) | **GET** /v1/requests | List access requests
 *authress.accessRecords* | [**respondToAccessRequest**](./AccessRecordsApi.md#respondToAccessRequest) | **PATCH** /v1/requests/{requestId} | Approve or deny access request
 *authress.accessRecords* | [**updateRecord**](./AccessRecordsApi.md#updateRecord) | **PUT** /v1/records/{recordId} | Update access record
-*Authress.accounts* | [**delegateAuthentication**](./AccountsApi.md#delegateAuthentication) | **POST** /v1/identities | Link external provider
-*Authress.accounts* | [**getAccount**](./AccountsApi.md#getAccount) | **GET** /v1/accounts/{accountId} | Retrieve account information
-*Authress.accounts* | [**getAccountIdentities**](./AccountsApi.md#getAccountIdentities) | **GET** /v1/identities | List linked external providers
-*Authress.accounts* | [**getAccounts**](./AccountsApi.md#getAccounts) | **GET** /v1/accounts | List user Authress accounts
-*Authress.applications* | [**createApplication**](./ApplicationsApi.md#createApplication) | **POST** /v1/applications | Create application
-*Authress.applications* | [**delegateUserLogin**](./ApplicationsApi.md#delegateUserLogin) | **POST** /v1/applications/{applicationId}/users/{userId}/delegation | Log user into third-party application
-*Authress.applications* | [**deleteApplication**](./ApplicationsApi.md#deleteApplication) | **DELETE** /v1/applications/{applicationId} | Delete the application
-*Authress.applications* | [**getApplication**](./ApplicationsApi.md#getApplication) | **GET** /v1/applications/{applicationId} | Retrieve application
-*Authress.applications* | [**getApplications**](./ApplicationsApi.md#getApplications) | **GET** /v1/applications | List applications
-*Authress.applications* | [**updateApplication**](./ApplicationsApi.md#updateApplication) | **PUT** /v1/applications/{applicationId} | Update application
-*Authress.connections* | [**createConnection**](./ConnectionsApi.md#createConnection) | **POST** /v1/connections | Create SSO connection
-*Authress.connections* | [**deleteConnection**](./ConnectionsApi.md#deleteConnection) | **DELETE** /v1/connections/{connectionId} | Delete SSO connection
-*Authress.connections* | [**getConnection**](./ConnectionsApi.md#getConnection) | **GET** /v1/connections/{connectionId} | Retrieve SSO connection
-*Authress.connections* | [**getConnectionCredentials**](./ConnectionsApi.md#getConnectionCredentials) | **GET** /v1/connections/{connectionId}/users/{userId}/credentials | Retrieve user connection credentials
-*Authress.connections* | [**getConnections**](./ConnectionsApi.md#getConnections) | **GET** /v1/connections | List SSO connections
-*Authress.connections* | [**updateConnection**](./ConnectionsApi.md#updateConnection) | **PUT** /v1/connections/{connectionId} | Update SSO connection
-*Authress.extensions* | [**createExtension**](./ExtensionsApi.md#createExtension) | **POST** /v1/extensions | Create extension
-*Authress.extensions* | [**deleteExtension**](./ExtensionsApi.md#deleteExtension) | **DELETE** /v1/extensions/{extensionId} | Delete extension
-*Authress.extensions* | [**getExtension**](./ExtensionsApi.md#getExtension) | **GET** /v1/extensions/{extensionId} | Retrieve extension
-*Authress.extensions* | [**getExtensions**](./ExtensionsApi.md#getExtensions) | **GET** /v1/extensions | List extensions
-*Authress.extensions* | [**login**](./ExtensionsApi.md#login) | **GET** / | OAuth Authorize
-*Authress.extensions* | [**requestToken**](./ExtensionsApi.md#requestToken) | **POST** /api/authentication/oauth/tokens | OAuth Token
-*Authress.extensions* | [**updateExtension**](./ExtensionsApi.md#updateExtension) | **PUT** /v1/extensions/{extensionId} | Update extension
-*Authress.groups* | [**createGroup**](./GroupsApi.md#createGroup) | **POST** /v1/groups | Create group
-*Authress.groups* | [**deleteGroup**](./GroupsApi.md#deleteGroup) | **DELETE** /v1/groups/{groupId} | Delete group
-*Authress.groups* | [**getGroup**](./GroupsApi.md#getGroup) | **GET** /v1/groups/{groupId} | Retrieve group
-*Authress.groups* | [**getGroups**](./GroupsApi.md#getGroups) | **GET** /v1/groups | List groups
-*Authress.groups* | [**updateGroup**](./GroupsApi.md#updateGroup) | **PUT** /v1/groups/{groupId} | Update a group
-*Authress.invites* | [**createInvite**](./InvitesApi.md#createInvite) | **POST** /v1/invites | Create user invite
-*Authress.invites* | [**deleteInvite**](./InvitesApi.md#deleteInvite) | **DELETE** /v1/invites/{inviteId} | Delete invite
-*Authress.invites* | [**getInvite**](./InvitesApi.md#getInvite) | **GET** /v1/invites/{inviteId} | Retrieve invite
-*Authress.invites* | [**respondToInvite**](./InvitesApi.md#respondToInvite) | **PATCH** /v1/invites/{inviteId} | Accept invite
-*Authress.resourcePermissions* | [**getPermissionedResource**](./ResourcePermissionsApi.md#getPermissionedResource) | **GET** /v1/resources/{resourceUri} | Retrieve resource configuration
-*Authress.resourcePermissions* | [**getPermissionedResources**](./ResourcePermissionsApi.md#getPermissionedResources) | **GET** /v1/resources | List all resource configurations
-*Authress.resourcePermissions* | [**getResourceUsers**](./ResourcePermissionsApi.md#getResourceUsers) | **GET** /v1/resources/{resourceUri}/users | List users with resource access
-*Authress.resourcePermissions* | [**updatePermissionedResource**](./ResourcePermissionsApi.md#updatePermissionedResource) | **PUT** /v1/resources/{resourceUri} | Update resource configuration
-*Authress.roles* | [**createRole**](./RolesApi.md#createRole) | **POST** /v1/roles | Create role
-*Authress.roles* | [**deleteRole**](./RolesApi.md#deleteRole) | **DELETE** /v1/roles/{roleId} | Delete role
-*Authress.roles* | [**getRole**](./RolesApi.md#getRole) | **GET** /v1/roles/{roleId} | Retrieve role
-*Authress.roles* | [**getRoles**](./RolesApi.md#getRoles) | **GET** /v1/roles | List roles
-*Authress.roles* | [**updateRole**](./RolesApi.md#updateRole) | **PUT** /v1/roles/{roleId} | Update role
-*Authress.serviceClients* | [**createClient**](./ServiceClientsApi.md#createClient) | **POST** /v1/clients | Create service client
-*Authress.serviceClients* | [**deleteAccessKey**](./ServiceClientsApi.md#deleteAccessKey) | **DELETE** /v1/clients/{clientId}/access-keys/{keyId} | Delete service client access key
-*Authress.serviceClients* | [**deleteClient**](./ServiceClientsApi.md#deleteClient) | **DELETE** /v1/clients/{clientId} | Delete service client
-*Authress.serviceClients* | [**getClient**](./ServiceClientsApi.md#getClient) | **GET** /v1/clients/{clientId} | Retrieve service client
-*Authress.serviceClients* | [**getClients**](./ServiceClientsApi.md#getClients) | **GET** /v1/clients | List service clients
-*Authress.serviceClients* | [**requestAccessKey**](./ServiceClientsApi.md#requestAccessKey) | **POST** /v1/clients/{clientId}/access-keys | Generate service client access key
-*Authress.serviceClients* | [**updateClient**](./ServiceClientsApi.md#updateClient) | **PUT** /v1/clients/{clientId} | Update service client
-*Authress.tenants* | [**createTenant**](./TenantsApi.md#createTenant) | **POST** /v1/tenants | Create tenant
-*Authress.tenants* | [**deleteTenant**](./TenantsApi.md#deleteTenant) | **DELETE** /v1/tenants/{tenantId} | Delete tenant
-*Authress.tenants* | [**getTenant**](./TenantsApi.md#getTenant) | **GET** /v1/tenants/{tenantId} | Retrieve tenant
-*Authress.tenants* | [**getTenants**](./TenantsApi.md#getTenants) | **GET** /v1/tenants | List tenants
-*Authress.tenants* | [**linkTenantUser**](./TenantsApi.md#linkTenantUser) | **PATCH** /v1/tenants/{tenantId}/users | Link tenant user
-*Authress.tenants* | [**updateTenant**](./TenantsApi.md#updateTenant) | **PUT** /v1/tenants/{tenantId} | Update tenant
-*Authress.userPermissions* | [**authorizeUser**](./UserPermissionsApi.md#authorizeUser) | **GET** /v1/users/{userId}/resources/{resourceUri}/permissions/{permission} | Verify user authorization
-*Authress.userPermissions* | [**getUserPermissionsForResource**](./UserPermissionsApi.md#getUserPermissionsForResource) | **GET** /v1/users/{userId}/resources/{resourceUri}/permissions | Get user permissions for resource
-*Authress.userPermissions* | [**getUserResources**](./UserPermissionsApi.md#getUserResources) | **GET** /v1/users/{userId}/resources | List user resources
-*Authress.userPermissions* | [**getUserRolesForResource**](./UserPermissionsApi.md#getUserRolesForResource) | **GET** /v1/users/{userId}/resources/{resourceUri}/roles | Get user roles for resource
-*Authress.users* | [**deleteUser**](./UsersApi.md#deleteUser) | **DELETE** /v1/users/{userId} | Delete a user
-*Authress.users* | [**getUser**](./UsersApi.md#getUser) | **GET** /v1/users/{userId} | Retrieve a user
-*Authress.users* | [**getUsers**](./UsersApi.md#getUsers) | **GET** /v1/users | List users
-*Authress.users* | [**linkTenantUser**](./UsersApi.md#linkTenantUser) | **PATCH** /v1/tenants/{tenantId}/users | Link tenant user
+*authress.accounts* | [**delegateAuthentication**](./AccountsApi.md#delegateAuthentication) | **POST** /v1/identities | Link external provider
+*authress.accounts* | [**getAccount**](./AccountsApi.md#getAccount) | **GET** /v1/accounts/{accountId} | Retrieve account information
+*authress.accounts* | [**getAccountIdentities**](./AccountsApi.md#getAccountIdentities) | **GET** /v1/identities | List linked external providers
+*authress.accounts* | [**getAccounts**](./AccountsApi.md#getAccounts) | **GET** /v1/accounts | List user Authress accounts
+*authress.applications* | [**createApplication**](./ApplicationsApi.md#createApplication) | **POST** /v1/applications | Create application
+*authress.applications* | [**delegateUserLogin**](./ApplicationsApi.md#delegateUserLogin) | **POST** /v1/applications/{applicationId}/users/{userId}/delegation | Log user into third-party application
+*authress.applications* | [**deleteApplication**](./ApplicationsApi.md#deleteApplication) | **DELETE** /v1/applications/{applicationId} | Delete the application
+*authress.applications* | [**getApplication**](./ApplicationsApi.md#getApplication) | **GET** /v1/applications/{applicationId} | Retrieve application
+*authress.applications* | [**getApplications**](./ApplicationsApi.md#getApplications) | **GET** /v1/applications | List applications
+*authress.applications* | [**updateApplication**](./ApplicationsApi.md#updateApplication) | **PUT** /v1/applications/{applicationId} | Update application
+*authress.connections* | [**createConnection**](./ConnectionsApi.md#createConnection) | **POST** /v1/connections | Create SSO connection
+*authress.connections* | [**deleteConnection**](./ConnectionsApi.md#deleteConnection) | **DELETE** /v1/connections/{connectionId} | Delete SSO connection
+*authress.connections* | [**getConnection**](./ConnectionsApi.md#getConnection) | **GET** /v1/connections/{connectionId} | Retrieve SSO connection
+*authress.connections* | [**getConnectionCredentials**](./ConnectionsApi.md#getConnectionCredentials) | **GET** /v1/connections/{connectionId}/users/{userId}/credentials | Retrieve user connection credentials
+*authress.connections* | [**getConnections**](./ConnectionsApi.md#getConnections) | **GET** /v1/connections | List SSO connections
+*authress.connections* | [**updateConnection**](./ConnectionsApi.md#updateConnection) | **PUT** /v1/connections/{connectionId} | Update SSO connection
+*authress.extensions* | [**createExtension**](./ExtensionsApi.md#createExtension) | **POST** /v1/extensions | Create extension
+*authress.extensions* | [**deleteExtension**](./ExtensionsApi.md#deleteExtension) | **DELETE** /v1/extensions/{extensionId} | Delete extension
+*authress.extensions* | [**getExtension**](./ExtensionsApi.md#getExtension) | **GET** /v1/extensions/{extensionId} | Retrieve extension
+*authress.extensions* | [**getExtensions**](./ExtensionsApi.md#getExtensions) | **GET** /v1/extensions | List extensions
+*authress.extensions* | [**login**](./ExtensionsApi.md#login) | **GET** / | OAuth Authorize
+*authress.extensions* | [**requestToken**](./ExtensionsApi.md#requestToken) | **POST** /api/authentication/oauth/tokens | OAuth Token
+*authress.extensions* | [**updateExtension**](./ExtensionsApi.md#updateExtension) | **PUT** /v1/extensions/{extensionId} | Update extension
+*authress.groups* | [**createGroup**](./GroupsApi.md#createGroup) | **POST** /v1/groups | Create group
+*authress.groups* | [**deleteGroup**](./GroupsApi.md#deleteGroup) | **DELETE** /v1/groups/{groupId} | Delete group
+*authress.groups* | [**getGroup**](./GroupsApi.md#getGroup) | **GET** /v1/groups/{groupId} | Retrieve group
+*authress.groups* | [**getGroups**](./GroupsApi.md#getGroups) | **GET** /v1/groups | List groups
+*authress.groups* | [**updateGroup**](./GroupsApi.md#updateGroup) | **PUT** /v1/groups/{groupId} | Update a group
+*authress.invites* | [**createInvite**](./InvitesApi.md#createInvite) | **POST** /v1/invites | Create user invite
+*authress.invites* | [**deleteInvite**](./InvitesApi.md#deleteInvite) | **DELETE** /v1/invites/{inviteId} | Delete invite
+*authress.invites* | [**getInvite**](./InvitesApi.md#getInvite) | **GET** /v1/invites/{inviteId} | Retrieve invite
+*authress.invites* | [**respondToInvite**](./InvitesApi.md#respondToInvite) | **PATCH** /v1/invites/{inviteId} | Accept invite
+*authress.resourcePermissions* | [**getPermissionedResource**](./ResourcePermissionsApi.md#getPermissionedResource) | **GET** /v1/resources/{resourceUri} | Retrieve resource configuration
+*authress.resourcePermissions* | [**getPermissionedResources**](./ResourcePermissionsApi.md#getPermissionedResources) | **GET** /v1/resources | List all resource configurations
+*authress.resourcePermissions* | [**getResourceUsers**](./ResourcePermissionsApi.md#getResourceUsers) | **GET** /v1/resources/{resourceUri}/users | List users with resource access
+*authress.resourcePermissions* | [**updatePermissionedResource**](./ResourcePermissionsApi.md#updatePermissionedResource) | **PUT** /v1/resources/{resourceUri} | Update resource configuration
+*authress.roles* | [**createRole**](./RolesApi.md#createRole) | **POST** /v1/roles | Create role
+*authress.roles* | [**deleteRole**](./RolesApi.md#deleteRole) | **DELETE** /v1/roles/{roleId} | Delete role
+*authress.roles* | [**getRole**](./RolesApi.md#getRole) | **GET** /v1/roles/{roleId} | Retrieve role
+*authress.roles* | [**getRoles**](./RolesApi.md#getRoles) | **GET** /v1/roles | List roles
+*authress.roles* | [**updateRole**](./RolesApi.md#updateRole) | **PUT** /v1/roles/{roleId} | Update role
+*authress.serviceClients* | [**createClient**](./ServiceClientsApi.md#createClient) | **POST** /v1/clients | Create service client
+*authress.serviceClients* | [**deleteAccessKey**](./ServiceClientsApi.md#deleteAccessKey) | **DELETE** /v1/clients/{clientId}/access-keys/{keyId} | Delete service client access key
+*authress.serviceClients* | [**deleteClient**](./ServiceClientsApi.md#deleteClient) | **DELETE** /v1/clients/{clientId} | Delete service client
+*authress.serviceClients* | [**getClient**](./ServiceClientsApi.md#getClient) | **GET** /v1/clients/{clientId} | Retrieve service client
+*authress.serviceClients* | [**getClients**](./ServiceClientsApi.md#getClients) | **GET** /v1/clients | List service clients
+*authress.serviceClients* | [**requestAccessKey**](./ServiceClientsApi.md#requestAccessKey) | **POST** /v1/clients/{clientId}/access-keys | Generate service client access key
+*authress.serviceClients* | [**updateClient**](./ServiceClientsApi.md#updateClient) | **PUT** /v1/clients/{clientId} | Update service client
+*authress.tenants* | [**createTenant**](./TenantsApi.md#createTenant) | **POST** /v1/tenants | Create tenant
+*authress.tenants* | [**deleteTenant**](./TenantsApi.md#deleteTenant) | **DELETE** /v1/tenants/{tenantId} | Delete tenant
+*authress.tenants* | [**getTenant**](./TenantsApi.md#getTenant) | **GET** /v1/tenants/{tenantId} | Retrieve tenant
+*authress.tenants* | [**getTenants**](./TenantsApi.md#getTenants) | **GET** /v1/tenants | List tenants
+*authress.tenants* | [**linkTenantUser**](./TenantsApi.md#linkTenantUser) | **PATCH** /v1/tenants/{tenantId}/users | Link tenant user
+*authress.tenants* | [**updateTenant**](./TenantsApi.md#updateTenant) | **PUT** /v1/tenants/{tenantId} | Update tenant
+*authress.userPermissions* | [**authorizeUser**](./UserPermissionsApi.md#authorizeUser) | **GET** /v1/users/{userId}/resources/{resourceUri}/permissions/{permission} | Verify user authorization
+*authress.userPermissions* | [**getUserPermissionsForResource**](./UserPermissionsApi.md#getUserPermissionsForResource) | **GET** /v1/users/{userId}/resources/{resourceUri}/permissions | Get user permissions for resource
+*authress.userPermissions* | [**getUserResources**](./UserPermissionsApi.md#getUserResources) | **GET** /v1/users/{userId}/resources | List user resources
+*authress.userPermissions* | [**getUserRolesForResource**](./UserPermissionsApi.md#getUserRolesForResource) | **GET** /v1/users/{userId}/resources/{resourceUri}/roles | Get user roles for resource
+*authress.users* | [**deleteUser**](./UsersApi.md#deleteUser) | **DELETE** /v1/users/{userId} | Delete a user
+*authress.users* | [**getUser**](./UsersApi.md#getUser) | **GET** /v1/users/{userId} | Retrieve a user
+*authress.users* | [**getUsers**](./UsersApi.md#getUsers) | **GET** /v1/users | List users
+*authress.users* | [**linkTenantUser**](./UsersApi.md#linkTenantUser) | **PATCH** /v1/tenants/{tenantId}/users | Link tenant user
 
 
 ## Documentation for Models
