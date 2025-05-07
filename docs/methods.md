@@ -4,7 +4,7 @@
 
 ### Authorize using a user token
 ```js
-const { AuthressClient } = require('@authress/sdk');
+import { AuthressClient } from '@authress/sdk';
 
 // on api route
 [route('/resources/<resourceId>')]
@@ -33,7 +33,7 @@ async function getResource(resourceId) {
 
 ### Authorize with a service client
 ```js
-const { AuthressClient } = require('@authress/sdk');
+import { AuthressClient } from '@authress/sdk';
 
 // create an instance of the API class during service initialization
 // Replace DOMAIN with the Authress domain for your account
@@ -81,7 +81,7 @@ await authressClient.accessRecords.createRecord({
 
 ### Verifying a token using the token verifier
 ```js
-const { AuthressClient } = require('@authress/sdk');
+import { AuthressClient } from '@authress/sdk';
 const cookieManager = require('cookie');
 
 const authressClient = new AuthressClient({ authressApiUrl: 'https://auth.yourdomain.com' });
@@ -120,7 +120,7 @@ const response = await client.get(url, { 'Authorization': `Bearer: ${temporarySe
 Some of the resources in the API are paginated. These resources contain a `pagination.next.cursor` property when there is a next page. The cursor can be passed to query to fetch the next page. Here's an example usage:
 
 ```js
-const { AuthressClient } = require('@authress/sdk');
+import { AuthressClient } from '@authress/sdk';
 
 // on api route
 async function (resourceId) {
