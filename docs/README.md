@@ -37,7 +37,6 @@ Class | Method | HTTP request | Description
 *Authress.extensions* | [**deleteExtension**](./ExtensionsApi.md#deleteExtension) | **DELETE** /v1/extensions/{extensionId} | Delete extension
 *Authress.extensions* | [**getExtension**](./ExtensionsApi.md#getExtension) | **GET** /v1/extensions/{extensionId} | Retrieve extension
 *Authress.extensions* | [**getExtensions**](./ExtensionsApi.md#getExtensions) | **GET** /v1/extensions | List extensions
-*Authress.extensions* | [**login**](./ExtensionsApi.md#login) | **GET** / | OAuth Authorize
 *Authress.extensions* | [**requestToken**](./ExtensionsApi.md#requestToken) | **POST** /api/authentication/oauth/tokens | OAuth Token
 *Authress.extensions* | [**updateExtension**](./ExtensionsApi.md#updateExtension) | **PUT** /v1/extensions/{extensionId} | Update extension
 *Authress.groups* | [**createGroup**](./GroupsApi.md#createGroup) | **POST** /v1/groups | Create group
