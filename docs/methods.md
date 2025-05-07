@@ -82,7 +82,7 @@ await authressClient.accessRecords.createRecord({
 ### Verifying a token using the token verifier
 ```js
 import { AuthressClient } from '@authress/sdk';
-const cookieManager = require('cookie');
+import cookieManager from 'cookie';
 
 const authressClient = new AuthressClient({ authressApiUrl: 'https://auth.yourdomain.com' });
 
@@ -107,7 +107,7 @@ const response = await client.get(url, { 'Authorization': `Bearer: ${userAccessT
 In the case you want to make a request using the service client's secret key, use the `serviceClientTokenProvider` you've already configured:
 ```js
 // Standard library configuration:
-const { ServiceClientTokenProvider } = require('@authress/sdk');
+import { ServiceClientTokenProvider } from '@authress/sdk';
 const accessToken = 'eyJrZXlJ....';
 const serviceClientTokenProvider = new ServiceClientTokenProvider(accessToken, 'https://auth.yourdomain.com');
 
