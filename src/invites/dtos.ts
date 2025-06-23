@@ -17,8 +17,16 @@ export interface Invite {
    * @memberof Invite
    */
   inviteId?: string;
+  
   /**
-   * Specify the tenant associated with the invite. The invited user must use this tenant's connection configuration to log in.
+   * Specify a User ID the user should receive when login completes. This ID is used to automatically assign a user ID to the user rather than a dynamically generated Authress User ID when using the Authress Login UI SDK. This parameter is ignored when accepting invites directly. Note: If the user logging in has already signed up, then this parameter is ignored.
+   * @type {string}
+   * @memberof Invite
+   */
+  linkedUserId?: string;
+
+  /**
+   * Specify the tenant associated with the invite. This tenant Id is used to automatically select the tenant during login with Authress when using the Authress Login UI SDK. This parameter is ignored when accepting invites directly. To explicitly add a user to a tenant use the <code>linkTenantUser</code> API endpoint.
    * @type {string}
    * @memberof Invite
    */

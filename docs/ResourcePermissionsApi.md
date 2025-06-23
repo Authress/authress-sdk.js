@@ -88,7 +88,7 @@ await new AuthressClient().resourcePermissions.getResourceUsers(resourceUri, opt
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **resourceUri** | **String**| The uri path of a resource to validate, must be URL encoded, uri segments are allowed. | 
- **limit** | **Number**| Max number of results to return | [optional] [default to 20]
+ **limit** | **Number**| Max number of results to return | [optional] [default: 20]
  **cursor** | **String**| Continuation cursor for paging | [optional] 
 
 ### Return type

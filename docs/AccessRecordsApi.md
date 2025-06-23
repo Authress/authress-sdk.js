@@ -208,7 +208,7 @@ await new AuthressClient().accessRecords.getRecords(opts.limit, opts.cursor, opt
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **limit** | **Number**| Max number of results to return | [optional] [default to 20]
+ **limit** | **Number**| Max number of results to return | [optional] [default: 20]
  **cursor** | **String**| Continuation cursor for paging | [optional] 
  **filter** | **String**| Filter to search records by. This performs an optimized search for matching on properties in the record. The results may change over time based on improvements in the API. | [optional] 
  **status** | **String**| Filter records by their current status. | [optional] 
@@ -273,7 +273,7 @@ await new AuthressClient().accessRecords.getRequests(opts);
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **limit** | **Number**| Max number of results to return | [optional] [default to 20]
+ **limit** | **Number**| Max number of results to return | [optional] [default: 20]
  **cursor** | **String**| Continuation cursor for paging | [optional] 
  **status** | **String**| Filter requests by their current status. | [optional] 
 

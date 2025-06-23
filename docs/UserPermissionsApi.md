@@ -101,9 +101,9 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **userId** | **String**| The user identifier for which to list all accessible resources. | 
  **resourceUri** | **String**| The top level uri path of a resource to query for. Will only match explicit or nested sub-resources. Will not partial match resource names. | [optional] 
- **collectionConfiguration** | **String**| &#x60;TOP_LEVEL_ONLY&#x60; - returns only directly nested resources under the resourceUri. A query to &#x60;resourceUri&#x3D;Collection&#x60; will return &#x60;Collection/resource_1&#x60;.&lt;br&gt;&#x60;INCLUDE_NESTED&#x60; - will return all sub-resources as well as deeply nested resources that the user has the specified permission to. A query to &#x60;resourceUri&#x3D;Collection&#x60; will return &#x60;Collection/namespaces/ns/resources/resource_1&#x60;.&lt;br&gt;&lt;br&gt;To return matching resources for nested resources, set this parameter to &#x60;INCLUDE_NESTED&#x60;. | [optional] [default to &#39;TOP_LEVEL_ONLY&#39;]
+ **collectionConfiguration** | **String**| &#x60;TOP_LEVEL_ONLY&#x60; - returns only directly nested resources under the resourceUri. A query to &#x60;resourceUri&#x3D;Collection&#x60; will return &#x60;Collection/resource_1&#x60;.&lt;br&gt;&#x60;INCLUDE_NESTED&#x60; - will return all sub-resources as well as deeply nested resources that the user has the specified permission to. A query to &#x60;resourceUri&#x3D;Collection&#x60; will return &#x60;Collection/namespaces/ns/resources/resource_1&#x60;.&lt;br&gt;&lt;br&gt;To return matching resources for nested resources, set this parameter to &#x60;INCLUDE_NESTED&#x60;. | [optional] [default: &#39;TOP_LEVEL_ONLY&#39;]
  **permissions** | **Action**| Permission to check, &#39;✶&#39; and scoped permissions can also be checked here. By default if the user has any permission explicitly to a resource, it will be included in the list. | [optional] 
- **limit** | **Number**| Max number of results to return | [optional] [default to 20]
+ **limit** | **Number**| Max number of results to return | [optional] [default: 20]
  **cursor** | **String**| Continuation cursor for paging | [optional] 
 
 ### Return type

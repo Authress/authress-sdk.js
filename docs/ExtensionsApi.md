@@ -115,7 +115,7 @@ await new AuthressClient().extensions.getExtensions(opts);
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **limit** | **Number**| Max number of results to return | [optional] [default to 20]
+ **limit** | **Number**| Max number of results to return | [optional] [default: 20]
  **cursor** | **String**| Continuation cursor for paging | [optional] 
 
 ### Return type

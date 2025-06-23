@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**type** | **String** |  | [optional] [default to &#39;OAUTH2&#39;]
+**type** | **String** |  | [optional] [default: &#39;OAUTH2&#39;]
 **connectionId** | **String** |  | [optional] 
 **authenticationUrl** | **String** | Authorization URL of the provider (where the user logs in). For OAuth this is the authorization URL. For SAML, specify the **SSO URL** in this property. | [optional] 
 **tokenUrl** | **String** | The token exchange url (where we validate the token). | [optional] 
