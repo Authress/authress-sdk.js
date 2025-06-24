@@ -121,7 +121,7 @@ await new AuthressClient().tenants.getTenants(opts);
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **limit** | **Number**| Max number of results to return | [optional] [default to 100]
+ **limit** | **Number**| Max number of results to return | [optional] [default: 100]
  **cursor** | **String**| Continuation cursor for paging | [optional] 
  **filter** | **String**| Filter to search tenants by. This performs an optimized search for matching on properties in the tenant. The results may change over time based on improvements in the API. | [optional] 
 
