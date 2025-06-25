@@ -19,7 +19,7 @@ export interface Invite {
   inviteId?: string;
   
   /**
-   * Specify a User ID the user should receive when login completes. This ID is used to automatically assign a user ID to the user rather than a dynamically generated Authress User ID when using the Authress Login UI SDK. This parameter is ignored when accepting invites directly. Note: If the user logging in has already signed up, then this parameter is ignored.
+   * Specify a User ID the user should receive when login completes. This ID is used to automatically assign a user ID to the user rather than a dynamically generated Authress User ID when using the Authress Login UI SDK. This parameter is ignored when accepting invites directly. Note: If the user logging in has already signed up, then this parameter is ignored. (Max length: 32, allowed characters: [a-zA-Z0-9_-])
    * @type {string}
    * @memberof Invite
    */
