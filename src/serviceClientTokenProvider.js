@@ -4,6 +4,8 @@ const ArgumentRequiredError = require('./argumentRequiredError');
 const InvalidAccessKeyError = require('./invalidAccessKeyError');
 const { sanitizeUrl } = require('./util');
 
+const packageInfo = require('../package.json');
+
 function getIssuer(unsanitizedAuthressCustomDomain, decodedAccessKey) {
   const authressCustomDomain = sanitizeUrl(unsanitizedAuthressCustomDomain).replace(/\/+$/, '');
   return `${authressCustomDomain}/v1/clients/${encodeURIComponent(decodedAccessKey.clientId)}`;
