@@ -116,7 +116,7 @@ await new AuthressClient().groups.getGroups(opts);
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **limit** | **Number**| Max number of results to return | [optional] [default to 20]
+ **limit** | **Number**| Max number of results to return | [optional] [default: 20]
  **cursor** | **String**| Continuation cursor for paging | [optional] 
  **filter** | **String**| Filter to search groups by. This performs an optimized search for matching on properties in the group. The results may change over time based on improvements in the API. | [optional] 
 

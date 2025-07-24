@@ -4,6 +4,8 @@ const ArgumentRequiredError = require('./argumentRequiredError');
 const InvalidAccessKeyError = require('./invalidAccessKeyError');
 const { sanitizeUrl } = require('./util');
 
+const packageInfo = require('../package.json');
+
 function getIssuer(unsanitizedAuthressCustomDomain, decodedAccessKey) {
   const authressCustomDomain = sanitizeUrl(unsanitizedAuthressCustomDomain).replace(/\/+$/, '');
   return `${authressCustomDomain}/v1/clients/${encodeURIComponent(decodedAccessKey.clientId)}`;
@@ -89,11 +91,13 @@ class ServiceClientTokenProvider {
     const issuer = getIssuer(this.authressCustomDomain || customDomainFallback, this.decodedAccessKey);
 
     const now = Math.round(Date.now() / 1000);
-    const jwt = {
+    const clientSdkString = `Authress SDK; Javascript; ${packageInfo.version}; ${this.decodedAccessKey.clientId}`;
+    const codeJwt = {
       aud: this.decodedAccessKey.audience,
       iss: issuer,
       sub: userId,
       client_id: this.decodedAccessKey.clientId,
+      jti: `${clientSdkString}-${userId}`,
       iat: now,
       exp: now + 60,
       max_age: 60,
@@ -101,15 +105,15 @@ class ServiceClientTokenProvider {
     };
 
     if (userId.match(/@/)) {
-      jwt.email = userId;
-      jwt.email_verified = true;
+      codeJwt.email = userId;
+      codeJwt.email_verified = true;
     }
 
     const importedKey = createPrivateKey({ key: Buffer.from(this.decodedAccessKey.privateKey, 'base64'), format: 'der', type: 'pkcs8' });
-    const code = await new SignJWT(jwt).setProtectedHeader({ alg: 'EdDSA', kid: this.decodedAccessKey.keyId, typ: 'oauth-authz-req+jwt' }).sign(importedKey);
+    const encodedCode = await new SignJWT(codeJwt).setProtectedHeader({ alg: 'EdDSA', kid: this.decodedAccessKey.keyId, typ: 'oauth-authz-req+jwt' }).sign(importedKey);
 
     const url = new URL(authressCustomDomainLoginUrl);
-    url.searchParams.set('code', code);
+    url.searchParams.set('code', encodedCode);
     url.searchParams.set('iss', issuer);
     url.searchParams.set('state', state);
     return url.toString();
