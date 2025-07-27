@@ -60,26 +60,28 @@ class ServiceClientTokenProvider {
     }
   }
 
-  async generateUserLoginUrl(authressCustomDomainLoginUrlInput, stateInput, clientIdInput, userIdInput) {
+  async generateUserLoginUrl(authressCustomDomainLoginUrlInput, authenticationRequestIdInput, clientIdInput, userIdInput) {
     if (!authressCustomDomainLoginUrlInput) {
       throw new ArgumentRequiredError('authressCustomDomainLoginUrl', 'The authressCustomDomainLoginUrl is not specified in the incoming login request, this should match the configured Authress custom domain.');
     }
 
     let authressCustomDomainLoginUrl = authressCustomDomainLoginUrlInput;
-    let state = stateInput;
+    let authenticationRequestId = authenticationRequestIdInput;
     let clientId = clientIdInput;
     let userId = userIdInput;
     if (typeof authressCustomDomainLoginUrlInput === 'object' && authressCustomDomainLoginUrlInput.authenticationUrl) {
-      userId = stateInput;
+      userId = authenticationRequestIdInput;
       const parameters = [...new URL(authressCustomDomainLoginUrlInput.authenticationUrl).searchParams.entries()].reduce((acc, [k, v]) => ({ ...acc, [k]: v }), {});
       authressCustomDomainLoginUrl = authressCustomDomainLoginUrlInput.authenticationUrl;
       clientId = parameters.client_id;
-      state = parameters.state;
+      authenticationRequestId = parameters.state;
     }
     
-    if (!state) {
+    if (!authenticationRequestId) {
       throw new ArgumentRequiredError('state', 'The state is required to generate a authorization code redirect for is required, and should be present in the authenticationUrl.');
     }
+
+
     if (!clientId || clientId !== this.decodedAccessKey.clientId) {
       throw new ArgumentRequiredError('clientId', 'The clientId should be specified in the authenticationUrl. It should match the service client ID.');
     }
@@ -99,8 +101,8 @@ class ServiceClientTokenProvider {
       client_id: this.decodedAccessKey.clientId,
       jti: `${clientSdkString}-${userId}`,
       iat: now,
-      exp: now + 60,
-      max_age: 60,
+      exp: now + 3600,
+      max_age: 3600,
       scope: 'openid'
     };
 
@@ -113,9 +115,11 @@ class ServiceClientTokenProvider {
     const encodedCode = await new SignJWT(codeJwt).setProtectedHeader({ alg: 'EdDSA', kid: this.decodedAccessKey.keyId, typ: 'oauth-authz-req+jwt' }).sign(importedKey);
 
     const url = new URL(authressCustomDomainLoginUrl);
+    // the UI always redirects to /login for handling redirects, we definitely cannot change this now as customers will have registered this path in third party tools.
+    url.pathname = '/login';
     url.searchParams.set('code', encodedCode);
     url.searchParams.set('iss', issuer);
-    url.searchParams.set('state', state);
+    url.searchParams.set('state', authenticationRequestId);
     return url.toString();
   }
 }
