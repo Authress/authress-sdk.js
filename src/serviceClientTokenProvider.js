@@ -81,7 +81,6 @@ class ServiceClientTokenProvider {
       throw new ArgumentRequiredError('state', 'The state is required to generate a authorization code redirect for is required, and should be present in the authenticationUrl.');
     }
 
-
     if (!clientId || clientId !== this.decodedAccessKey.clientId) {
       throw new ArgumentRequiredError('clientId', 'The clientId should be specified in the authenticationUrl. It should match the service client ID.');
     }
