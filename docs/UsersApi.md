@@ -5,6 +5,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**deleteUser**](UsersApi.md#deleteUser) | **DELETE** /v1/users/{userId} | Delete a user
 [**getUser**](UsersApi.md#getUser) | **GET** /v1/users/{userId} | Retrieve a user
+[**setUserTokenConfiguration**](UsersApi.md#setUserTokenConfiguration) | **PUT** /v1/users/{userId}/token-configuration | Set user token configuration
 [**getUsers**](UsersApi.md#getUsers) | **GET** /v1/users | List users
 [**linkTenantUser**](UsersApi.md#linkTenantUser) | **PATCH** /v1/tenants/{tenantId}/users | Link tenant user
 
@@ -99,6 +100,33 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**UserIdentityCollection**](UserIdentityCollection.md)
+
+
+## setUserTokenConfiguration
+
+> UserIdentity setUserTokenConfiguration(userId, tokenConfiguration)
+
+Set user token configuration.
+
+Sets the user authentication configuration. This endpoint contains properties that allow detailed control over tokens generated for the user.
+
+### Example
+
+```javascript
+import { AuthressClient, UserTokenConfiguration } from '@authress/sdk';
+
+const userId = "userId_example"; // UserId | The user identifier.
+const tokenConfiguration = new UserTokenConfiguration(); //  UserTokenConfiguration
+await new AuthressClient().users.setUserTokenConfiguration(userId, tokenConfiguration);
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **userId** | **String**| The user identifier. | 
+ **tokenConfiguration** | **UserTokenConfiguration** | Token configuration dedicated for the specific user. |
 
 
 ## linkTenantUser
