@@ -38,12 +38,12 @@ See the SDK reference guide for a examples of commonly executed blocks with desc
 ### Method Documentation
 
 <!-- Use absolute links, to support this link working from PackageManager-->
-[Authorize using a user token](https://github.com/Authress/authress-sdk.js/blob/main/docs/methods.md#authorize-using-a-user-token)
-[Authorize with a service client](https://github.com/Authress/authress-sdk.js/blob/main/docs/methods.md#authorize-with-a-service-client)
-[Creating resources](https://github.com/Authress/authress-sdk.js/blob/main/docs/methods.md#creating-resources)
-[Verifying a token using the token verifier](https://github.com/Authress/authress-sdk.js/blob/main/docs/methods.md#verifying-a-token-using-the-token-verifier)
-[Make direct API requests](https://github.com/Authress/authress-sdk.js/blob/main/docs/methods.md#make-direct-api-requests)
-[Paginating through a collection resource](https://github.com/Authress/authress-sdk.js/blob/main/docs/methods.md#paginating-through-a-collection-resource)
+* [Authorize using a user token](https://github.com/Authress/authress-sdk.js/blob/main/docs/methods.md#authorize-using-a-user-token)
+* [Authorize with a service client](https://github.com/Authress/authress-sdk.js/blob/main/docs/methods.md#authorize-with-a-service-client)
+* [Creating resources](https://github.com/Authress/authress-sdk.js/blob/main/docs/methods.md#creating-resources)
+* [Verifying a token using the token verifier](https://github.com/Authress/authress-sdk.js/blob/main/docs/methods.md#verifying-a-token-using-the-token-verifier)
+* [Make direct API requests](https://github.com/Authress/authress-sdk.js/blob/main/docs/methods.md#make-direct-api-requests)
+* [Paginating through a collection resource](https://github.com/Authress/authress-sdk.js/blob/main/docs/methods.md#paginating-through-a-collection-resource)
 
 ### Frequently Asked Questions
 * Where do I get a user ID from?
