@@ -977,6 +977,14 @@ export interface UsersApi {
   getUser(userId: string): Promise<Response<UserIdentity>>;
 
   /**
+   * Delete an Authress user
+   * @summary Delete a user.
+   * @param {string} userId The user identifier.
+   * @throws {ArgumentRequiredError}
+   */
+  deleteUser(userId: string): Promise<Response<void>>;
+
+  /**
    * Set user token configuration
    * @summary Sets the user authentication configuration. This endpoint contains properties that allow detailed control over tokens generated for the user.
    * @param {string} userId The user identifier.
