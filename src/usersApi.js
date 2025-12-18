@@ -15,6 +15,16 @@ class UsersApi {
     return response;
   }
 
+  async deleteUser(userId) {
+    // verify required parameter 'userId' is not null or undefined
+    if (userId === null || userId === undefined) {
+      throw new ArgumentRequiredError('userId', 'Required parameter userId was null or undefined when calling deleteUser.');
+    }
+    const url = `/v1/users/${encodeURIComponent(String(userId))}`;
+    const response = await this.client.delete(url);
+    return response;
+  }
+
   async setUserTokenConfiguration(userId, tokenConfiguration) {
     if (userId === null || userId === undefined) {
       throw new ArgumentRequiredError('userId', 'Required parameter userId was null or undefined when calling setUserTokenConfiguration.');
