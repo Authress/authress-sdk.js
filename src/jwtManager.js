@@ -10,20 +10,21 @@ class JwtManager {
     }
   }
 
-  async calculateAntiAbuseHash(props) {
+  calculateAntiAbuseHash(props) {
     const timestamp = Date.now();
     const valueString = Object.values(props).filter(v => v).join('|');
 
     let fineTuner = 0;
     let hash = null;
     while (++fineTuner) {
-      hash = base64url.encode(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(`${timestamp};${fineTuner};${valueString}`)));
+      const verifier = `${timestamp};${fineTuner};${valueString}`;
+      hash = base64url.encode(crypto.createHash('sha256').update(verifier).digest());
       if (hash.match(/^00/)) {
-        break;
+        return `v2;${verifier}`;
       }
     }
 
-    return `v2;${timestamp};${fineTuner};${hash}`;
+    throw Error('Could not calculate a valid anti abuse hash.');
   }
 }
 

@@ -28,6 +28,8 @@ import { Statement, LinkedGroup, User } from './src/records/dtos';
 export * from './src/invites/api';
 export * from './src/invites/dtos';
 
+import { LoginApi } from './src/login/api';
+
 /**
  * The Authress SDK primary settings object to be used with new AuthressClient.
  * @export
@@ -986,21 +988,6 @@ export interface UsersApi {
   setUserTokenConfiguration(userId: string, tokenConfiguration: UserTokenConfiguration): Promise<Response<void>>;
 }
 
-export interface ExtensionAuthenticationParameters {
-  /** The redirect to your login screen will contain two query parameters `state`. Pass the state into this method. */
-  state: string;
-  /** Specify which provider connection that user would like to use to log in - see https://authress.io/app/#/manage?focus=connections */
-  connectionId?: string;
-  /** Instead of connectionId, specify the tenant lookup identifier to log the user with the mapped tenant - see https://authress.io/app/#/manage?focus=tenants */
-  tenantLookupIdentifier?: string;
-  /** Instead of connectionId or tenant lookup identifier, specify the user's domain or the full email for the user to dynamically identify and log the user with the mapped tenant. */
-  hint?: string;
-  /** Invite to use to login, only one of the connectionId, tenantLookupIdentifier, or the inviteId is required. */
-  inviteId?: string;
-  /** Overrides the connection specific properties from the Authress Identity Connection to pass to the identity provider */
-  connectionProperties?: Record<string, string>;
-}
-
 /**
  * AuthressClient
  * @export
@@ -1090,6 +1077,12 @@ export class AuthressClient {
   tenants: TenantsApi;
 
   /**
+   * @summary The Login api
+   * @type {LoginApi}
+   */
+  login: LoginApi;
+
+  /**
    * @summary Verify an incoming Authress JWT request access token here.
    * @type {Function<Promise<Record<string, unknown>>>}
    * @param {string} jwtToken The user's JWT access token.
@@ -1097,13 +1090,6 @@ export class AuthressClient {
    * @throws {TokenVerificationError}
    */
   verifyToken(jwtToken: string): Promise<Record<string, unknown>>;
-
-  /**
-   * @description When a platform extension attempts to log a user in, the Authress Login page will redirect to your Platform defaultAuthenticationUrl. At this point, show the user the login screen, and then pass the results of the login to this method.
-   * @param {ExtensionAuthenticationParameters} settings Parameters for controlling how and when users should be authenticated for the app.
-   * @return {Promise<AuthenticateResponse>} Automatically redirects the user to the appropriate location, unless the connectionId matches a legacy authentication flow.
-   */
-  updateExtensionAuthenticationRequest(settings: ExtensionAuthenticationParameters): Promise<AuthenticateResponse>;
 }
 
 /**

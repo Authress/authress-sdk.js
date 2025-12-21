@@ -26,7 +26,7 @@ export interface InvitesApi {
    * Accepts an invite by claiming this invite by this user. The user access token used for this request will gain the permissions associated with the invite.
    * @summary Accept invite
    * @param {string} inviteId The identifier of the invite.
-   * @throws {RequiredError}
+   * @throws {ArgumentRequiredError}
    */
   respondToInvite(inviteId: string): Promise<Response<void>>;
   /**
