@@ -28,6 +28,8 @@ import { Statement, LinkedGroup, User } from './src/records/dtos';
 export * from './src/invites/api';
 export * from './src/invites/dtos';
 
+import { LoginApi } from './src/login/api';
+
 /**
  * The Authress SDK primary settings object to be used with new AuthressClient.
  * @export
@@ -1081,6 +1083,12 @@ export class AuthressClient {
    * @type {TenantsApi}
    */
   tenants: TenantsApi;
+
+  /**
+   * @summary The Login api
+   * @type {LoginApi}
+   */
+  login: LoginApi;
 
   /**
    * @summary Verify an incoming Authress JWT request access token here.

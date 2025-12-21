@@ -11,7 +11,7 @@ export interface ExtensionsApi {
    * Specify identity extension details for Authress identity aggregation.
    * @summary Create SSO extension
    * @param {Extension} body
-   * @throws {RequiredError}
+   * @throws {ArgumentRequiredError}
    */
   createExtension(body: Extension): Promise<Response<Extension>>;
 
@@ -19,7 +19,7 @@ export interface ExtensionsApi {
    * Delete an identity extension details for Authress identity aggregation.
    * @summary Delete SSO extension
    * @param {string} extensionId The extension identifier.
-   * @throws {RequiredError}
+   * @throws {ArgumentRequiredError}
    */
   deleteExtension(extensionId: string): Promise<Response<void>>;
 
@@ -28,7 +28,7 @@ export interface ExtensionsApi {
   * @summary Update SSO extension
   * @param {Extension} body
   * @param {string} extensionId The extension identifier.
-  * @throws {RequiredError}
+  * @throws {ArgumentRequiredError}
   */
   updateExtension(extensionId: string, body: Extension): Promise<Response<Extension>>;
 
@@ -36,14 +36,14 @@ export interface ExtensionsApi {
    * Get the identity extension details for Authress identity aggregation.
    * @summary Retrieve SSO extension
    * @param {string} extensionId The extension identifier.
-   * @throws {RequiredError}
+   * @throws {ArgumentRequiredError}
    */
   getExtension(extensionId: string): Promise<Response<Extension>>;
 
   /**
    * Returns a paginated extension list for the account. Only extensions the user has access to are returned.
    * @summary List SSO extensions
-   * @throws {RequiredError}
+   * @throws {ArgumentRequiredError}
    */
   getExtensions(): Promise<Response<ExtensionCollection>>;
 }

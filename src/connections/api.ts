@@ -11,7 +11,7 @@ export interface ConnectionsApi {
    * Specify identity connection details for Authress identity aggregation.
    * @summary Create SSO connection
    * @param {Connection} body
-   * @throws {RequiredError}
+   * @throws {ArgumentRequiredError}
    */
   createConnection(body: Connection): Promise<Response<Connection>>;
 
@@ -19,7 +19,7 @@ export interface ConnectionsApi {
    * Delete an identity connection details for Authress identity aggregation.
    * @summary Delete SSO connection
    * @param {string} connectionId The connection identifier.
-   * @throws {RequiredError}
+   * @throws {ArgumentRequiredError}
    */
   deleteConnection(connectionId: string): Promise<Response<void>>;
 
@@ -28,7 +28,7 @@ export interface ConnectionsApi {
   * @summary Update SSO connection
   * @param {Connection} body
   * @param {string} connectionId The connection identifier.
-  * @throws {RequiredError}
+  * @throws {ArgumentRequiredError}
   */
   updateConnection(connectionId: string, body: Connection): Promise<Response<Connection>>;
 
@@ -36,14 +36,14 @@ export interface ConnectionsApi {
    * Get the identity connection details for Authress identity aggregation.
    * @summary Retrieve SSO connection
    * @param {string} connectionId The connection identifier.
-   * @throws {RequiredError}
+   * @throws {ArgumentRequiredError}
    */
   getConnection(connectionId: string): Promise<Response<Connection>>;
 
   /**
    * Returns a paginated connection list for the account. Only connections the user has access to are returned.
    * @summary List SSO connections
-   * @throws {RequiredError}
+   * @throws {ArgumentRequiredError}
    */
   getConnections(): Promise<Response<ConnectionCollection>>;
 
