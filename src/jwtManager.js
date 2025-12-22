@@ -15,10 +15,9 @@ class JwtManager {
     const valueString = Object.values(props).filter(v => v).join('|');
 
     let fineTuner = 0;
-    let hash = null;
     while (++fineTuner) {
       const verifier = `${timestamp};${fineTuner};${valueString}`;
-      hash = base64url.encode(crypto.createHash('sha256').update(verifier).digest());
+      const hash = base64url.encode(crypto.createHash('sha256').update(verifier).digest());
       if (hash.match(/^00/)) {
         return hash;
       }
