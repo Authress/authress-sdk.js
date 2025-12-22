@@ -7,6 +7,8 @@ This is the changelog for [Authress SDK](readme.md).
 * [Breaking] Removal of property `accessToAllSubResources`.
 * [Breaking] `ServiceClientTokenProvider` is now a first-class Javascript Class, it cannot be used as a function.
 * [Breaking] `setToken` has been removed from the interface. To set a user token, pass in a function into the AuthressClient constructor.
+* [Fix] Remove passing the token in the request for token verification, it is completely unnecessary, and does not work for service clients in any scenario.
+* Add UserTokenConfiguration and setUserTokenConfiguration
 
 ## 2.3 ##
 * Require minimum Node version to be 16.

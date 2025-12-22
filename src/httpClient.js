@@ -43,8 +43,8 @@ class HttpClient {
         token = await this.tokenProvider.getToken();
       }
       config.headers = {
-        ...config.headers,
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
+        ...config.headers
       };
 
       // Avoid breaking SDK usages in UIs that depend on this library, since we aren't allowed to set User-Agent in a browser context

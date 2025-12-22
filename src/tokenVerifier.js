@@ -31,7 +31,7 @@ async function getPublicKey(httpClient, jwkKeyListUrl, kid) {
   const hashKey = JSON.stringify({ jwkKeyListUrl, kid });
 
   const getKeyUnCached = async () => {
-    const result = await httpClient.get(jwkKeyListUrl);
+    const result = await httpClient.get(jwkKeyListUrl, { Authorization: undefined });
     const jwk = result.data.keys.find(key => key.kid === kid);
     if (jwk) {
       return jwk;

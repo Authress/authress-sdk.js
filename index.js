@@ -12,6 +12,7 @@ const ExtensionsApi = require('./src/extensionsApi');
 const TenantsApi = require('./src/tenantsApi');
 const ServiceClientTokenProvider = require('./src/serviceClientTokenProvider');
 const TokenVerifier = require('./src/tokenVerifier');
+const LoginApi = require('./src/loginApi');
 
 class AuthressClient {
   constructor(settings, tokenProvider) {
@@ -30,6 +31,7 @@ class AuthressClient {
     this.connections = new ConnectionsApi(this.httpClient);
     this.extensions = new ExtensionsApi(this.httpClient);
     this.tenants = new TenantsApi(this.httpClient);
+    this.login = new LoginApi(this.httpClient);
   }
 
   /**
