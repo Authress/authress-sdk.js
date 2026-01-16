@@ -687,14 +687,14 @@ export interface LinkedIdentityConnection {
    * @type {string}
    * @memberof LinkedIdentityConnection
    */
-  string: connectionId;
+  connectionId: string;
 
   /**
    *
    * @type {string}
    * @memberof LinkedIdentityConnection
    */
-  string: userId;
+  userId: string;
 }
 
 /**
