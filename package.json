@@ -10,7 +10,7 @@
     "src"
   ],
   "scripts": {
-    "lint": "check-dts index.d.ts && eslint --ext .js,.ts tests tests_integration src make.js index.js index.d.ts",
+    "lint": "check-dts index.d.ts && eslint --ext .js,.ts,.d.ts tests tests_integration src make.js index.js index.d.ts",
     "test": "mocha tests/*.test.js tests/**/*.test.js -R spec",
     "integration": "mocha tests_integration/*.test.js -R spec"
   },

@@ -1,5 +1,4 @@
 /* eslint-disable node/no-missing-import */
-import { Response } from '../response';
 import { UpdateAuthenticationRequestParameters, AuthenticationRequest } from './dtos';
 
 /**
@@ -16,5 +15,5 @@ export interface LoginApi {
   * @throws {ArgumentRequiredError}
   */
   updateAuthenticationRequest(authenticationRequestId: string, selfHostedLoginApplicationUrl: string, authenticationRequest: UpdateAuthenticationRequestParameters):
-    Promise<Response<AuthenticationRequest>>;
+    Promise<AuthenticationRequest>;
 }
