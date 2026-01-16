@@ -655,6 +655,46 @@ export interface UserIdentity {
    * @memberof UserIdentity
    */
   tokenConfiguration?: UserTokenConfiguration;
+
+  /**
+   *
+   * @type {Array<LinkedIentity>}
+   * @memberof UserIdentity
+   */
+  linkedIdentities: Array<LinkedIdentity>;
+}
+
+/**
+ * @export
+ * @interface LinkedIdentity
+ */
+export interface LinkedIdentity {
+  /**
+   *
+   * @type {LinkedIdentityConnection}
+   * @memberof LinkedIdentity
+   */
+  connection: LinkedIdentityConnection;
+}
+
+/**
+ * @export
+ * @interface LinkedIdentityConnection
+ */
+export interface LinkedIdentityConnection {
+  /**
+   *
+   * @type {string}
+   * @memberof LinkedIdentityConnection
+   */
+  string: connectionId;
+
+  /**
+   *
+   * @type {string}
+   * @memberof LinkedIdentityConnection
+   */
+  string: userId;
 }
 
 /**
