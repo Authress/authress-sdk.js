@@ -658,7 +658,7 @@ export interface UserIdentity {
 
   /**
    *
-   * @type {Array<LinkedIentity>}
+   * @type {Array<LinkedIdentity>}
    * @memberof UserIdentity
    */
   linkedIdentities: Array<LinkedIdentity>;
