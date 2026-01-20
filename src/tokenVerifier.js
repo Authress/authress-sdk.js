@@ -1,6 +1,7 @@
 const { jwtVerify, importJWK } = require('jose');
 const base64url = require('base64url');
 const axios = require('axios');
+const { DateTime } = require('luxon');
 const { URL } = require('url');
 
 const ServiceClientTokenProvider = require('./serviceClientTokenProvider');
@@ -28,8 +29,6 @@ function decode(token) {
 }
 
 async function getPublicKey(httpClient, jwkKeyListUrl, kid) {
-  const hashKey = JSON.stringify({ jwkKeyListUrl, kid });
-
   const getKeyUnCached = async () => {
     const result = await httpClient.get(jwkKeyListUrl, { Authorization: undefined });
     const jwk = result.data.keys.find(key => key.kid === kid);
@@ -37,19 +36,27 @@ async function getPublicKey(httpClient, jwkKeyListUrl, kid) {
       return jwk;
     }
 
-    throw new TokenVerificationError('The Service Client Access Key is not valid yet or has been deleted. For new Access Keys just created, key validation is cached and can take up to 5 minutes before new keys can be used.');
+    throw new TokenVerificationError('The associated public key for the specified access token is not available. For Service Client Access Keys, it may not be valid yet or has been deleted. For new Access Keys just created, key validation is cached and can take up to 5 minutes before new keys can be used.');
   };
 
-  if (!keyMap[hashKey]) {
-    keyMap[hashKey] = getKeyUnCached();
-  }
+  const hashKey = JSON.stringify({ jwkKeyListUrl, kid });
 
   try {
-    const key = await keyMap[hashKey];
-    return key;
+    const keyData = keyMap[hashKey];
+    if (keyData && DateTime.utc() < keyData.expiry) {
+      const key = await keyData.asyncKey;
+      return key;
+    }
   } catch (error) {
-    return keyMap[hashKey] = getKeyUnCached();
+    keyMap[hashKey] = null;
   }
+
+  keyMap[hashKey] = {
+    asyncKey: getKeyUnCached(),
+    expiry: DateTime.utc().plus({ hours: 1 })
+  };
+
+  return keyMap[hashKey].asyncKey;
 }
 
 function getSanitizedIssuerUrl(rawUrlString) {
