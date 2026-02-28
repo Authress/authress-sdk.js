@@ -17,7 +17,9 @@ const LoginApi = require('./src/loginApi');
 class AuthressClient {
   constructor(settings, tokenProvider) {
     this.settings = settings || {};
-    this.tokenProvider = typeof tokenProvider === 'string' ? new ServiceClientTokenProvider(tokenProvider, this.settings.baseUrl || this.settings.authressApiUrl) : tokenProvider;
+    this.tokenProvider = typeof tokenProvider !== 'string' && tokenProvider
+      || tokenProvider.startsWith('eyJ') && (() => tokenProvider)
+      || new ServiceClientTokenProvider(tokenProvider, this.settings.baseUrl || this.settings.authressApiUrl);
 
     this.httpClient = new httpClient(this.settings.baseUrl || this.settings.authressApiUrl, this.tokenProvider, this.settings.userAgent);
     this.accessRecords = new AccessRecordsApi(this.httpClient);

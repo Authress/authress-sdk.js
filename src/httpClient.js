@@ -36,12 +36,15 @@ class HttpClient {
 
     client.interceptors.request.use(async config => {
       let token;
-      if (typeof this.tokenProvider === 'function') {
+      if (typeof this.tokenProvider === 'string') {
+        token = this.tokenProvider;
+      } else if (typeof this.tokenProvider === 'function') {
         token = await this.tokenProvider(this.baseUrl);
-      } else if (typeof this.tokenProvider === 'object') {
+      } else if (this.tokenProvider && typeof this.tokenProvider === 'object') {
         this.tokenProvider.authressCustomDomain = this.tokenProvider.authressCustomDomain || this.baseUrl;
         token = await this.tokenProvider.getToken();
       }
+
       config.headers = {
         Authorization: `Bearer ${token}`,
         ...config.headers
