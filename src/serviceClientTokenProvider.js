@@ -13,6 +13,10 @@ function getIssuer(unsanitizedAuthressCustomDomain, decodedAccessKey) {
 
 class ServiceClientTokenProvider {
   constructor(accessKey, authressCustomDomain) {
+    if (accessKey.startsWith('eyJ')) {
+      throw new InvalidAccessKeyError();
+    }
+
     const accountId = accessKey.split('.')[2];
     this.accountId = accountId;
     this.authressCustomDomain = authressCustomDomain;
