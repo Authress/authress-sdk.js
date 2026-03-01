@@ -994,7 +994,7 @@ export interface ServiceClientsApi {
    * @param {string} clientId The unique identifier of the client.
    * @throws {ArgumentRequiredError}
    */
-  requestAccessKey(clientId: string): Promise<Response<AccessKeyResponse>>;
+  requestAccessKey(clientId: string, options?: { publicKey?: string }): Promise<Response<AccessKeyResponse>>;
   /**
    * Updates a client information.
    * @summary Update a client
@@ -1228,6 +1228,32 @@ export class ServiceClientTokenProvider {
    * @returns {Promise<string>} A url to redirect the user to complete login.
    */
   generateUserLoginUrl(authenticateResponse: AuthenticateResponse, userId: string): Promise<string>;
+}
+
+/**
+ * Parameters for KmsServiceClientTokenProvider.
+ * @export
+ * @interface AwsKmsTokenProviderParameters
+ */
+export interface AwsKmsTokenProviderParameters {
+  /** The ARN of the AWS KMS Ed25519 key used for signing. */
+  kmsKeyArn: string;
+  /** The Authress service client ID. */
+  clientId: string;
+  /** The key ID returned by Authress when the public key was uploaded. */
+  keyId: string;
+  /** The Authress account ID. */
+  authressAccountId: string;
+}
+
+/**
+ * KmsServiceClientTokenProvider — signs Authress service client JWTs using an AWS KMS Ed25519 key.
+ * Requires the optional peer dependency `@aws-sdk/client-kms` to be installed.
+ * @export
+ */
+export class KmsServiceClientTokenProvider {
+  constructor(config: AwsKmsTokenProviderParameters);
+  getToken(): Promise<string>;
 }
 
 /**

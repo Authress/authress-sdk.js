@@ -12,7 +12,15 @@ class JwtManager {
 
   calculateAntiAbuseHash(props) {
     const timestamp = Date.now();
-    const valueString = Object.values(props).filter(v => v).join('|');
+    const valueString = Object.values(props).filter(v => v)
+    .map(v => {
+      if (!v || typeof v !== 'object' || Array.isArray(v)) {
+        return v;
+      }
+
+      const objectValue = Object.keys(v).sort((a, b) => a.localeCompare(b)).map(key => v[key]).join('-');
+      return objectValue;
+    }).join('|');
 
     let fineTuner = 0;
     while (++fineTuner) {
