@@ -11,6 +11,7 @@ const ConnectionsApi = require('./src/connectionsApi');
 const ExtensionsApi = require('./src/extensionsApi');
 const TenantsApi = require('./src/tenantsApi');
 const ServiceClientTokenProvider = require('./src/serviceClientTokenProvider');
+const KmsServiceClientTokenProvider = require('./src/kmsServiceClientTokenProvider');
 const TokenVerifier = require('./src/tokenVerifier');
 const LoginApi = require('./src/loginApi');
 
@@ -52,4 +53,4 @@ const UnauthorizedError = require('./src/unauthorizedError');
 const ApiError = require('./src/apiError');
 const TokenVerificationError = require('./src/tokenVerificationError');
 
-module.exports = { AuthressClient, ServiceClientTokenProvider, UnauthorizedError, ApiError, TokenVerifier, TokenVerificationError };
+module.exports = { AuthressClient, ServiceClientTokenProvider, KmsServiceClientTokenProvider, UnauthorizedError, ApiError, TokenVerifier, TokenVerificationError };

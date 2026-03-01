@@ -12,6 +12,15 @@
         "<node_internals>/**"
       ],
       "command": "npm test"
+    },
+    {
+      "type": "node-terminal",
+      "request": "launch",
+      "name": "Debug Integration Tests with AWS Credentials",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "command": "eval $(aws-sso eval  --account AWS_ACCOUNT_ID --role AdministratorAccess) && yarn integration"
     }
   ]
 }

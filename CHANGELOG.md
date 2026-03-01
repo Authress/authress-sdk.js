@@ -1,7 +1,7 @@
 # Change log
 This is the changelog for [Authress SDK](readme.md).
 
-## 3.0 ##
+## 3.1 ##
 * Require minimum Node version to be 18.
 * [Breaking] UserId is now required in all `userPermissions` apis. This improves **Security By Default** requiring explicit check on who the user is.
 * [Breaking] Removal of property `accessToAllSubResources`.
@@ -9,6 +9,7 @@ This is the changelog for [Authress SDK](readme.md).
 * [Breaking] `setToken` has been removed from the interface. To set a user token, pass in a function into the AuthressClient constructor.
 * [Fix] Remove passing the token in the request for token verification, it is completely unnecessary, and does not work for service clients in any scenario.
 * Add UserTokenConfiguration and setUserTokenConfiguration
+* Add Support for KMS Service Client BYOK usage.
 
 ## 2.3 ##
 * Require minimum Node version to be 16.

@@ -22,6 +22,7 @@
     "luxon": "3"
   },
   "devDependencies": {
+    "@aws-sdk/client-kms": "^3.1000.0",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
     "chai": "^4.2.0",
@@ -67,7 +68,15 @@
     "url": "https://github.com/Authress/authress-sdk.js/issues"
   },
   "homepage": "https://authress.io",
+  "peerDependencies": {
+    "@aws-sdk/client-kms": ">=3"
+  },
+  "peerDependenciesMeta": {
+    "@aws-sdk/client-kms": {
+      "optional": true
+    }
+  },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   }
 }
