@@ -1,4 +1,3 @@
-const { describe, it, before, after } = require('mocha');
 const { expect } = require('chai');
 const { KMSClient, CreateKeyCommand, CreateAliasCommand, GetPublicKeyCommand, ScheduleKeyDeletionCommand } = require('@aws-sdk/client-kms');
 
@@ -18,7 +17,7 @@ describe('kmsServiceClientTokenProvider.js', () => {
   let kmsTokenProvider;
   let authressClient;
 
-  before(async () => {
+  beforeAll(async () => {
     authressClient = new AuthressClient({ authressApiUrl: AUTHRESS_API_URL }, ADMIN_USER_JWT);
 
     // Create an AWS KMS Ed25519 signing key for this test run
@@ -57,7 +56,7 @@ describe('kmsServiceClientTokenProvider.js', () => {
     kmsTokenProvider.authressCustomDomain = AUTHRESS_API_URL;
   });
 
-  after(async () => {
+  afterAll(async () => {
     if (testClientId) {
       await authressClient.serviceClients.deleteClient(testClientId).catch(() => {});
     }

@@ -1,4 +1,3 @@
-const { describe, it, beforeEach, afterEach } = require('mocha');
 const sinon = require('sinon');
 
 let sandbox;

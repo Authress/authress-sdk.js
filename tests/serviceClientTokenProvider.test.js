@@ -1,4 +1,3 @@
-const { describe, it, beforeEach, afterEach } = require('mocha');
 const { expect } = require('chai');
 const sinon = require('sinon');
 

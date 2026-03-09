@@ -11,8 +11,8 @@
   ],
   "scripts": {
     "lint": "check-dts index.d.ts && eslint --ext .js,.ts,.d.ts tests tests_integration src make.js index.js index.d.ts",
-    "test": "mocha tests/*.test.js tests/**/*.test.js -R spec",
-    "integration": "mocha tests_integration/*.test.js -R spec"
+    "test": "vitest run --config vitest.config.js",
+    "integration": "vitest run --config vitest.integration.config.js"
   },
   "dependencies": {
     "@authress/login": "*",
@@ -32,12 +32,11 @@
     "eslint": "^8.14.0",
     "eslint-config-cimpress-atsquad": "^1.0.67",
     "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-mocha": "^7.0.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.0.0",
     "fs-extra": "^8.1.0",
     "glob": "^7.1.6",
-    "mocha": "^11.1.0",
+    "vitest": "^3.0.0",
     "sinon": "^7.5.0",
     "sinon-chai": "^3.3.0",
     "travis-build-tools": "~1.2",
