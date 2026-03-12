@@ -26,10 +26,10 @@ export interface Extension {
     application?: ExtensionApplication;
     /**
      *
-     * @type {Date}
+     * @type {string}
      * @memberof Extension
      */
-    createdTime?: Date;
+    createdTime?: string;
 }
 
 /**

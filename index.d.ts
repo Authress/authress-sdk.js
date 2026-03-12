@@ -172,10 +172,10 @@ export interface Account {
     accountId: string;
     /**
      *
-     * @type {Date}
+     * @type {string}
      * @memberof Account
      */
-    createdTime?: Date;
+    createdTime?: string;
     /**
      * The top authress sub domain specific for this account to be used with this API.
      * @type {string}
@@ -276,10 +276,10 @@ export interface ClientAccessKey {
     clientId: string;
     /**
      *
-     * @type {Date}
+     * @type {string}
      * @memberof ClientAccessKey
      */
-    generationDate?: Date;
+    generationDate?: string;
     /**
      * An encoded access key which contains identifying information for client access token creation. For direct use with the Authress SDKs, not meant to be decoded. Must be saved on created, as it will never be returned from the API ever again. Authress only saved the corresponding public key to verify private access keys.
      * @type {string}
@@ -368,10 +368,10 @@ export interface ServiceClientSummary {
   clientId: string;
   /**
    *
-   * @type {Date}
+   * @type {string}
    * @memberof ServiceClientSummary
    */
-  createdTime?: Date;
+  createdTime?: string;
   /**
    * The name of the client
    * @type {string}
@@ -394,10 +394,10 @@ export interface ServiceClient {
     clientId?: string;
     /**
      * (ReadOnly)
-     * @type {Date}
+     * @type {string}
      * @memberof ServiceClient
      */
-    createdTime?: Date;
+    createdTime?: string;
     /**
      * The name of the client
      * @type {string}
@@ -438,10 +438,10 @@ export interface AccessKeyResponse {
     clientId: string;
     /**
      *
-     * @type {Date}
+     * @type {string}
      * @memberof AccessKeyResponse
      */
-    generationDate?: Date;
+    generationstring?: string;
     /**
      * An encoded access key which contains identifying information for client access token creation. For direct use with the Authress SDKs, not meant to be decoded. Must be saved on created, as it will never be returned from the API ever again. Authress only saved the corresponding public key to verify private access keys.
      * @type {string}

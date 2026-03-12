@@ -19,8 +19,8 @@ Name | Type | Description | Notes
 **conditions** | [**ConnectionConditions**](ConnectionConditions.md) |  | [optional] 
 **tenantConfiguration** | [**ConnectionTenantConfiguration**](ConnectionTenantConfiguration.md) |  | [optional] 
 **linkingConfiguration** | [**ConnectionLinkingConfiguration**](ConnectionLinkingConfiguration.md) |  | [optional] 
-**createdTime** | **Date** |  | [optional] [readonly] 
-**lastUpdated** | **Date** |  | [optional] [readonly] 
+**createdTime** | **String** |  | [optional] [readonly] 
+**lastUpdated** | **String** |  | [optional] [readonly] 
 **isActiveConnection** | **Boolean** |  | [optional] [readonly] 
 **tags** | **{String: String}** | The tags associated with this resource, this property is an map. { key1: value1, key2: value2 } | [optional] 
 

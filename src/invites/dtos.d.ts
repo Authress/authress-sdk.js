@@ -69,11 +69,11 @@ export interface Invite {
   conflictResolutionStrategy?: Invite.ConflictResolutionStrategyEnum;
 
   /**
-   * How long should the invite be available for? Creating invites that are available for longer than 7 days may be a security risk as invites can be used to regain access even after a user has lost access. This is the fundamental aspect of invites, because invites exist to grant access to a user that does not currently have access. The minimum is five minutes `PT5M` and the max is 30 days `P30D`. This value must conform to the ISO8601 format. Note: Explicitly setting this parameter to a value other than the default requires the permission: Invites:Create Authress:Invites.
+   * When should the invite expire? Creating invites that are available for longer than 7 days may be a security risk as invites can be used to regain access even after a user has lost access. This is the fundamental aspect of invites, because invites exist to grant access to a user that does not currently have access. The minimum is five minutes and the max is 30 days. This value must conform to the ISO8601 format. Note: Explicitly setting this parameter to a value other than the default requires the permission: Invites:Create Authress:Invites.
    * @type {string}
    * @memberof Invite
    */
-  expiryDuration?: string;
+  expires?: string;
 }
 
 /**

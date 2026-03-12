@@ -73,10 +73,10 @@ export interface Connection {
     defaultConnectionProperties?: ConnectionDefaultConnectionProperties;
     /**
      *
-     * @type {Date}
+     * @type {string}
      * @memberof Connection
      */
-    createdTime?: Date;
+    createdTime?: string;
 }
 
 /**

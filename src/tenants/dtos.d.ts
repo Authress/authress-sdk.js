@@ -37,10 +37,10 @@ export interface Tenant {
   connection?: TenantConnection;
   /**
    *
-   * @type {Date}
+   * @type {string}
    * @memberof Tenant
    */
-  createdTime?: Date;
+  createdTime?: string;
 }
 /**
 * A collection of tenants.

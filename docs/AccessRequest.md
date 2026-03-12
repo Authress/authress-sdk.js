@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **requestId** | **String** | Unique identifier for the request. | [readonly] 
-**lastUpdated** | **Date** | The expected last time the request was updated | [optional] [readonly] 
+**lastUpdated** | **String** | The expected last time the request was updated | [optional] [readonly] 
 **status** | **String** | Current status of the access request. | [optional] [readonly] 
 **access** | [**AccessTemplate**](AccessTemplate.md) |  | 
 **links** | [**AccountLinks**](AccountLinks.md) |  | [optional] 
