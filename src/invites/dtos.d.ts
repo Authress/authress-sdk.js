@@ -11,7 +11,7 @@ export namespace Invite {
    * @enum {string}
    */
   export enum ConflictResolutionStrategyEnum {
-    /** (Default) Create a new access record which matches the statements in this invite. The record ID will be randomly generated and is unpredictable. */  
+    /** (Default) Create a new access record which matches the statements in this invite. The record ID will be randomly generated and is unpredictable. */
     GENERATE_NEW_RECORD = 'GENERATE_NEW_RECORD',
     /** Add the user and statements to the existing record. This will cause the user to gain all the permissions already defined in that record and will cause all the users currently in that record to gain all the additional permissions defined in the invite. */
     UNSAFE_FORCE_MERGE = 'UNSAFE_FORCE_MERGE',
