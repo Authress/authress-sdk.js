@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**duration** | **String** | The sliding window time slice duration for which this quota applies. This value must conform to the ISO8601 format, see the enum for allow values. | 
+**duration** | **Duration** | The sliding window time slice duration for which this quota applies. This value must conform to the ISO8601 format, see the enum for allow values. | 
 **quota** | **Number** | The maximum number of requests allowed during the duration. | 
 
 
