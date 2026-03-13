@@ -73,7 +73,7 @@ export interface Invite {
    * @type {string}
    * @memberof Invite
    */
-  expires?: string;
+  expiryTime?: string;
 }
 
 /**
