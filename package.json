@@ -22,7 +22,7 @@
     "luxon": "3"
   },
   "devDependencies": {
-    "@authress/eslint-config": "^2.0.16",
+    "@authress/eslint-config": "^2.0.18",
     "@aws-sdk/client-kms": "^3.1000.0",
     "@typescript-eslint/eslint-plugin": "^8.49.0",
     "@typescript-eslint/parser": "^8.49.0",
