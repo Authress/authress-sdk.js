@@ -4,7 +4,6 @@ import typescriptParser from '@typescript-eslint/parser';
 import tseslint from 'typescript-eslint';
 
 import authressConfig from '@authress/eslint-config/lib/index.js';
-import importPlugin from 'eslint-plugin-import';
 
 const globalVariables = {
   ...globals.browser,
@@ -35,12 +34,9 @@ export default [
       globals: globalVariables
     },
     settings: {
-      'import/resolver': {
-        node: true
-      }
     },
     plugins: {
-      import: importPlugin
+      // import: importPlugin
     },
     rules: {
       'arrow-parens': ['error', 'as-needed'],
@@ -89,8 +85,7 @@ export default [
     },
     rules: {
       'no-empty-function': 'off',
-      '@typescript-eslint/no-empty-function': 'off',
-      'import/no-extraneous-dependencies': ['error', { devDependencies: true }]
+      '@typescript-eslint/no-empty-function': 'off'
     }
   },
 
@@ -98,8 +93,7 @@ export default [
   {
     files: ['make.js'],
     rules: {
-      'n/no-process-exit': 'off',
-      'import/no-extraneous-dependencies': ['error', { devDependencies: true }]
+      'n/no-process-exit': 'off'
     }
   }
 ];
