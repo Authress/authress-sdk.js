@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable node/no-missing-import */
 import { Response, Cursor } from '../response';
 import { UserPermissions, UserResources, UserRoleCollection, GetUserResourcesParams } from './dtos';
