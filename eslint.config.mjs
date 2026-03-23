@@ -36,7 +36,6 @@ export default [
     settings: {
     },
     plugins: {
-      // import: importPlugin
     },
     rules: {
       'arrow-parens': ['error', 'as-needed'],
