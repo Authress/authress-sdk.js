@@ -23,7 +23,7 @@ function decode(token) {
       header: JSON.parse(base64url.decode(token.split('.')[0])),
       payload: JSON.parse(base64url.decode(token.split('.')[1]))
     };
-  } catch (error) {
+  } catch (_) {
     return null;
   }
 }
@@ -47,7 +47,7 @@ async function getPublicKey(httpClient, jwkKeyListUrl, kid) {
       const key = await keyData.asyncKey;
       return key;
     }
-  } catch (error) {
+  } catch (_) {
     keyMap[hashKey] = null;
   }
 
@@ -91,7 +91,7 @@ module.exports = async function(authressCustomDomainOrHttpClient, requestToken, 
       const replacementToken = await (new ServiceClientTokenProvider(requestToken, authressCustomDomain))();
       authenticationToken = replacementToken;
       unverifiedToken = decode(replacementToken);
-    } catch (tokenError) {
+    } catch (_) {
       throw new TokenVerificationError('Unauthorized: Invalid token');
     }
   }
@@ -113,7 +113,7 @@ module.exports = async function(authressCustomDomainOrHttpClient, requestToken, 
     if (new URL(issuer).origin !== completeIssuerUrlOrigin && new URL(issuer).origin !== altIssuerUrlOrigin && new URL(issuer).origin !== altGlobalIssuerUrlOrigin) {
       throw new TokenVerificationError(`Unauthorized: Invalid Issuer: ${issuer}, Expected: ${completeIssuerUrlOrigin}`);
     }
-  } catch (error) {
+  } catch (_) {
     throw new TokenVerificationError(`Unauthorized: Invalid Issuer: ${issuer}, Expected: ${completeIssuerUrlOrigin}`);
   }
 

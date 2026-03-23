@@ -1,6 +1,3 @@
-/* eslint-disable no-shadow */
-/* eslint-disable no-redeclare */
-/* eslint-disable @typescript-eslint/no-namespace */
 
 /**
  *

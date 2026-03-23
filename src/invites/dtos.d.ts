@@ -1,8 +1,4 @@
-/* eslint-disable no-shadow */
-/* eslint-disable no-redeclare */
-/* eslint-disable @typescript-eslint/no-namespace */
-
-// eslint-disable-next-line node/no-missing-import
+ 
 import { Resource } from '../records/dtos';
 
 export namespace Invite {

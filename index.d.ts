@@ -1,6 +1,3 @@
-/* eslint-disable node/no-missing-import */
-/* eslint-disable @typescript-eslint/no-empty-interface */
-/* eslint-disable no-shadow */
 
 import { AuthenticateResponse } from '@authress/login';
 
@@ -1184,7 +1181,7 @@ export class ServiceClientTokenProvider {
    * @param {string} accessKey The service client access key, can be generated from https://authress.io/app/#/manage?focus=clients
    * @param {string} [authressCustomDomain] The custom domain specified in your account under domain settings. What should my url be? => https://authress.io/app/#/setup?focus=domain
    */
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+   
   constructor(accessKey: string, authressCustomDomain?: string);
 
   /**

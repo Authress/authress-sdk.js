@@ -10,7 +10,7 @@
     "src"
   ],
   "scripts": {
-    "lint": "check-dts index.d.ts && eslint --ext .js,.ts,.d.ts tests tests_integration src make.js index.js index.d.ts",
+    "lint": "check-dts index.d.ts && eslint tests tests_integration src make.js index.js index.d.ts",
     "test": "vitest run --config vitest.config.js",
     "integration": "vitest run --config vitest.integration.config.js"
   },

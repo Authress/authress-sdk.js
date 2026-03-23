@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable node/no-missing-import */
+ 
 import { Response, Cursor } from '../response';
 import { UserPermissions, UserResources, UserRoleCollection, GetUserResourcesParams } from './dtos';
 
@@ -17,6 +16,7 @@ export interface UserPermissionsApi {
    * @throws {ArgumentRequiredError}
    * @throws {UnauthorizedError}
    */
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   authorizeUser(userId: string, resourceUri: string, permission: string): Promise<Response<void>>;
   /**
@@ -26,6 +26,7 @@ export interface UserPermissionsApi {
    * @param {string} tokenId The relevant token identifier
    * @throws {ArgumentRequiredError}
    */
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   disableUserToken(userId: string, tokenId: string): Promise<Response<void>>;
   /**
@@ -35,6 +36,7 @@ export interface UserPermissionsApi {
    * @param {string} resourceUri The uri path of a resource to validate, must be URL encoded, uri segments are allowed.
    * @throws {ArgumentRequiredError}
    */
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   getUserPermissionsForResource(userId: string, resourceUri: string): Promise<Response<UserPermissions>>;
   /**
@@ -44,6 +46,7 @@ export interface UserPermissionsApi {
    * @param {string} resourceUri The uri path of a resource to get roles for, must be URL encoded. Checks for explicit resource roles, roles attached to parent resources are not returned.
    * @throws {ArgumentRequiredError}
    */
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
    getUserRolesForResource(userId: string, resourceUri: string): Promise<Response<UserRoleCollection>>;
   /**
