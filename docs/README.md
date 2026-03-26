@@ -37,7 +37,6 @@ Class | Method | HTTP request | Description
 *authress.extensions* | [**deleteExtension**](./ExtensionsApi.md#deleteExtension) | **DELETE** /v1/extensions/{extensionId} | Delete extension
 *authress.extensions* | [**getExtension**](./ExtensionsApi.md#getExtension) | **GET** /v1/extensions/{extensionId} | Retrieve extension
 *authress.extensions* | [**getExtensions**](./ExtensionsApi.md#getExtensions) | **GET** /v1/extensions | List extensions
-*authress.extensions* | [**login**](./ExtensionsApi.md#login) | **GET** / | OAuth Authorize
 *authress.extensions* | [**requestToken**](./ExtensionsApi.md#requestToken) | **POST** /api/authentication/oauth/tokens | OAuth Token
 *authress.extensions* | [**updateExtension**](./ExtensionsApi.md#updateExtension) | **PUT** /v1/extensions/{extensionId} | Update extension
 *authress.groups* | [**createGroup**](./GroupsApi.md#createGroup) | **POST** /v1/groups | Create group
@@ -79,7 +78,6 @@ Class | Method | HTTP request | Description
 *authress.users* | [**getUser**](./UsersApi.md#getUser) | **GET** /v1/users/{userId} | Retrieve a user
 *authress.users* | [**getUsers**](./UsersApi.md#getUsers) | **GET** /v1/users | List users
 *authress.users* | [**linkTenantUser**](./UsersApi.md#linkTenantUser) | **PATCH** /v1/tenants/{tenantId}/users | Link tenant user
-
 
 ## Documentation for Models
 

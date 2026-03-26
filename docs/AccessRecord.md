@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **name** | **String** | A helpful name for this record | 
 **description** | **String** | More details about this record | [optional] 
 **capacity** | **Number** | Percentage capacity of record that is filled. | [optional] [readonly] 
-**lastUpdated** | **Date** | The expected last time the record was updated | [optional] [readonly] 
+**lastUpdated** | **String** | The expected last time the record was updated | [optional] [readonly] 
 **status** | **String** | Current status of the access record. | [optional] [readonly] 
 **account** | [**AccessRecordAccount**](AccessRecordAccount.md) |  | [optional] 
 **users** | [**[User]**](User.md) | The list of users this record applies to. The record is finite in size, for patterns where the list of users might grow indefinitely, the recommended solution is to specify each user in their own access record. | [optional] 

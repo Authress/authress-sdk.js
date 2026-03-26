@@ -1,4 +1,4 @@
-/* eslint-disable node/no-missing-import */
+ 
 import { UpdateAuthenticationRequestParameters, AuthenticationRequest } from './dtos';
 
 /**

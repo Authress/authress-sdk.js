@@ -5,7 +5,7 @@ class JwtManager {
   decode(token) {
     try {
       return token && JSON.parse(base64url.decode(token.split('.')[1]));
-    } catch (error) {
+    } catch (_) {
       return null;
     }
   }

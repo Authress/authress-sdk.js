@@ -1,8 +1,4 @@
-/* eslint-disable no-shadow */
-/* eslint-disable no-redeclare */
-/* eslint-disable @typescript-eslint/no-namespace */
-
-// eslint-disable-next-line node/no-missing-import
+ 
 import { IPaginated } from '../response';
 
 /**
@@ -26,10 +22,10 @@ export interface Extension {
     application?: ExtensionApplication;
     /**
      *
-     * @type {Date}
+     * @type {string}
      * @memberof Extension
      */
-    createdTime?: Date;
+    createdTime?: string;
 }
 
 /**

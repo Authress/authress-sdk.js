@@ -56,13 +56,13 @@ class ServiceClientsApi {
     return response;
   }
 
-  async requestAccessKey(clientId) {
+  async requestAccessKey(clientId, body) {
     // verify required parameter 'clientId' is not null or undefined
     if (clientId === null || clientId === undefined) {
       throw new ArgumentRequiredError('clientId', 'Required parameter clientId was null or undefined when calling requestAccessKey.');
     }
     const url = `/v1/clients/${encodeURIComponent(String(clientId))}/access-keys`;
-    const response = await this.client.post(url);
+    const response = await this.client.post(url, body);
     return response;
   }
 

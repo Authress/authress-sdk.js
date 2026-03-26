@@ -1,4 +1,3 @@
-const { describe, it, beforeEach, afterEach } = require('mocha');
 const { expect } = require('chai');
 const sinon = require('sinon');
 
@@ -161,6 +160,7 @@ describe('serviceClientTokenProvider.js', () => {
       const url = await serviceClientTokenProvider.generateUserLoginUrl('https://login.redirect-url.com', 'state', 'clientId', 'user1');
 
       const code = new URL(url).searchParams.get('code');
+      // eslint-disable-next-line no-unused-expressions, @typescript-eslint/no-unused-expressions
       expect(code).to.not.be.null;
 
       const jwtPayload = jwtManager.decode(code);

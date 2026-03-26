@@ -1,4 +1,4 @@
-/* eslint-disable node/no-missing-import */
+ 
 import { Response } from '../response';
 import { Invite } from './dtos';
 

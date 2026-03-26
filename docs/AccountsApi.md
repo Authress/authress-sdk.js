@@ -108,7 +108,7 @@ await new AuthressClient().accounts.getAccounts(opts);
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **earliestCacheTime** | **Date**| Ensure the accounts list is not cached before this time. | [optional] 
+ **earliestCacheTime** | **String**| Ensure the accounts list is not cached before this time. | [optional] 
 
 ### Return type
 

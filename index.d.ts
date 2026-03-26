@@ -1,6 +1,3 @@
-/* eslint-disable node/no-missing-import */
-/* eslint-disable @typescript-eslint/no-empty-interface */
-/* eslint-disable no-shadow */
 
 import { AuthenticateResponse } from '@authress/login';
 
@@ -172,10 +169,10 @@ export interface Account {
     accountId: string;
     /**
      *
-     * @type {Date}
+     * @type {string}
      * @memberof Account
      */
-    createdTime?: Date;
+    createdTime?: string;
     /**
      * The top authress sub domain specific for this account to be used with this API.
      * @type {string}
@@ -276,10 +273,10 @@ export interface ClientAccessKey {
     clientId: string;
     /**
      *
-     * @type {Date}
+     * @type {string}
      * @memberof ClientAccessKey
      */
-    generationDate?: Date;
+    generationDate?: string;
     /**
      * An encoded access key which contains identifying information for client access token creation. For direct use with the Authress SDKs, not meant to be decoded. Must be saved on created, as it will never be returned from the API ever again. Authress only saved the corresponding public key to verify private access keys.
      * @type {string}
@@ -368,10 +365,10 @@ export interface ServiceClientSummary {
   clientId: string;
   /**
    *
-   * @type {Date}
+   * @type {string}
    * @memberof ServiceClientSummary
    */
-  createdTime?: Date;
+  createdTime?: string;
   /**
    * The name of the client
    * @type {string}
@@ -394,10 +391,10 @@ export interface ServiceClient {
     clientId?: string;
     /**
      * (ReadOnly)
-     * @type {Date}
+     * @type {string}
      * @memberof ServiceClient
      */
-    createdTime?: Date;
+    createdTime?: string;
     /**
      * The name of the client
      * @type {string}
@@ -438,10 +435,10 @@ export interface AccessKeyResponse {
     clientId: string;
     /**
      *
-     * @type {Date}
+     * @type {string}
      * @memberof AccessKeyResponse
      */
-    generationDate?: Date;
+    generationstring?: string;
     /**
      * An encoded access key which contains identifying information for client access token creation. For direct use with the Authress SDKs, not meant to be decoded. Must be saved on created, as it will never be returned from the API ever again. Authress only saved the corresponding public key to verify private access keys.
      * @type {string}
@@ -994,7 +991,7 @@ export interface ServiceClientsApi {
    * @param {string} clientId The unique identifier of the client.
    * @throws {ArgumentRequiredError}
    */
-  requestAccessKey(clientId: string): Promise<Response<AccessKeyResponse>>;
+  requestAccessKey(clientId: string, options?: { publicKey?: string }): Promise<Response<AccessKeyResponse>>;
   /**
    * Updates a client information.
    * @summary Update a client
@@ -1184,7 +1181,7 @@ export class ServiceClientTokenProvider {
    * @param {string} accessKey The service client access key, can be generated from https://authress.io/app/#/manage?focus=clients
    * @param {string} [authressCustomDomain] The custom domain specified in your account under domain settings. What should my url be? => https://authress.io/app/#/setup?focus=domain
    */
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+   
   constructor(accessKey: string, authressCustomDomain?: string);
 
   /**
@@ -1228,6 +1225,32 @@ export class ServiceClientTokenProvider {
    * @returns {Promise<string>} A url to redirect the user to complete login.
    */
   generateUserLoginUrl(authenticateResponse: AuthenticateResponse, userId: string): Promise<string>;
+}
+
+/**
+ * Parameters for KmsServiceClientTokenProvider.
+ * @export
+ * @interface AwsKmsTokenProviderParameters
+ */
+export interface AwsKmsTokenProviderParameters {
+  /** The ARN of the AWS KMS Ed25519 key used for signing. */
+  kmsKeyArn: string;
+  /** The Authress service client ID. */
+  clientId: string;
+  /** The key ID returned by Authress when the public key was uploaded. */
+  keyId: string;
+  /** The Authress account ID. */
+  authressAccountId: string;
+}
+
+/**
+ * KmsServiceClientTokenProvider — signs Authress service client JWTs using an AWS KMS Ed25519 key.
+ * Requires the optional peer dependency `@aws-sdk/client-kms` to be installed.
+ * @export
+ */
+export class KmsServiceClientTokenProvider {
+  constructor(config: AwsKmsTokenProviderParameters);
+  getToken(): Promise<string>;
 }
 
 /**
