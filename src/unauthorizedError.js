@@ -1,12 +1,15 @@
+const AuthressHttpError = require('./apiError');
+
 /**
  *
  * @export
  * @class UnauthorizedError
- * @extends {Error}
+ * @extends {AuthressHttpError}
  */
-class UnauthorizedError extends Error {
-  constructor(userId, resourceUri, permission) {
-    super(`User=${userId} does not have permission=${permission} to resourceUri=${resourceUri}.`);
+class UnauthorizedError extends AuthressHttpError {
+  constructor(userId, resourceUri, permission, url, data, headers) {
+    super(url, 404, data, headers);
+    this.message = data?.title || `User=${userId} does not have permission=${permission} to resourceUri=${resourceUri}.`;
     this.userId = userId;
     this.resourceUri = resourceUri;
     this.permission = permission;

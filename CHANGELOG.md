@@ -1,6 +1,9 @@
 # Change log
 This is the changelog for [Authress SDK](readme.md).
 
+## 3.2 ##
+* Require minimum Node version to be 22.
+
 ## 3.1 ##
 * Require minimum Node version to be 20.
 * Add Support for KMS Service Client BYOK usage.
@@ -32,7 +35,7 @@ This is the changelog for [Authress SDK](readme.md).
 * Fix service client token generated tokens so that they automatically get the custom domain injected in during using in the SDK.
 * Fix TokenVerifier return type to be a `Promise`.
 * Add the `TokenVerificationError` error and `verifyToken` method directly to the Authress Client interface.
-* Add the `ApiError` error type
+* Add the `AuthressHttpError` error type
 * Include `email`, `picture`, and `name` in `UserIdentity` ts definition.
 * Add the `invites` api.
 

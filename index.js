@@ -50,7 +50,12 @@ class AuthressClient {
 }
 
 const UnauthorizedError = require('./src/unauthorizedError');
-const ApiError = require('./src/apiError');
+const AuthressHttpError = require('./src/apiError');
+const ClientNotAuthorizedToCheckPermissionError = require('./src/clientNotAuthorizedError');
 const TokenVerificationError = require('./src/tokenVerificationError');
 
-module.exports = { AuthressClient, ServiceClientTokenProvider, KmsServiceClientTokenProvider, UnauthorizedError, ApiError, TokenVerifier, TokenVerificationError };
+module.exports = {
+  AuthressClient, ServiceClientTokenProvider, KmsServiceClientTokenProvider,
+  UnauthorizedError, AuthressHttpError, ClientNotAuthorizedToCheckPermissionError,
+  TokenVerifier, TokenVerificationError
+};

@@ -1270,26 +1270,34 @@ export function TokenVerifier(authressCustomDomain: string, authenticationToken:
 */
 export class ArgumentRequiredError extends Error {}
 /**
+ * AuthressHttpError
+ * @export
+ * @summary Thrown when the api request fails expectedly with 4XX, may also be thrown as a 5XX
+*/
+export class AuthressHttpError extends Error {
+  url: string;
+  status: number;
+  data: Record<string, unknown>;
+  headers: Record<string, string>;
+}
+
+/**
  * UnauthorizedError
  * @export
  * @summary Thrown when the user does not have permissions to the resource
 */
-export class UnauthorizedError extends Error {
+export class UnauthorizedError extends AuthressHttpError {
   userId: string;
   resourceUri: string;
   permission: string;
 }
 
 /**
- * ApiError
+ * ClientNotAuthorizedToCheckPermissionError
  * @export
- * @summary Thrown when the api request fails expectedly with 4XX, may also be thrown as a 5XX
+ * @summary Thrown when the service client is not authorized to check user permissions
 */
-export class ApiError extends Error {
-  status: number;
-  body: string;
-  headers: string;
-}
+export class ClientNotAuthorizedToCheckPermissionError extends AuthressHttpError {}
 
 /**
  * TokenVerificationError

@@ -16,7 +16,6 @@
   },
   "dependencies": {
     "@authress/login": "*",
-    "axios": "*",
     "base64url": "^3.0.1",
     "jose": "^4.8.3",
     "luxon": "3"
@@ -73,6 +72,6 @@
     }
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   }
 }

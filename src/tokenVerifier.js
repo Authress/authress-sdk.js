@@ -1,21 +1,44 @@
 const { jwtVerify, importJWK } = require('jose');
 const base64url = require('base64url');
-const axios = require('axios');
 const { DateTime } = require('luxon');
 const { URL } = require('url');
 
+const AuthressHttpError = require('./apiError');
 const ServiceClientTokenProvider = require('./serviceClientTokenProvider');
 const TokenVerificationError = require('./tokenVerificationError');
 const { sanitizeUrl } = require('./util');
 const packageInfo = require('../package.json');
 
 const keyMap = {};
-const client = axios.create();
+const client = {
+  async get(url, headers) {
+    const fetchHeaders = { ...headers };
 
-// Avoid breaking SDK usages in UIs that depend on this library, since we aren't allowed to set User-Agent in a browser context
-if (process && process.versions && process.versions.node) {
-  client.defaults.headers.common['User-Agent'] = `Authress SDK; Javascript; ${packageInfo.version};`;
-}
+    // Avoid breaking SDK usages in UIs that depend on this library, since we aren't allowed to set User-Agent in a browser context
+    if (process?.versions?.node) {
+      fetchHeaders['User-Agent'] = `Authress SDK; Javascript; ${packageInfo.version};`;
+    }
+
+    for (const key of Object.keys(fetchHeaders)) {
+      if (fetchHeaders[key] === undefined || fetchHeaders[key] === null) {
+        delete fetchHeaders[key];
+      }
+    }
+
+    const response = await fetch(url, { headers: fetchHeaders });
+    const data = await response.json();
+    const responseHeaders = {};
+    response.headers.forEach((value, key) => {
+      responseHeaders[key] = value;
+    });
+
+    if (!response.ok) {
+      throw new AuthressHttpError(url, response.status, data, responseHeaders);
+    }
+
+    return { data, status: response.status, headers: responseHeaders };
+  }
+};
 
 function decode(token) {
   try {
@@ -96,12 +119,12 @@ module.exports = async function(authressCustomDomainOrHttpClient, requestToken, 
     }
   }
 
-  const kid = unverifiedToken && unverifiedToken.header && unverifiedToken.header.kid;
+  const kid = unverifiedToken?.header?.kid;
   if (!kid) {
     throw new TokenVerificationError('Unauthorized: No KID in token');
   }
 
-  const issuer = unverifiedToken && unverifiedToken.payload && unverifiedToken.payload.iss;
+  const issuer = unverifiedToken?.payload?.iss;
   if (!issuer) {
     throw new TokenVerificationError('Unauthorized: No Issuer found');
   }

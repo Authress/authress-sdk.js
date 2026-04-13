@@ -1,6 +1,7 @@
 const { URL, URLSearchParams } = require('url');
 
 const ArgumentRequiredError = require('./argumentRequiredError');
+const ClientNotAuthorizedToCheckPermissionError = require('./clientNotAuthorizedError');
 const UnauthorizedError = require('./unauthorizedError');
 
 class UserPermissionsApi {
@@ -26,8 +27,11 @@ class UserPermissionsApi {
       const response = await this.client.get(url);
       return response;
     } catch (error) {
+      if (error.status === 403) {
+        throw new ClientNotAuthorizedToCheckPermissionError(error.url, error.data, error.headers);
+      }
       if (error.status === 404) {
-        throw new UnauthorizedError(userId, resourceUri, permission);
+        throw new UnauthorizedError(userId, resourceUri, permission, error.url, error.data, error.headers);
       }
       throw error;
     }

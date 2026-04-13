@@ -55,7 +55,8 @@ export default [
       'node/no-missing-require': ['error', {
         allowModules: ['jose']
       }],
-      'no-shadow': ['error']
+      'no-shadow': ['error'],
+      'no-underscore-dangle': ['error', { allow: ['_links', '_embedded'], allowAfterThis: true }]
     }
   },
 
