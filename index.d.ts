@@ -1053,7 +1053,7 @@ export class AuthressClient {
    * @param {AuthressSettings} settings The authress settings
    * @param {Promise<Function<string>> | Function<string> | string} [tokenProvider] A {@link ServiceClientTokenProvider} which can generate an Authress client with the service clients permissions.
    */
-  constructor(settings: AuthressSettings, tokenProvider?: (() => Promise<string>) | (() => string) | ServiceClientTokenProvider);
+  constructor(settings: AuthressSettings, tokenProvider?: (() => Promise<string>) | (() => string) | ServiceClientTokenProvider | KmsServiceClientTokenProvider);
 
   /**
    * @summary The AccessRecords api
