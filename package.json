@@ -17,7 +17,7 @@
   "dependencies": {
     "@authress/login": "*",
     "base64url": "^3.0.1",
-    "jose": "^4.8.3",
+    "jose": "4.8.3 - 4.15.4 || ^5",
     "luxon": "3"
   },
   "devDependencies": {
