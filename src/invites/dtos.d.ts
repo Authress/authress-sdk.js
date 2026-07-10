@@ -65,6 +65,13 @@ export interface Invite {
   conflictResolutionStrategy?: Invite.ConflictResolutionStrategyEnum;
 
   /**
+   * Specify the access record that the invite statements should be applied to when the invite is accepted. By default Authress targets a record derived from the accepting user ID. Specifying this parameter forces the invite to look up, create, or update this exact record instead, so that the resulting record ID is predictable. This ID must conform to the same format as an access record ID.
+   * @type {string}
+   * @memberof Invite
+   */
+  mergeTargetRecordId?: string;
+
+  /**
    * When should the invite expire? Creating invites that are available for longer than 7 days may be a security risk as invites can be used to regain access even after a user has lost access. This is the fundamental aspect of invites, because invites exist to grant access to a user that does not currently have access. The minimum is five minutes and the max is 30 days. This value must conform to the ISO8601 format. Note: Explicitly setting this parameter to a value other than the default requires the permission: Invites:Create Authress:Invites.
    * @type {string}
    * @memberof Invite
