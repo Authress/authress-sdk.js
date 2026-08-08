@@ -69,9 +69,9 @@ class ConnectionsApi {
 
     const requestUserId = userId || await getFallbackUser(this.client);
 
-    const url = `/v1/connections/${encodeURIComponent(String(connectionId))}/users/${encodeURIComponent(String(requestUserId))}/credentials`;
+    let url = `/v1/connections/${encodeURIComponent(String(connectionId))}/users/${encodeURIComponent(String(requestUserId))}/credentials`;
     if (connectionUserId) {
-      url += `/${encodeURICemponent(connectionUserId)}`;
+      url += `/${encodeURIComponent(connectionUserId)}`;
     }
     const response = await this.client.get(url);
     return response;
