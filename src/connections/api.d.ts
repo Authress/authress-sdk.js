@@ -54,5 +54,5 @@ export interface ConnectionsApi {
    * @param {string} [userId] The user to get the stored credentials, if not specified will automatically be populated by the token specified in the request to Authress.
    * @throws {ArgumentRequiredError}
    */
-   getConnectionCredentials(connectionId: string, userId?: string): Promise<Response<UserConnectionCredentials>>;
+   getConnectionCredentials(connectionId: string, userId?: string, connectionUserId?: string): Promise<Response<UserConnectionCredentials>>;
 }
