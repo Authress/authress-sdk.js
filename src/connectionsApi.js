@@ -62,7 +62,7 @@ class ConnectionsApi {
     return response;
   }
 
-  async getConnectionCredentials(connectionId, userId) {
+  async getConnectionCredentials(connectionId, userId, connectionUserId) {
     if (!connectionId) {
       throw new ArgumentRequiredError('connectionId', 'Required parameter connectionId was not specified when calling getConnectionCredentials.');
     }
@@ -70,6 +70,9 @@ class ConnectionsApi {
     const requestUserId = userId || await getFallbackUser(this.client);
 
     const url = `/v1/connections/${encodeURIComponent(String(connectionId))}/users/${encodeURIComponent(String(requestUserId))}/credentials`;
+    if (connectionUserId) {
+      url += `/${encodeURICemponent(connectionUserId)}`;
+    }
     const response = await this.client.get(url);
     return response;
   }
