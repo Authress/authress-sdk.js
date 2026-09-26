@@ -122,7 +122,7 @@ export interface AccessRecord {
    * @type {string}
    * @memberof AccessRecord
    */
-  lastUpdated?: string;
+  readonly lastUpdated: string;
   /**
    *
    * @type {Links}
@@ -784,7 +784,7 @@ export interface AccessRecordsApi {
    * @param {AccessRecord} body
    * @throws {ArgumentRequiredError}
    */
-  createRecord(body: AccessRecord): Promise<Response<AccessRecord>>;
+  createRecord(body: Omit<AccessRecord, 'lastUpdated'>): Promise<Response<AccessRecord>>;
   /**
    * Remove an access record, removing associated permissions from all users in record. If a user has a permission from another record, that permission will not be removed. (Note: This disables the record by changing the status to <strong>DELETED</strong> but not completely remove the record for tracking purposes.
    * @summary Deletes an access record.
@@ -817,7 +817,7 @@ export interface AccessRecordsApi {
    * @param {Date} expectedLastModifiedTime The expected last time that the access record was updated. Provide this value using the {@link AccessRecord.lastUpdated} time to prevent overwriting previous updates.
    * @throws {ArgumentRequiredError}
    */
-  updateRecord(recordId: string, body: AccessRecord, expectedLastModifiedTime?: Date): Promise<Response<AccessRecord>>;
+  updateRecord(recordId: string, body: Omit<AccessRecord, 'lastUpdated'>, expectedLastModifiedTime?: Date): Promise<Response<AccessRecord>>;
 }
 
 /**

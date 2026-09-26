@@ -25,7 +25,7 @@ export interface Group {
    * @type {string}
    * @memberof Group
    */
-  lastUpdated?: string;
+  readonly lastUpdated: string;
   /**
    * The list of users in this group. A group can have a maximum of 100 users.
    * @type {Array<User>}

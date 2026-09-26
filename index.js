@@ -56,8 +56,28 @@ const AuthressHttpError = require('./src/apiError');
 const ClientNotAuthorizedToCheckPermissionError = require('./src/clientNotAuthorizedError');
 const TokenVerificationError = require('./src/tokenVerificationError');
 
+const { Invite } = require('./src/invites/dtos');
+const { Connection, ConnectionData } = require('./src/connections/dtos');
+const { GetUserResourcesParams } = require('./src/userPermissions/dtos');
+
+const AccessRecord = Object.freeze({
+  StatusEnum: Object.freeze({
+    ACTIVE: 'ACTIVE',
+    DELETED: 'DELETED'
+  })
+});
+
+const ResourcePermissionsObject = Object.freeze({
+  ActionEnum: Object.freeze({
+    CLAIM: 'CLAIM',
+    PUBLIC: 'PUBLIC'
+  })
+});
+
 module.exports = {
   AuthressClient, ServiceClientTokenProvider, KmsServiceClientTokenProvider,
   UnauthorizedError, AuthressHttpError, ClientNotAuthorizedToCheckPermissionError,
-  TokenVerifier, TokenVerificationError
+  TokenVerifier, TokenVerificationError,
+  Invite, Connection, ConnectionData, GetUserResourcesParams,
+  AccessRecord, ResourcePermissionsObject
 };

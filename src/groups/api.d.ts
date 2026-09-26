@@ -13,7 +13,7 @@ export interface GroupsApi {
    * @param {Group} body
    * @throws {ArgumentRequiredError}
    */
-  createGroup(body: Group): Promise<Response<Group>>;
+  createGroup(body: Omit<Group, 'lastUpdated'>): Promise<Response<Group>>;
 
   /**
    * Remove a group, users will lose any role that was assigned through membership of this group. This action cannot be undone.
@@ -31,7 +31,7 @@ export interface GroupsApi {
   * @param {Date} expectedLastModifiedTime The expected last time that the group was updated. Provide this value using the {@link Group.lastUpdated} time to prevent overwriting previous updates.
   * @throws {ArgumentRequiredError}
   */
-  updateGroup(groupId: string, body: Group, expectedLastModifiedTime?: Date): Promise<Response<Group>>;
+  updateGroup(groupId: string, body: Omit<Group, 'lastUpdated'>, expectedLastModifiedTime?: Date): Promise<Response<Group>>;
 
   /**
    * A group contains multiple users which can be added to an access record, and should be assigned the same roles at the same time.
