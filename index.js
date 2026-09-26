@@ -10,6 +10,7 @@ const RolesApi = require('./src/rolesApi');
 const ConnectionsApi = require('./src/connectionsApi');
 const ExtensionsApi = require('./src/extensionsApi');
 const TenantsApi = require('./src/tenantsApi');
+const GroupsApi = require('./src/groupsApi');
 const ServiceClientTokenProvider = require('./src/serviceClientTokenProvider');
 const KmsServiceClientTokenProvider = require('./src/kmsServiceClientTokenProvider');
 const TokenVerifier = require('./src/tokenVerifier');
@@ -34,6 +35,7 @@ class AuthressClient {
     this.connections = new ConnectionsApi(this.httpClient);
     this.extensions = new ExtensionsApi(this.httpClient);
     this.tenants = new TenantsApi(this.httpClient);
+    this.groups = new GroupsApi(this.httpClient);
     this.login = new LoginApi(this.httpClient);
   }
 

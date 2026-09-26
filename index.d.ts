@@ -11,6 +11,10 @@ import { TenantsApi } from './src/tenants/api';
 export * from './src/tenants/api';
 export * from './src/tenants/dtos';
 
+import { GroupsApi } from './src/groups/api';
+export * from './src/groups/api';
+export * from './src/groups/dtos';
+
 import { ExtensionsApi } from './src/extensions/api';
 export * from './src/extensions/api';
 export * from './src/extensions/dtos';
@@ -810,7 +814,7 @@ export interface AccessRecordsApi {
    * @summary Update an access record.
    * @param {string} recordId The identifier of the access record.
    * @param {AccessRecord} body
-   * @param {Date|string} expectedLastModifiedTime The expected last time that the access record was updated. Provide this value using the {@link AccessRecord.lastUpdated} time to prevent overwriting previous updates.
+   * @param {Date} expectedLastModifiedTime The expected last time that the access record was updated. Provide this value using the {@link AccessRecord.lastUpdated} time to prevent overwriting previous updates.
    * @throws {ArgumentRequiredError}
    */
   updateRecord(recordId: string, body: AccessRecord, expectedLastModifiedTime?: Date): Promise<Response<AccessRecord>>;
@@ -1120,6 +1124,12 @@ export class AuthressClient {
    * @type {TenantsApi}
    */
   tenants: TenantsApi;
+
+  /**
+   * @summary The Groups api
+   * @type {GroupsApi}
+   */
+  groups: GroupsApi;
 
   /**
    * @summary The Login api
