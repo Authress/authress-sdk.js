@@ -98,6 +98,24 @@ function getSanitizedIssuerUrl(rawUrlString) {
   return sanitizedUrl.replace(/[/]+$/, '');
 }
 
+/**
+ * The service client check and the JWKS fetch must read the same issuer value. Any issuer that a runtime could normalise differently is rejected.
+ */
+function getCanonicalIssuer(issuer) {
+  const issuerMatch = !(/[?#\\]/).test(issuer) && issuer.match(/^([a-z][a-z0-9+.-]*:\/\/[^/@]+)(\/.*)?$/i);
+  if (!issuerMatch) {
+    return null;
+  }
+
+  const path = (issuerMatch[2] || '').replace(/\/$/, '');
+  const segments = path ? path.slice(1).split('/') : [];
+  if (segments.some(segment => !segment || segment === '.' || segment === '..' || (/%(2e|2f|5c)/i).test(segment))) {
+    return null;
+  }
+
+  return { url: `${issuerMatch[1]}${path}`, path };
+}
+
 module.exports = async function(authressCustomDomainOrHttpClient, requestToken, options = { expectedPublicKey: null, verifierOptions: {} }) {
   const httpClient = typeof authressCustomDomainOrHttpClient === 'object' ? authressCustomDomainOrHttpClient : client;
   const authressCustomDomain = typeof authressCustomDomainOrHttpClient === 'object' ? authressCustomDomainOrHttpClient.baseUrl : authressCustomDomainOrHttpClient;
@@ -129,6 +147,11 @@ module.exports = async function(authressCustomDomainOrHttpClient, requestToken, 
     throw new TokenVerificationError('Unauthorized: No Issuer found');
   }
 
+  const canonicalIssuer = getCanonicalIssuer(issuer);
+  if (!canonicalIssuer) {
+    throw new TokenVerificationError(`Unauthorized: Invalid Issuer: ${issuer}`);
+  }
+
   const completeIssuerUrlOrigin = new URL(getSanitizedIssuerUrl(authressCustomDomain)).origin;
   const altIssuerUrlOrigin = new URL(sanitizeUrl(authressCustomDomain)).origin;
   const altGlobalIssuerUrlOrigin = new URL(sanitizeUrl(authressCustomDomain)).origin.replace(/^https:\/\/([a-z0-9-]+)[.][a-z0-9-]+[.]authress[.]io$/, 'https://$1.api.authress.io');
@@ -141,12 +164,12 @@ module.exports = async function(authressCustomDomainOrHttpClient, requestToken, 
   }
 
   // Handle service client checking
-  const clientIdMatcher = new URL(issuer).pathname.match(/^\/v\d\/clients\/([^/]+)$/);
+  const clientIdMatcher = canonicalIssuer.path.match(/^\/v\d\/clients\/([^/]+)\/?$/);
   if (clientIdMatcher && clientIdMatcher[1] !== unverifiedToken.payload.sub) {
     throw new TokenVerificationError(`Unauthorized: Invalid Sub found for service client token: ${unverifiedToken.payload.sub}`);
   }
 
-  const key = options.expectedPublicKey || await getPublicKey(httpClient, `${issuer}/.well-known/openid-configuration/jwks?kid=${kid}`, kid);
+  const key = options.expectedPublicKey || await getPublicKey(httpClient, `${canonicalIssuer.url}/.well-known/openid-configuration/jwks?kid=${kid}`, kid);
 
   try {
     const verifiedToken = await jwtVerify(authenticationToken, await importJWK(key), { algorithms: ['EdDSA', 'RS512'], issuer, ...options.verifierOptions });
